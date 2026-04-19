@@ -1,5 +1,10 @@
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react'
-import { supabase, isConnected } from './supabase'
+import {
+  isConnected, initConnection,
+  fetchHeuristics, fetchHeaderHeuristics,
+  insertHeuristic, updateHeuristic, deleteHeuristic,
+  seedHeuristics, seedHeaderHeuristics
+} from './base44Data'
 import { SEED_DATA, COLUMNS, CATEGORIES, ACTIONS, CONTEXTS, STATUSES, PRIORITIES } from './seedData'
 import { HEADER_SEED_DATA, HEADER_COLUMNS } from './headerSeedData'
 import Toast from './components/Toast'
@@ -8,83 +13,6 @@ import EditableCell from './components/EditableCell'
 import DiagramsView from './components/DiagramsView'
 import Simulator from './components/Simulator'
 import AddRuleWizard from './components/AddRuleWizard'
-
-const TABLE_NAME = 'heuristics'
-const HEADER_TABLE_NAME = 'header_heuristics'
-
-const DB_TO_APP = {
-  element_type: 'when',
-  condition: 'if',
-  output_operation: 'action',
-  sub_type: 'parameters',
-  final_label: 'summary',
-  priority_note: 'note'
-}
-const APP_TO_DB = Object.fromEntries(Object.entries(DB_TO_APP).map(([k, v]) => [v, k]))
-
-const ACTION_REMAP = {
-  'Item Size': 'Set Size',
-  'Item Resize': 'Set Size',
-  'Container Item Resize': 'Set Size',
-  'Show Element': 'Set Visibility',
-  'Hide Element': 'Set Visibility',
-  'Set ODC': 'Set OOG',
-  'Item Rotation': 'Set Rotation',
-  'Item Margin': 'Set Margin',
-  'Item Padding': 'Set Padding',
-  'Item Alignment': 'Set Alignment',
-  'Item Font Size': 'Set Font Size',
-  'Item Spacing': 'Set Spacing',
-  'Item Min Height': 'Set Min Height',
-  'Pin Item': 'Set Pinned'
-}
-
-const WHEN_REMAP = {
-  'Any Element (Exception: Vertical Line)': 'Any Element',
-  'System Container / Box': 'System Container',
-  'Text Box': 'Text',
-  'Hamburger Menu / Shape': 'Hamburger Menu | Shape',
-  'Social Bar Container': 'Social Bar'
-}
-
-const PARAMS_REMAP = {
-  'Rotation Value: 0': 'Value: 0',
-  'Set ODC': 'Set OOG'
-}
-
-function transformFromDb(row) {
-  const out = {}
-  for (const [k, v] of Object.entries(row)) {
-    out[DB_TO_APP[k] || k] = v
-  }
-
-  const origAction = out.action
-  if (origAction && ACTION_REMAP[origAction]) out.action = ACTION_REMAP[origAction]
-  if (origAction === 'Show Element') out.parameters = 'Value: Show'
-  if (origAction === 'Hide Element') out.parameters = 'Value: Hide'
-
-  if (out.when && WHEN_REMAP[out.when]) out.when = WHEN_REMAP[out.when]
-  if (out.parameters && PARAMS_REMAP[out.parameters]) out.parameters = PARAMS_REMAP[out.parameters]
-
-  if (out.action && out.parameters && out.parameters !== '—') {
-    out.summary = `${out.action} | ${out.parameters}`
-  } else if (out.action) {
-    out.summary = out.action
-  }
-
-  if (!out.in) out.in = 'Any Parent'
-  if (!out.priority) out.priority = 1
-
-  return out
-}
-
-function transformToDb(updates) {
-  const out = {}
-  for (const [k, v] of Object.entries(updates)) {
-    out[APP_TO_DB[k] || k] = v
-  }
-  return out
-}
 
 function App() {
   const [activeTab, setActiveTab] = useState('main')
@@ -135,48 +63,46 @@ function App() {
   }, [])
 
   useEffect(() => {
-    loadData()
+    initConnection().then(() => loadData())
   }, [])
 
   async function loadData() {
     setLoading(true)
-    if (isConnected()) {
-      const { data, error } = await supabase.from(TABLE_NAME).select('*').order('rule_id')
-      if (error) {
-        toast(`DB error: ${error.message}`, 'error')
-        setRows(SEED_DATA.map((r, i) => ({ ...r, id: i + 1 })))
-      } else if (data.length === 0) {
-        const seeded = SEED_DATA.map((r, i) => ({ ...r, id: i + 1 }))
-        setRows(seeded)
-        await seedDatabase(seeded)
-      } else {
-        setRows(data.map(transformFromDb))
-      }
+    try {
+      if (isConnected()) {
+        const data = await fetchHeuristics()
+        if (data.length === 0) {
+          const seeded = SEED_DATA.map((r, i) => ({ ...r, id: i + 1 }))
+          setRows(seeded)
+          await seedHeuristics(seeded)
+          toast('Database seeded with heuristics')
+          const freshData = await fetchHeuristics()
+          if (freshData.length > 0) setRows(freshData)
+        } else {
+          setRows(data)
+        }
 
-      const { data: hData, error: hError } = await supabase.from(HEADER_TABLE_NAME).select('*').order('rule_id')
-      if (!hError && hData) {
-        setHeaderRows(hData.length > 0 ? hData.map(transformFromDb) : HEADER_SEED_DATA.map((r, i) => ({ ...r, id: i + 1 })))
+        const hData = await fetchHeaderHeuristics()
+        if (hData.length === 0) {
+          const seeded = HEADER_SEED_DATA.map((r, i) => ({ ...r, id: i + 1 }))
+          setHeaderRows(seeded)
+          await seedHeaderHeuristics(seeded)
+          const freshH = await fetchHeaderHeuristics()
+          if (freshH.length > 0) setHeaderRows(freshH)
+        } else {
+          setHeaderRows(hData)
+        }
       } else {
+        setRows(SEED_DATA.map((r, i) => ({ ...r, id: i + 1 })))
         setHeaderRows(HEADER_SEED_DATA.map((r, i) => ({ ...r, id: i + 1 })))
+        toast('Running in local mode — Base44 not connected', 'info')
       }
-    } else {
+    } catch (err) {
+      toast(`Load error: ${err.message}`, 'error')
       setRows(SEED_DATA.map((r, i) => ({ ...r, id: i + 1 })))
       setHeaderRows(HEADER_SEED_DATA.map((r, i) => ({ ...r, id: i + 1 })))
-      toast('Running in local mode — no Supabase connected', 'info')
     }
     setLoading(false)
-  }
-
-  async function seedDatabase(data) {
-    if (!isConnected()) return
-    const toInsert = data.map(({ id, ...rest }) => transformToDb(rest))
-    const { error } = await supabase.from(TABLE_NAME).insert(toInsert)
-    if (error) {
-      toast(`Seed failed: ${error.message}`, 'error')
-    } else {
-      toast('Database seeded with heuristics')
-      loadData()
-    }
   }
 
   async function handleCellSave(rowId, key, value, isHeader = false) {
@@ -185,12 +111,12 @@ function App() {
     setEditingCell(null)
 
     if (isConnected()) {
-      const tableName = isHeader ? HEADER_TABLE_NAME : TABLE_NAME
       setPendingChanges(prev => {
         const next = new Map(prev)
-        const existing = next.get(`${tableName}:${rowId}`) || { tableName, rowId, updates: {} }
+        const tag = `${isHeader ? 'h' : 'm'}:${rowId}`
+        const existing = next.get(tag) || { rowId, isHeader, updates: {} }
         existing.updates[key] = value
-        next.set(`${tableName}:${rowId}`, existing)
+        next.set(tag, existing)
         return next
       })
       debouncedSave()
@@ -210,10 +136,12 @@ function App() {
     setPendingChanges(new Map())
     let errorCount = 0
 
-    for (const [, { tableName, rowId, updates }] of changes) {
-      const dbUpdates = transformToDb(updates)
-      const { error } = await supabase.from(tableName).update(dbUpdates).eq('id', rowId)
-      if (error) errorCount++
+    for (const [, { rowId, isHeader, updates }] of changes) {
+      try {
+        await updateHeuristic(rowId, updates, isHeader)
+      } catch {
+        errorCount++
+      }
     }
 
     if (errorCount > 0) {
@@ -224,9 +152,9 @@ function App() {
   }
 
   async function handleWizardSave(rowsPayload) {
-    const tableName = activeTab === 'header' ? HEADER_TABLE_NAME : TABLE_NAME
-    const setter = activeTab === 'header' ? setHeaderRows : setRows
-    const targetRows = activeTab === 'header' ? headerRows : rows
+    const isHeader = activeTab === 'header'
+    const setter = isHeader ? setHeaderRows : setRows
+    const targetRows = isHeader ? headerRows : rows
     let nextRuleId = Math.max(0, ...targetRows.map(r => r.rule_id))
 
     for (const payload of rowsPayload) {
@@ -234,13 +162,13 @@ function App() {
       const row = { ...emptyRow(), ...payload, rule_id: nextRuleId }
 
       if (isConnected()) {
-        const dbRow = transformToDb(row)
-        const { data, error } = await supabase.from(tableName).insert([dbRow]).select()
-        if (error) {
+        try {
+          const created = await insertHeuristic(row, isHeader)
+          setter(prev => [...prev, created])
+        } catch (err) {
           toast('Failed to save — try again', 'error')
-          throw new Error(error.message)
+          throw err
         }
-        setter(prev => [...prev, transformFromDb(data[0])])
       } else {
         setter(prev => [...prev, { ...row, id: Date.now() + Math.floor(Math.random() * 1000) }])
       }
@@ -250,38 +178,39 @@ function App() {
   }
 
   async function handleDeleteRow(row) {
-    const tableName = activeTab === 'header' ? HEADER_TABLE_NAME : TABLE_NAME
+    const isHeader = activeTab === 'header'
     if (isConnected()) {
-      const { error } = await supabase.from(tableName).delete().eq('id', row.id)
-      if (error) {
-        toast(`Delete failed: ${error.message}`, 'error')
+      try {
+        await deleteHeuristic(row.id, isHeader)
+      } catch (err) {
+        toast(`Delete failed: ${err.message}`, 'error')
         return
       }
     }
-    const setter = activeTab === 'header' ? setHeaderRows : setRows
+    const setter = isHeader ? setHeaderRows : setRows
     setter(prev => prev.filter(r => r.id !== row.id))
     setConfirmDelete(null)
     toast('Row deleted')
   }
 
   async function handleDuplicateRow(row) {
-    const targetRows = activeTab === 'header' ? headerRows : rows
+    const isHeader = activeTab === 'header'
+    const targetRows = isHeader ? headerRows : rows
     const nextId = Math.max(...targetRows.map(r => r.rule_id), 0) + 1
-    const { id, ...rest } = row
+    const { id, created_at, updated_at, ...rest } = row
     const dup = { ...rest, rule_id: nextId }
-    const tableName = activeTab === 'header' ? HEADER_TABLE_NAME : TABLE_NAME
 
     if (isConnected()) {
-      const dbDup = transformToDb(dup)
-      const { data, error } = await supabase.from(tableName).insert([dbDup]).select()
-      if (error) {
-        toast(`Duplicate failed: ${error.message}`, 'error')
+      try {
+        const created = await insertHeuristic(dup, isHeader)
+        const setter = isHeader ? setHeaderRows : setRows
+        setter(prev => [...prev, created])
+      } catch (err) {
+        toast(`Duplicate failed: ${err.message}`, 'error')
         return
       }
-      const setter = activeTab === 'header' ? setHeaderRows : setRows
-      setter(prev => [...prev, transformFromDb(data[0])])
     } else {
-      const setter = activeTab === 'header' ? setHeaderRows : setRows
+      const setter = isHeader ? setHeaderRows : setRows
       setter(prev => [...prev, { ...dup, id: Date.now() }])
     }
     toast('Row duplicated')
@@ -448,7 +377,7 @@ function App() {
         <div className="app-header-right">
           <div className="db-status">
             <span className={`db-status-dot ${isConnected() ? '' : 'offline'}`} />
-            {isConnected() ? 'Supabase connected' : 'Local mode'}
+            {isConnected() ? 'Base44 connected' : 'Local mode'}
           </div>
           {pendingChanges.size > 0 && <span className="unsaved-dot" title="Saving..." />}
         </div>
