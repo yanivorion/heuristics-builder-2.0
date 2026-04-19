@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react'
 import {
-  isConnected, initConnection,
+  isConnected, initConnection, getConnectionError,
   fetchHeuristics, fetchHeaderHeuristics,
   insertHeuristic, updateHeuristic, deleteHeuristic,
   seedHeuristics, seedHeaderHeuristics,
@@ -402,19 +402,20 @@ function App() {
           <button className={`tab-btn ${activeTab === 'diagrams' ? 'active' : ''}`} onClick={() => setActiveTab('diagrams')}>Diagrams</button>
         </div>
         <div className="app-header-right">
-          {isConnected() && (
-            <button
-              className="btn btn-migrate"
-              onClick={handleMigrate}
-              disabled={migrating}
-              title="Push all Supabase data into Base44 database"
-            >
-              {migrating
-                ? `Migrating… ${migrateProgress?.done || 0}/${migrateProgress?.total || '?'}`
-                : '↻ Seed DB'}
-            </button>
-          )}
-          <div className="db-status">
+          <button
+            className="btn btn-migrate"
+            onClick={isConnected() ? handleMigrate : () => initConnection().then(ok => {
+              if (ok) { toast('Connected to Base44!'); loadData() }
+              else toast('Connection failed: ' + (getConnectionError() || 'unknown'), 'error')
+            })}
+            disabled={migrating}
+            title={isConnected() ? 'Push all Supabase data into Base44 database' : 'Retry Base44 connection'}
+          >
+            {migrating
+              ? `Migrating… ${migrateProgress?.done || 0}/${migrateProgress?.total || '?'}`
+              : isConnected() ? '↻ Seed DB' : '⟳ Connect'}
+          </button>
+          <div className="db-status" title={getConnectionError() || ''}>
             <span className={`db-status-dot ${isConnected() ? '' : 'offline'}`} />
             {isConnected() ? 'Base44 connected' : 'Local mode'}
           </div>
