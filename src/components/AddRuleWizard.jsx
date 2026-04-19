@@ -13,6 +13,7 @@ import {
   buildSentenceSegments,
   categoryForElementGroup
 } from '../addRuleWizardConfig'
+import CustomSelect from './CustomSelect'
 
 const PREVIEW = {
   when: { bg: '#EEEDFE', color: '#3C3489', label: 'When:' },
@@ -388,13 +389,11 @@ export default function AddRuleWizard({ open, onClose, onSave, existingRows, pre
                   </label>
                   <label>
                     Group
-                    <select value={addElementGroup} onChange={e => setAddElementGroup(e.target.value)}>
-                      {ELEMENT_GROUP_DROPDOWN.map(g => (
-                        <option key={g} value={g}>
-                          {g}
-                        </option>
-                      ))}
-                    </select>
+                    <CustomSelect
+                      value={addElementGroup}
+                      options={ELEMENT_GROUP_DROPDOWN}
+                      onChange={val => setAddElementGroup(val)}
+                    />
                   </label>
                   <div className="wizard-addon-actions">
                     <button type="button" className="btn btn-ghost" onClick={() => setOpenPanel(null)}>
@@ -522,13 +521,11 @@ export default function AddRuleWizard({ open, onClose, onSave, existingRows, pre
                   </label>
                   <label>
                     Type
-                    <select value={addIfType} onChange={e => setAddIfType(e.target.value)}>
-                      {CONDITION_TYPE_DROPDOWN.map(t => (
-                        <option key={t} value={t}>
-                          {t}
-                        </option>
-                      ))}
-                    </select>
+                    <CustomSelect
+                      value={addIfType}
+                      options={CONDITION_TYPE_DROPDOWN}
+                      onChange={val => setAddIfType(val)}
+                    />
                   </label>
                   <div className="wizard-addon-actions">
                     <button type="button" className="btn btn-ghost" onClick={() => setOpenPanel(null)}>
@@ -550,30 +547,23 @@ export default function AddRuleWizard({ open, onClose, onSave, existingRows, pre
               <p className="wizard-hint">Action and parameters (THEN).</p>
               <label className="wizard-field">
                 Action
-                <select value={actionKey} onChange={e => setActionKey(e.target.value)}>
-                  {WIZARD_ACTIONS.map(a => (
-                    <option key={a.action} value={a.action}>
-                      {a.action}
-                    </option>
-                  ))}
-                </select>
+                <CustomSelect
+                  value={actionKey}
+                  options={WIZARD_ACTIONS.map(a => ({ value: a.action, label: a.action }))}
+                  onChange={val => setActionKey(val)}
+                />
               </label>
               <div className="wizard-param-grid">
                 {actionDef.fields.map(f => (
                   <label key={f.key} className="wizard-field">
                     {f.label}
                     {f.type === 'select' ? (
-                      <select
+                      <CustomSelect
                         value={paramFields[f.key] || ''}
-                        onChange={e => setParamFields(prev => ({ ...prev, [f.key]: e.target.value }))}
-                      >
-                        <option value="">Select…</option>
-                        {f.options.map(o => (
-                          <option key={o} value={o}>
-                            {o}
-                          </option>
-                        ))}
-                      </select>
+                        options={[{ value: '', label: 'Select…' }, ...f.options.map(o => ({ value: o, label: o }))]}
+                        onChange={val => setParamFields(prev => ({ ...prev, [f.key]: val }))}
+                        placeholder="Select…"
+                      />
                     ) : (
                       <input
                         type="text"
@@ -678,13 +668,11 @@ export default function AddRuleWizard({ open, onClose, onSave, existingRows, pre
               </div>
               <label className="wizard-field">
                 Priority
-                <select value={priority} onChange={e => setPriority(Number(e.target.value))}>
-                  {PRIORITY_OPTIONS.map(p => (
-                    <option key={p.value} value={p.value}>
-                      {p.label}
-                    </option>
-                  ))}
-                </select>
+                <CustomSelect
+                  value={priority}
+                  options={PRIORITY_OPTIONS.map(p => ({ value: p.value, label: p.label }))}
+                  onChange={val => setPriority(Number(val))}
+                />
               </label>
               <label className="wizard-field">
                 Note

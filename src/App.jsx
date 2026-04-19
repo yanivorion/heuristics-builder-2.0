@@ -13,6 +13,7 @@ import EditableCell from './components/EditableCell'
 import DiagramsView from './components/DiagramsView'
 import Simulator from './components/Simulator'
 import AddRuleWizard from './components/AddRuleWizard'
+import CustomSelect from './components/CustomSelect'
 
 function App() {
   const [activeTab, setActiveTab] = useState('main')
@@ -401,45 +402,50 @@ function App() {
                   onChange={e => activeTab === 'header' ? setHeaderSearch(e.target.value) : setSearch(e.target.value)}
                 />
               </div>
-              <select
-                className="filter-select"
-                style={{ '--i': 1 }}
-                value={activeTab === 'header' ? headerFilterCategory : filterCategory}
-                onChange={e => activeTab === 'header' ? setHeaderFilterCategory(e.target.value) : setFilterCategory(e.target.value)}
-              >
-                <option value="">All Categories</option>
-                {(activeTab === 'header' ? headerCategories : CATEGORIES).map(c => <option key={c} value={c}>{c}</option>)}
-              </select>
-              <select
-                className="filter-select"
-                style={{ '--i': 2 }}
-                value={activeTab === 'header' ? headerFilterAction : filterAction}
-                onChange={e => activeTab === 'header' ? setHeaderFilterAction(e.target.value) : setFilterAction(e.target.value)}
-              >
-                <option value="">All Actions</option>
-                {(activeTab === 'header' ? headerActions : ACTIONS).map(a => <option key={a} value={a}>{a}</option>)}
-              </select>
+              <div style={{ '--i': 1 }}>
+                <CustomSelect
+                  value={activeTab === 'header' ? headerFilterCategory : filterCategory}
+                  options={[{ value: '', label: 'All Categories' }, ...(activeTab === 'header' ? headerCategories : CATEGORIES).map(c => ({ value: c, label: c }))]}
+                  onChange={val => activeTab === 'header' ? setHeaderFilterCategory(val) : setFilterCategory(val)}
+                  placeholder="All Categories"
+                />
+              </div>
+              <div style={{ '--i': 2 }}>
+                <CustomSelect
+                  value={activeTab === 'header' ? headerFilterAction : filterAction}
+                  options={[{ value: '', label: 'All Actions' }, ...(activeTab === 'header' ? headerActions : ACTIONS).map(a => ({ value: a, label: a }))]}
+                  onChange={val => activeTab === 'header' ? setHeaderFilterAction(val) : setFilterAction(val)}
+                  placeholder="All Actions"
+                />
+              </div>
               {activeTab === 'main' && (
                 <>
-                  <select className="filter-select" style={{ '--i': 3 }} value={filterContext} onChange={e => setFilterContext(e.target.value)}>
-                    <option value="">All Contexts</option>
-                    {CONTEXTS.map(c => <option key={c} value={c}>{c}</option>)}
-                  </select>
-                  <select className="filter-select" style={{ '--i': 4 }} value={filterPriority} onChange={e => setFilterPriority(e.target.value)}>
-                    <option value="">All Priorities</option>
-                    {PRIORITIES.map(p => <option key={p} value={p}>{p}</option>)}
-                  </select>
+                  <div style={{ '--i': 3 }}>
+                    <CustomSelect
+                      value={filterContext}
+                      options={[{ value: '', label: 'All Contexts' }, ...CONTEXTS.map(c => ({ value: c, label: c }))]}
+                      onChange={val => setFilterContext(val)}
+                      placeholder="All Contexts"
+                    />
+                  </div>
+                  <div style={{ '--i': 4 }}>
+                    <CustomSelect
+                      value={filterPriority}
+                      options={[{ value: '', label: 'All Priorities' }, ...PRIORITIES.map(p => ({ value: p, label: String(p) }))]}
+                      onChange={val => setFilterPriority(val)}
+                      placeholder="All Priorities"
+                    />
+                  </div>
                 </>
               )}
-              <select
-                className="filter-select"
-                style={{ '--i': 5 }}
-                value={activeTab === 'header' ? headerFilterStatus : filterStatus}
-                onChange={e => activeTab === 'header' ? setHeaderFilterStatus(e.target.value) : setFilterStatus(e.target.value)}
-              >
-                <option value="">All Statuses</option>
-                {STATUSES.map(s => <option key={s} value={s}>{s}</option>)}
-              </select>
+              <div style={{ '--i': 5 }}>
+                <CustomSelect
+                  value={activeTab === 'header' ? headerFilterStatus : filterStatus}
+                  options={[{ value: '', label: 'All Statuses' }, ...STATUSES.map(s => ({ value: s, label: s }))]}
+                  onChange={val => activeTab === 'header' ? setHeaderFilterStatus(val) : setFilterStatus(val)}
+                  placeholder="All Statuses"
+                />
+              </div>
             </div>
             <div className="toolbar-right">
               <button className="btn btn-ghost" style={{ '--i': 0 }} onClick={loadData}>Refresh</button>

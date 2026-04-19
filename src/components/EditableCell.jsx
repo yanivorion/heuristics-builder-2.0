@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { STATUSES, CANONICAL_ACTIONS, CANONICAL_COMPONENTS, CANONICAL_CONTEXTS, PRIORITIES } from '../seedData'
+import CustomSelect from './CustomSelect'
 
 const DROPDOWN_COLUMNS = {
   status: STATUSES,
@@ -94,20 +95,19 @@ function EditableCell({ value, columnKey, rowAction, isEditing, onStartEdit, onS
     const isNumeric = columnKey === 'priority'
     return (
       <div className="cell editing">
-        <select
-          ref={inputRef}
-          className="cell-input"
+        <CustomSelect
+          className="cs-cell"
           value={draft}
-          onChange={e => {
-            const val = isNumeric ? Number(e.target.value) : e.target.value
-            setDraft(val)
-            onSave(val)
+          options={options}
+          onChange={val => {
+            const v = isNumeric ? Number(val) : val
+            setDraft(v)
+            onSave(v)
           }}
-          onBlur={handleBlur}
-          onKeyDown={handleKeyDown}
-        >
-          {options.map(s => <option key={s} value={s}>{s}</option>)}
-        </select>
+          onClose={onCancel}
+          compact
+          autoOpen
+        />
       </div>
     )
   }
