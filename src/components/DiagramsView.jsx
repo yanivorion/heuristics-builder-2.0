@@ -1,8 +1,15 @@
 import React, { useEffect, useRef, useState, useCallback, useMemo } from 'react'
-import mermaid from 'mermaid'
 import { SEED_DATA } from '../seedData'
 import { HEADER_SEED_DATA } from '../headerSeedData'
 import { buildDiagrams, UNIFIED_TAXONOMY, OP_STYLE_MAP, STRIP_COLORS } from '../diagramBuilder'
+
+let mermaid = null
+const mermaidReady = import('mermaid').then(m => {
+  mermaid = m.default
+  mermaid.initialize(MERMAID_INIT)
+}).catch(() => {
+  console.warn('Mermaid library not available')
+})
 
 const MERMAID_INIT = {
   startOnLoad: false,
@@ -32,7 +39,6 @@ const MERMAID_INIT = {
   }
 }
 
-let mermaidInited = false
 let renderCounter = 0
 
 function MermaidChart({ id, chart }) {
@@ -44,9 +50,10 @@ function MermaidChart({ id, chart }) {
     let cancelled = false
 
     async function render() {
-      if (!mermaidInited) {
-        mermaid.initialize(MERMAID_INIT)
-        mermaidInited = true
+      await mermaidReady
+      if (!mermaid) {
+        setError('Mermaid library not available')
+        return
       }
       try {
         renderCounter++
