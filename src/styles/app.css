@@ -1,7 +1,3 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 :root {
   --bg-gradient:linear-gradient(145deg, #eef2f7, #e8edf5, #f0f3f8);
   --glass:#ffffff85;
