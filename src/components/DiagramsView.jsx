@@ -4,11 +4,25 @@ import { HEADER_SEED_DATA } from '../headerSeedData'
 import { buildDiagrams, UNIFIED_TAXONOMY, OP_STYLE_MAP, STRIP_COLORS } from '../diagramBuilder'
 
 let mermaid = null
-const mermaidReady = import('mermaid').then(m => {
-  mermaid = m.default
-  mermaid.initialize(MERMAID_INIT)
-}).catch(() => {
-  console.warn('Mermaid library not available')
+const mermaidReady = new Promise((resolve) => {
+  if (window.mermaid) {
+    mermaid = window.mermaid
+    mermaid.initialize(MERMAID_INIT)
+    resolve()
+    return
+  }
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js'
+  script.onload = () => {
+    mermaid = window.mermaid
+    mermaid.initialize(MERMAID_INIT)
+    resolve()
+  }
+  script.onerror = () => {
+    console.warn('Failed to load mermaid from CDN')
+    resolve()
+  }
+  document.head.appendChild(script)
 })
 
 const MERMAID_INIT = {
