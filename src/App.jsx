@@ -3,7 +3,8 @@ import {
   isConnected, initConnection,
   fetchHeuristics, fetchHeaderHeuristics,
   insertHeuristic, updateHeuristic, deleteHeuristic,
-  seedHeuristics, seedHeaderHeuristics
+  seedHeuristics, seedHeaderHeuristics,
+  migrateSupabaseToBase44
 } from './base44Data'
 import { SEED_DATA, COLUMNS, CATEGORIES, ACTIONS, CONTEXTS, STATUSES, PRIORITIES } from './seedData'
 import { HEADER_SEED_DATA, HEADER_COLUMNS } from './headerSeedData'
@@ -39,6 +40,8 @@ function App() {
   const [toasts, setToasts] = useState([])
   const [confirmDelete, setConfirmDelete] = useState(null)
   const [pendingChanges, setPendingChanges] = useState(new Map())
+  const [migrating, setMigrating] = useState(false)
+  const [migrateProgress, setMigrateProgress] = useState(null)
   const saveTimerRef = useRef(null)
 
   function emptyRow() {
@@ -104,6 +107,29 @@ function App() {
       setHeaderRows(HEADER_SEED_DATA.map((r, i) => ({ ...r, id: i + 1 })))
     }
     setLoading(false)
+  }
+
+  async function handleMigrate() {
+    if (!isConnected()) {
+      toast('Base44 not connected — cannot migrate', 'error')
+      return
+    }
+    if (migrating) return
+    setMigrating(true)
+    setMigrateProgress({ phase: 'clearing', done: 0, total: SEED_DATA.length + HEADER_SEED_DATA.length })
+    try {
+      const result = await migrateSupabaseToBase44(
+        SEED_DATA,
+        HEADER_SEED_DATA,
+        p => setMigrateProgress(p)
+      )
+      toast(`Migration complete — ${result.main} main + ${result.header} header rules stored in Base44`)
+      await loadData()
+    } catch (err) {
+      toast(`Migration error: ${err.message}`, 'error')
+    }
+    setMigrating(false)
+    setMigrateProgress(null)
   }
 
   async function handleCellSave(rowId, key, value, isHeader = false) {
@@ -376,6 +402,18 @@ function App() {
           <button className={`tab-btn ${activeTab === 'diagrams' ? 'active' : ''}`} onClick={() => setActiveTab('diagrams')}>Diagrams</button>
         </div>
         <div className="app-header-right">
+          {isConnected() && (
+            <button
+              className="btn btn-migrate"
+              onClick={handleMigrate}
+              disabled={migrating}
+              title="Push all Supabase data into Base44 database"
+            >
+              {migrating
+                ? `Migrating… ${migrateProgress?.done || 0}/${migrateProgress?.total || '?'}`
+                : '↻ Seed DB'}
+            </button>
+          )}
           <div className="db-status">
             <span className={`db-status-dot ${isConnected() ? '' : 'offline'}`} />
             {isConnected() ? 'Base44 connected' : 'Local mode'}

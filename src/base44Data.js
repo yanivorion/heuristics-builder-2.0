@@ -68,3 +68,42 @@ export async function seedHeaderHeuristics(rows) {
     await HeaderHeuristic.create(data)
   }
 }
+
+async function deleteAll(Entity) {
+  let items = await Entity.list('rule_id')
+  while (items.length > 0) {
+    for (const item of items) {
+      await Entity.delete(item.id)
+    }
+    items = await Entity.list('rule_id')
+  }
+}
+
+export async function migrateSupabaseToBase44(mainRows, headerRows, onProgress) {
+  if (!_connected) throw new Error('Not connected')
+
+  const total = mainRows.length + headerRows.length
+  let done = 0
+
+  onProgress?.({ phase: 'clearing', done: 0, total })
+  await deleteAll(Heuristic)
+  await deleteAll(HeaderHeuristic)
+
+  onProgress?.({ phase: 'seeding', done: 0, total })
+  for (const row of mainRows) {
+    const { id, created_at, updated_at, ...data } = row
+    await Heuristic.create(data)
+    done++
+    onProgress?.({ phase: 'seeding', done, total })
+  }
+
+  for (const row of headerRows) {
+    const { id, created_at, updated_at, ...data } = row
+    await HeaderHeuristic.create(data)
+    done++
+    onProgress?.({ phase: 'seeding', done, total })
+  }
+
+  onProgress?.({ phase: 'done', done: total, total })
+  return { main: mainRows.length, header: headerRows.length }
+}

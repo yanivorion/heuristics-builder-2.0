@@ -96,6 +96,29 @@ body {
   align-items:center;
   gap:8px;
   display:flex}
+.btn-migrate {
+  border-radius:var(--radius);
+  height:24px;
+  font-size:10px;
+  font-weight:600;
+  font-family:var(--font);
+  cursor:pointer;
+  padding:0 10px;
+  background:var(--accent-soft);
+  color:var(--accent);
+  border:1px solid var(--accent-glow);
+  transition:all var(--duration) var(--ease-out);
+  white-space:nowrap;
+}
+.btn-migrate:hover {
+  background:var(--accent);
+  color:#fff;
+  border-color:var(--accent);
+}
+.btn-migrate:disabled {
+  opacity:.6;
+  cursor:not-allowed;
+}
 .db-status {
   letter-spacing:.08em;
   text-transform:uppercase;
