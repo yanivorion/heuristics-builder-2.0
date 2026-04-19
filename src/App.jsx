@@ -310,7 +310,7 @@ function App() {
     }
 
     return (
-      <table className="table">
+      <table className="table" key={`table-${activeTab}`}>
         <thead>
           <tr>
             {currentColumns.map(col => (
@@ -330,7 +330,7 @@ function App() {
         </thead>
         <tbody>
           {currentFiltered.map((row, idx) => (
-            <tr key={row.id} className={confirmDelete?.id === row.id ? 'deleting' : ''} style={{ '--i': Math.min(idx, 20) }}>
+            <tr key={row.id} className={confirmDelete?.id === row.id ? 'deleting' : ''} style={{ '--i': idx }}>
               <td><div className="cell cell-id">{row.rule_id}</div></td>
               {editableColumns.map(col => (
                 <td key={col.key}>

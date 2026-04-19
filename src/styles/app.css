@@ -1738,10 +1738,10 @@ to {
   animation-delay:90ms;
 }
 
-/* Table rows entrance stagger */
+/* Table rows entrance stagger — higher delay per row for visible cascade */
 .table tbody tr {
-  animation:stagger-up .3s var(--ease-out) both;
-  animation-delay:calc(var(--i, 0) * var(--stagger-unit));
+  animation:stagger-up .4s var(--ease-out) both;
+  animation-delay:calc(var(--i, 0) * 45ms);
 }
 
 /* Tab content fade */
