@@ -329,8 +329,8 @@ function App() {
           </tr>
         </thead>
         <tbody>
-          {currentFiltered.map(row => (
-            <tr key={row.id} className={confirmDelete?.id === row.id ? 'deleting' : ''}>
+          {currentFiltered.map((row, idx) => (
+            <tr key={row.id} className={confirmDelete?.id === row.id ? 'deleting' : ''} style={{ '--i': Math.min(idx, 20) }}>
               <td><div className="cell cell-id">{row.rule_id}</div></td>
               {editableColumns.map(col => (
                 <td key={col.key}>
@@ -391,7 +391,7 @@ function App() {
         <>
           <div className="toolbar">
             <div className="toolbar-left">
-              <div className="search-wrap">
+              <div className="search-wrap" style={{ '--i': 0 }}>
                 <span className="search-icon">&#x2315;</span>
                 <input
                   className="search-input"
@@ -403,6 +403,7 @@ function App() {
               </div>
               <select
                 className="filter-select"
+                style={{ '--i': 1 }}
                 value={activeTab === 'header' ? headerFilterCategory : filterCategory}
                 onChange={e => activeTab === 'header' ? setHeaderFilterCategory(e.target.value) : setFilterCategory(e.target.value)}
               >
@@ -411,6 +412,7 @@ function App() {
               </select>
               <select
                 className="filter-select"
+                style={{ '--i': 2 }}
                 value={activeTab === 'header' ? headerFilterAction : filterAction}
                 onChange={e => activeTab === 'header' ? setHeaderFilterAction(e.target.value) : setFilterAction(e.target.value)}
               >
@@ -419,11 +421,11 @@ function App() {
               </select>
               {activeTab === 'main' && (
                 <>
-                  <select className="filter-select" value={filterContext} onChange={e => setFilterContext(e.target.value)}>
+                  <select className="filter-select" style={{ '--i': 3 }} value={filterContext} onChange={e => setFilterContext(e.target.value)}>
                     <option value="">All Contexts</option>
                     {CONTEXTS.map(c => <option key={c} value={c}>{c}</option>)}
                   </select>
-                  <select className="filter-select" value={filterPriority} onChange={e => setFilterPriority(e.target.value)}>
+                  <select className="filter-select" style={{ '--i': 4 }} value={filterPriority} onChange={e => setFilterPriority(e.target.value)}>
                     <option value="">All Priorities</option>
                     {PRIORITIES.map(p => <option key={p} value={p}>{p}</option>)}
                   </select>
@@ -431,6 +433,7 @@ function App() {
               )}
               <select
                 className="filter-select"
+                style={{ '--i': 5 }}
                 value={activeTab === 'header' ? headerFilterStatus : filterStatus}
                 onChange={e => activeTab === 'header' ? setHeaderFilterStatus(e.target.value) : setFilterStatus(e.target.value)}
               >
@@ -439,8 +442,8 @@ function App() {
               </select>
             </div>
             <div className="toolbar-right">
-              <button className="btn btn-ghost" onClick={loadData}>Refresh</button>
-              <button type="button" className="btn btn-primary" onClick={() => setShowAddWizard(true)}>+ Add Rule</button>
+              <button className="btn btn-ghost" style={{ '--i': 0 }} onClick={loadData}>Refresh</button>
+              <button type="button" className="btn btn-primary" style={{ '--i': 1 }} onClick={() => setShowAddWizard(true)}>+ Add Rule</button>
             </div>
           </div>
 

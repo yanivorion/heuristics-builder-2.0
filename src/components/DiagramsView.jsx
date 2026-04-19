@@ -120,7 +120,7 @@ function OutputStrip({ outputs }) {
           const isDash = out.subType === '—' || out.subType === '--'
 
           return (
-            <div key={i} className="output-pair">
+            <div key={i} className="output-pair" style={{ '--i': i }}>
               <div
                 className="output-pair-op"
                 style={{
@@ -185,7 +185,7 @@ function TaxonomyPage() {
             Color coding matches the diagram nodes.
           </p>
           <div className="taxonomy-grid">
-            {UNIFIED_TAXONOMY.map(op => {
+            {UNIFIED_TAXONOMY.map((op, ti) => {
               const s = opStyle(op)
               const used = allUsedOps.includes(op)
               return (
@@ -193,6 +193,7 @@ function TaxonomyPage() {
                   key={op}
                   className="taxonomy-pill"
                   style={{
+                    '--i': ti,
                     background: used ? s.bg : 'transparent',
                     color: used ? s.color : 'var(--text-3)',
                     border: `1px solid ${used ? s.color + '33' : 'var(--border)'}`,
@@ -300,6 +301,7 @@ function DiagramListPage({ diagrams, title, subtitle }) {
             <button
               key={d.id}
               className={`diagram-nav-btn ${activeId === d.id ? 'active' : ''}`}
+              style={{ '--i': i }}
               onClick={() => scrollTo(d.id)}
             >
               <span className="diagram-nav-num">{i + 1}</span>
@@ -322,6 +324,7 @@ function DiagramListPage({ diagrams, title, subtitle }) {
               key={d.id}
               ref={el => sectionRefs.current[d.id] = el}
               className="diagram-card"
+              style={{ '--i': i }}
               id={`diagram-${d.id}`}
             >
               <div className="diagram-card-header">
@@ -364,10 +367,11 @@ export default function DiagramsView() {
   return (
     <div className="diagram-view-shell">
       <div className="diagram-section-tabs">
-        {SECTIONS.map(s => (
+        {SECTIONS.map((s, si) => (
           <button
             key={s.key}
             className={`diagram-section-tab ${activeSection === s.key ? 'active' : ''}`}
+            style={{ '--i': si }}
             onClick={() => setActiveSection(s.key)}
           >
             {s.label}

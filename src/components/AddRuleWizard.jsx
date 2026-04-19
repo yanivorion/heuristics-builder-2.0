@@ -339,7 +339,7 @@ export default function AddRuleWizard({ open, onClose, onSave, existingRows, pre
             { n: 4, label: 'Result' },
             { n: 5, label: 'Review' }
           ].map(({ n, label }) => (
-            <span key={n} className={`wizard-step-badge ${step === n ? 'active' : ''} ${step > n ? 'done' : ''}`}>
+            <span key={n} className={`wizard-step-badge ${step === n ? 'active' : ''} ${step > n ? 'done' : ''}`} style={{ '--i': n }}>
               <span className="wizard-step-num">{n}</span>
               <span className="wizard-step-label">{label}</span>
             </span>

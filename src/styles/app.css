@@ -30,7 +30,9 @@
   --radius-pill:999px;
   --font:-apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", system-ui, sans-serif;
   --ease-out:cubic-bezier(.22, 1, .36, 1);
-  --duration:.25s}
+  --ease-spring:cubic-bezier(.175, .885, .32, 1.275);
+  --duration:.25s;
+  --stagger-unit:30ms}
 html {
   font-size:13px}
 body {
@@ -1688,4 +1690,250 @@ to {
   flex:1;
   min-width:110px;
   max-width:none}
+}
+
+/* ─── Stagger entrance animations (Shopify-style) ─── */
+@keyframes stagger-up {
+  0% { opacity:0; transform:translateY(8px) }
+  100% { opacity:1; transform:translateY(0) }
+}
+@keyframes stagger-fade {
+  0% { opacity:0 }
+  100% { opacity:1 }
+}
+@keyframes stagger-scale {
+  0% { opacity:0; transform:scale(.96) translateY(4px) }
+  100% { opacity:1; transform:scale(1) translateY(0) }
+}
+@keyframes slide-down {
+  0% { opacity:0; transform:translateY(-6px); max-height:0 }
+  100% { opacity:1; transform:translateY(0); max-height:500px }
+}
+
+.stagger-in {
+  animation:stagger-up .35s var(--ease-out) both;
+  animation-delay:calc(var(--i, 0) * var(--stagger-unit));
+}
+.stagger-fade-in {
+  animation:stagger-fade .3s var(--ease-out) both;
+  animation-delay:calc(var(--i, 0) * var(--stagger-unit));
+}
+.stagger-scale-in {
+  animation:stagger-scale .35s var(--ease-spring) both;
+  animation-delay:calc(var(--i, 0) * var(--stagger-unit));
+}
+
+/* Header entrance */
+.app-header {
+  animation:stagger-fade .4s var(--ease-out) both;
+}
+
+/* Toolbar + stats bar stagger */
+.toolbar {
+  animation:stagger-up .35s var(--ease-out) both;
+  animation-delay:60ms;
+}
+.stats-bar {
+  animation:stagger-up .35s var(--ease-out) both;
+  animation-delay:90ms;
+}
+
+/* Table rows entrance stagger */
+.table tbody tr {
+  animation:stagger-up .3s var(--ease-out) both;
+  animation-delay:calc(var(--i, 0) * var(--stagger-unit));
+}
+
+/* Tab content fade */
+.table-container,
+.viz-layout,
+.diagram-view-shell {
+  animation:stagger-fade .3s var(--ease-out) both;
+  animation-delay:100ms;
+}
+
+/* Stat pills pop */
+.stat-pill {
+  animation:stagger-scale .3s var(--ease-spring) both;
+}
+.stat-pill.mapped { animation-delay:120ms }
+.stat-pill.needs-values { animation-delay:160ms }
+
+/* Filter selects stagger */
+.toolbar-left > * {
+  animation:stagger-up .3s var(--ease-out) both;
+  animation-delay:calc(var(--i, 0) * 40ms + 80ms);
+}
+
+/* Buttons entrance */
+.toolbar-right > * {
+  animation:stagger-scale .3s var(--ease-spring) both;
+  animation-delay:calc(var(--i, 0) * 50ms + 200ms);
+}
+
+/* ─── Smooth dropdown transitions ─── */
+.filter-select {
+  transition:all var(--duration) var(--ease-out),
+             box-shadow .2s var(--ease-out),
+             transform .15s var(--ease-out);
+}
+.filter-select:focus {
+  transform:translateY(-1px);
+}
+.filter-select:active {
+  transform:translateY(0);
+}
+
+/* Status dropdown open animation */
+.cell select.cell-input {
+  animation:slide-down .2s var(--ease-out) both;
+}
+
+/* Cell editing transition */
+.cell {
+  transition:all var(--duration) var(--ease-out),
+             border-color .15s var(--ease-out),
+             box-shadow .2s var(--ease-out);
+}
+.cell.editing {
+  animation:stagger-scale .2s var(--ease-spring) both;
+}
+
+/* Tab button active transition */
+.tab-btn {
+  transition:all var(--duration) var(--ease-out),
+             box-shadow .2s ease,
+             transform .15s var(--ease-out);
+}
+.tab-btn:active {
+  transform:scale(.97);
+}
+.tab-btn.active {
+  animation:stagger-scale .2s var(--ease-spring) both;
+}
+
+/* Button hover/press micro-animations */
+.btn {
+  transition:all var(--duration) var(--ease-out),
+             transform .15s var(--ease-out),
+             box-shadow .2s ease;
+}
+.btn:active {
+  transform:translateY(0) scale(.97);
+}
+.btn-primary:hover {
+  transform:translateY(-1px) scale(1.01);
+}
+.btn-ghost:hover {
+  transform:translateY(-1px);
+}
+
+/* Row action buttons */
+.btn-icon {
+  transition:all .2s var(--ease-out),
+             transform .12s var(--ease-spring);
+}
+.btn-icon:active {
+  transform:scale(.88);
+}
+
+/* Wizard modal entrance */
+.wizard-overlay {
+  animation:fade-in .2s var(--ease-out) both;
+}
+.wizard-modal {
+  animation:stagger-scale .35s var(--ease-spring) both;
+  animation-delay:50ms;
+}
+.wizard-step-badge {
+  animation:stagger-scale .25s var(--ease-spring) both;
+  animation-delay:calc(var(--i, 0) * 40ms + 100ms);
+}
+.wizard-chip {
+  transition:all .2s var(--ease-out),
+             transform .12s var(--ease-spring);
+}
+.wizard-chip:active {
+  transform:scale(.95);
+}
+.wizard-chip.selected {
+  animation:stagger-scale .15s var(--ease-spring) both;
+}
+
+/* Diagram cards stagger */
+.diagram-card {
+  animation:stagger-up .4s var(--ease-out) both;
+  animation-delay:calc(var(--i, 0) * 60ms);
+}
+
+/* Diagram sidebar nav buttons stagger */
+.diagram-nav-btn {
+  animation:stagger-fade .25s var(--ease-out) both;
+  animation-delay:calc(var(--i, 0) * 25ms);
+}
+
+/* Diagram section tabs stagger */
+.diagram-section-tab {
+  animation:stagger-up .3s var(--ease-out) both;
+  animation-delay:calc(var(--i, 0) * 40ms);
+}
+
+/* Toast slide-in enhancement */
+.toast {
+  animation:toast-in .35s var(--ease-spring) both;
+}
+
+/* Modal entrance enhancement */
+.modal {
+  animation:stagger-scale .3s var(--ease-spring) both;
+  animation-delay:80ms;
+}
+
+/* Confirm delete modal */
+.modal-overlay {
+  animation:fade-in .15s var(--ease-out) both;
+}
+
+/* Simulator layout entrance */
+.viz-detail {
+  animation:stagger-up .35s var(--ease-out) both;
+  animation-delay:60ms;
+}
+.viz-rule-btn {
+  animation:stagger-fade .2s var(--ease-out) both;
+  animation-delay:calc(var(--i, 0) * 20ms);
+}
+.viz-frame {
+  animation:stagger-scale .35s var(--ease-spring) both;
+  animation-delay:calc(var(--i, 0) * 80ms + 100ms);
+}
+.viz-outcome {
+  animation:stagger-up .3s var(--ease-out) both;
+  animation-delay:200ms;
+}
+
+/* Output pairs stagger */
+.output-pair {
+  animation:stagger-scale .3s var(--ease-spring) both;
+  animation-delay:calc(var(--i, 0) * 40ms);
+}
+
+/* Taxonomy pills stagger */
+.taxonomy-pill {
+  animation:stagger-scale .25s var(--ease-spring) both;
+  animation-delay:calc(var(--i, 0) * 30ms);
+}
+
+/* Search input focus animation */
+.search-input:focus {
+  transform:translateY(-1px);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration:0.01ms !important;
+    animation-delay:0ms !important;
+    transition-duration:0.01ms !important;
+  }
 }
