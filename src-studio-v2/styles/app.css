@@ -1,0 +1,4707 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────────────────────────────
+   Studio 2.0 typography — Wix Madefor family (single source of truth)
+   Two families ship the entire app:
+     • WixMadeforText    — body / UI copy (Regular → ExtraBold + italics)
+     • WixMadeforDisplay — headings / display sizes (Regular → ExtraBold)
+   Files live in /public/fonts and are exposed via --font (text) and
+   --font-display (display). All font-family declarations across the
+   app go through these tokens.
+   ───────────────────────────────────────────────────────────────── */
+@font-face {
+  font-family: "Wix Madefor Text";
+  src: url("/fonts/WixMadeforText-Regular.woff2") format("woff2");
+  font-weight: 400; font-style: normal; font-display: swap}
+@font-face {
+  font-family: "Wix Madefor Text";
+  src: url("/fonts/WixMadeforText-Italic.woff2") format("woff2");
+  font-weight: 400; font-style: italic; font-display: swap}
+@font-face {
+  font-family: "Wix Madefor Text";
+  src: url("/fonts/WixMadeforText-Medium.woff2") format("woff2");
+  font-weight: 500; font-style: normal; font-display: swap}
+@font-face {
+  font-family: "Wix Madefor Text";
+  src: url("/fonts/WixMadeforText-MediumItalic.woff2") format("woff2");
+  font-weight: 500; font-style: italic; font-display: swap}
+@font-face {
+  font-family: "Wix Madefor Text";
+  src: url("/fonts/WixMadeforText-SemiBold.woff2") format("woff2");
+  font-weight: 600; font-style: normal; font-display: swap}
+@font-face {
+  font-family: "Wix Madefor Text";
+  src: url("/fonts/WixMadeforText-SemiBoldItalic.woff2") format("woff2");
+  font-weight: 600; font-style: italic; font-display: swap}
+@font-face {
+  font-family: "Wix Madefor Text";
+  src: url("/fonts/WixMadeforText-Bold.woff2") format("woff2");
+  font-weight: 700; font-style: normal; font-display: swap}
+@font-face {
+  font-family: "Wix Madefor Text";
+  src: url("/fonts/WixMadeforText-BoldItalic.woff2") format("woff2");
+  font-weight: 700; font-style: italic; font-display: swap}
+@font-face {
+  font-family: "Wix Madefor Text";
+  src: url("/fonts/WixMadeforText-ExtraBold.woff2") format("woff2");
+  font-weight: 800; font-style: normal; font-display: swap}
+@font-face {
+  font-family: "Wix Madefor Text";
+  src: url("/fonts/WixMadeforText-ExtraBoldItalic.woff2") format("woff2");
+  font-weight: 800; font-style: italic; font-display: swap}
+@font-face {
+  font-family: "Wix Madefor Display";
+  src: url("/fonts/WixMadeforDisplay-Regular.woff2") format("woff2");
+  font-weight: 400; font-style: normal; font-display: swap}
+@font-face {
+  font-family: "Wix Madefor Display";
+  src: url("/fonts/WixMadeforDisplay-Medium.woff2") format("woff2");
+  font-weight: 500; font-style: normal; font-display: swap}
+@font-face {
+  font-family: "Wix Madefor Display";
+  src: url("/fonts/WixMadeforDisplay-SemiBold.woff2") format("woff2");
+  font-weight: 600; font-style: normal; font-display: swap}
+@font-face {
+  font-family: "Wix Madefor Display";
+  src: url("/fonts/WixMadeforDisplay-Bold.woff2") format("woff2");
+  font-weight: 700; font-style: normal; font-display: swap}
+@font-face {
+  font-family: "Wix Madefor Display";
+  src: url("/fonts/WixMadeforDisplay-ExtraBold.woff2") format("woff2");
+  font-weight: 800; font-style: normal; font-display: swap}
+
+:root {
+  /* ─────────────────────────────────────────────────────────────────
+     Lucas Berghoef "Colours" palette — sophisticated neutral ladder
+     from Athens Grey → Pearl Black, with Chartreuse Yellow as the
+     single editorial pop accent. Sourced from the portfolio reference
+     screenshot. Use the named `--lb-*` tokens below as the ground
+     truth; everything else (`--text-*`, `--accent`, `--wiz-*`, etc.)
+     is a semantic alias mapped to a swatch on this ladder so the
+     whole app picks up the palette by redirecting one token.
+     ───────────────────────────────────────────────────────────────── */
+  --lb-chartreuse:#dbff00;
+  --lb-chartreuse-soft:#f5ffb3;
+  --lb-chartreuse-tint:#fcffd6;
+  --lb-white:#ffffff;
+  --lb-athens:#dbdee1;
+  --lb-athens-soft:#ecedf0;
+  --lb-chateau:#9ca3a8;
+  --lb-raven:#6b7379;
+  --lb-abbey:#52595f;
+  --lb-arsenic:#3d454d;
+  --lb-ebony:#252e36;
+  --lb-pearl:#0b1014;
+  --lb-black:#000000;
+
+  /* App-wide gradient — soft Athens-tinted neutral wash */
+  --bg-gradient:linear-gradient(145deg, #f3f4f5, #ecedf0, #f3f4f5);
+  --glass:#ffffff85;
+  --glass-strong:#ffffffb3;
+  --glass-border:#ffffff7a;
+  --glass-highlight:inset 0 1px 0 #ffffff8c;
+  /* Text ladder mapped onto the palette greys (lightest → darkest) */
+  --text-1:var(--lb-pearl);
+  --text-2:var(--lb-arsenic);
+  --text-3:var(--lb-chateau);
+  --text-4:var(--lb-raven);
+  /* Borders use Athens Grey at low alpha so they read against any
+     light background without losing the palette feel */
+  --border:#252e3614;
+  --border-control:#252e361f;
+  /* Accent = the editorial pop. Pearl Black for primary actions
+     (high-contrast on white), Chartreuse for focus/glow/highlight. */
+  --accent:var(--lb-pearl);
+  --accent-soft:#dbff0033;
+  --accent-glow:#dbff0066;
+  --accent-shadow:#0b101452;
+  --success:#16a34a;
+  --success-soft:#16a34a14;
+  --danger:#dc2626;
+  --danger-soft:#dc26260f;
+  --warning:#f59e0b;
+  --warning-soft:#f59e0b14;
+  --shadow-rest:0 4px 24px #0000000b, 0 1px 3px #00000005;
+  --shadow-hover:0 8px 32px #00000012;
+  --shadow-elevated:0 12px 48px #0000001f;
+  --shadow-subtle:0 1px 3px #00000005;
+  --radius-sm:6px;
+  --radius:8px;
+  --radius-lg:14px;
+  --radius-pill:999px;
+  /* ─────────────────────────────────────────────────────────────────
+     WIX Design System — Typography (Wix Studio scale)
+     Three layers: families, foundation tokens, semantic bundles.
+     Always use the semantic helpers (--h1…--h6, --body-*) when you can,
+     and only reach for the foundation tokens (--fs-*, --fw-*, --lh-*,
+     --tracking-*) for one-off needs.
+     ───────────────────────────────────────────────────────────────── */
+  /* Families */
+  --font:"Wix Madefor Text", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-display:"Wix Madefor Display", "Wix Madefor Text", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  /* Foundation — font sizes (Wix Studio values, smaller end of the scale) */
+  --fs-100:11px;   /* extra tiny copy, hint */
+  --fs-200:12px;   /* tiny body, H6 caption */
+  --fs-300:13px;   /* small body */
+  --fs-400:15px;   /* H5 / card section title, default body */
+  --fs-500:16px;   /* medium body */
+  --fs-600:19px;   /* H4 / page section title */
+  --fs-700:20px;   /* H3 / card title */
+  --fs-800:21px;   /* H2 / modal title */
+  --fs-900:24px;   /* H1 / page title */
+  /* Foundation — weights */
+  --fw-regular:400;
+  --fw-medium:500;
+  --fw-semibold:600;
+  --fw-bold:700;
+  /* Foundation — line heights (px so they render true to the spec) */
+  --lh-100:12px;
+  --lh-200:16px;
+  --lh-300:20px;
+  --lh-400:28px;
+  --lh-500:32px;
+  /* Foundation — letter spacing */
+  --tracking-0:0;
+  --tracking-100:.04em;   /* ≈ 1px on H6/eyebrow text */
+  /* Semantic — heading font-size */
+  --h1-fs:var(--fs-900);
+  --h2-fs:var(--fs-800);
+  --h3-fs:var(--fs-700);
+  --h4-fs:var(--fs-600);
+  --h5-fs:var(--fs-400);
+  --h6-fs:var(--fs-200);
+  /* Semantic — heading line-height */
+  --h1-lh:var(--lh-500);
+  --h2-lh:var(--lh-400);
+  --h3-lh:var(--lh-400);
+  --h4-lh:var(--lh-300);
+  --h5-lh:var(--lh-300);
+  --h6-lh:var(--lh-200);
+  /* Semantic — heading weight (all 600 per Wix Studio) */
+  --h1-fw:var(--fw-semibold);
+  --h2-fw:var(--fw-semibold);
+  --h3-fw:var(--fw-semibold);
+  --h4-fw:var(--fw-semibold);
+  --h5-fw:var(--fw-semibold);
+  --h6-fw:var(--fw-semibold);
+  /* Semantic — heading tracking (H6/eyebrow gets the spaced cut) */
+  --h1-tr:var(--tracking-0);
+  --h2-tr:var(--tracking-0);
+  --h3-tr:var(--tracking-0);
+  --h4-tr:var(--tracking-0);
+  --h5-tr:var(--tracking-0);
+  --h6-tr:var(--tracking-100);
+  /* Semantic — body sizes */
+  --body-medium-fs:var(--fs-500);
+  --body-medium-lh:var(--lh-300);
+  --body-small-fs:var(--fs-300);
+  --body-small-lh:var(--lh-200);
+  --body-tiny-fs:var(--fs-200);
+  --body-tiny-lh:var(--lh-200);
+  --ease-out:cubic-bezier(.22, 1, .36, 1);
+  --duration:.25s}
+html {
+  font-size:13px;
+  height:100%;
+  overflow:hidden}
+body {
+  font-family:var(--font);
+  background:var(--bg-gradient);
+  color:var(--text-1);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  background-attachment:fixed;
+  height:100%;
+  margin:0;
+  font-size:var(--body-small-fs);
+  line-height:var(--body-small-lh);
+  font-weight:var(--fw-regular);
+  overflow:hidden}
+/* Native heading defaults follow the WIX Design System scale */
+h1 { font-family:var(--font-display); font-size:var(--h1-fs); line-height:var(--h1-lh); font-weight:var(--h1-fw); letter-spacing:var(--h1-tr); margin:0 }
+h2 { font-family:var(--font-display); font-size:var(--h2-fs); line-height:var(--h2-lh); font-weight:var(--h2-fw); letter-spacing:var(--h2-tr); margin:0 }
+h3 { font-family:var(--font-display); font-size:var(--h3-fs); line-height:var(--h3-lh); font-weight:var(--h3-fw); letter-spacing:var(--h3-tr); margin:0 }
+h4 { font-family:var(--font-display); font-size:var(--h4-fs); line-height:var(--h4-lh); font-weight:var(--h4-fw); letter-spacing:var(--h4-tr); margin:0 }
+h5 { font-family:var(--font);         font-size:var(--h5-fs); line-height:var(--h5-lh); font-weight:var(--h5-fw); letter-spacing:var(--h5-tr); margin:0 }
+h6 { font-family:var(--font);         font-size:var(--h6-fs); line-height:var(--h6-lh); font-weight:var(--h6-fw); letter-spacing:var(--h6-tr); text-transform:uppercase; margin:0 }
+#root,.app-shell {
+  flex-direction:column;
+  height:100%;
+  display:flex;
+  overflow:hidden}
+.app-header {
+  border-bottom:1px solid var(--border);
+  background:var(--glass-strong);
+  -webkit-backdrop-filter:blur(24px)saturate(180%);
+  height:48px;
+  box-shadow:var(--shadow-subtle),var(--glass-highlight);
+  z-index:100;
+  justify-content:space-between;
+  align-items:center;
+  padding:0 18px;
+  display:flex;
+  flex-shrink:0}
+.app-header-left {
+  align-items:center;
+  gap:10px;
+  display:flex}
+.app-logo {
+  background:var(--accent);
+  border-radius:var(--radius-sm);
+  color:#fff;
+  letter-spacing:.02em;
+  width:26px;
+  height:26px;
+  box-shadow:0 2px 10px var(--accent-shadow);
+  flex-shrink:0;
+  justify-content:center;
+  align-items:center;
+  font-size:10px;
+  font-weight:700;
+  display:flex}
+.app-title {
+  letter-spacing:var(--tracking-100);
+  text-transform:uppercase;
+  color:var(--text-1);
+  font-size:var(--fs-100);
+  font-weight:var(--fw-bold)}
+.app-subtitle {
+  letter-spacing:var(--tracking-100);
+  text-transform:uppercase;
+  color:var(--text-3);
+  margin-top:1px;
+  font-size:var(--fs-100);
+  font-weight:var(--fw-medium)}
+.app-header-right {
+  align-items:center;
+  gap:8px;
+  display:flex}
+.db-status {
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--text-3);
+  border-radius:var(--radius-pill);
+  border:1px solid var(--border-control);
+  background:#ffffff80;
+  align-items:center;
+  gap:5px;
+  padding:3px 10px;
+  font-size:9px;
+  font-weight:600;
+  display:flex}
+.db-status-dot {
+  background:var(--success);
+  border-radius:50%;
+  width:5px;
+  height:5px}
+.db-status-dot.offline {
+  background:var(--warning)}
+.toolbar {
+  border-bottom:1px solid var(--border);
+  -webkit-backdrop-filter:blur(12px);
+  background:#ffffff4d;
+  flex-wrap:wrap;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  padding:10px 18px;
+  display:flex;
+  flex-shrink:0}
+.toolbar-left {
+  flex:1;
+  align-items:center;
+  gap:6px;
+  min-width:0;
+  display:flex}
+.toolbar-right {
+  flex-shrink:0;
+  align-items:center;
+  gap:6px;
+  display:flex}
+.search-input {
+  border:1px solid var(--border-control);
+  color:var(--text-2);
+  font-size:11px;
+  font-weight:400;
+  font-family:var(--font);
+  width:220px;
+  height:28px;
+  transition:all var(--duration) var(--ease-out);
+  background:#fff9;
+  border-radius:7px;
+  outline:none;
+  padding:6px 10px 6px 30px}
+.search-input:focus {
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px var(--accent-glow);
+  background:#ffffffd9}
+.search-input::placeholder {
+  color:var(--text-3);
+  font-weight:400}
+.search-wrap {
+  position:relative}
+.search-icon {
+  color:var(--text-3);
+  pointer-events:none;
+  font-size:12px;
+  position:absolute;
+  top:50%;
+  left:9px;
+  transform:translateY(-50%)}
+.filter-select {
+  border:1px solid var(--border-control);
+  height:28px;
+  color:var(--text-4);
+  font-size:11px;
+  font-weight:500;
+  font-family:var(--font);
+  cursor:pointer;
+  -webkit-appearance:none;
+  -moz-appearance:none;
+  appearance:none;
+  transition:all var(--duration) var(--ease-out);
+  background:#fff9 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") right 7px center no-repeat;
+  border-radius:7px;
+  outline:none;
+  padding:0 24px 0 8px}
+.filter-select:focus {
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px var(--accent-glow);
+  background-color:#ffffffd9}
+.btn {
+  border-radius:var(--radius);
+  height:28px;
+  font-size:11px;
+  font-weight:500;
+  font-family:var(--font);
+  cursor:pointer;
+  transition:all var(--duration) var(--ease-out);
+  white-space:nowrap;
+  letter-spacing:.01em;
+  border:1px solid #0000;
+  justify-content:center;
+  align-items:center;
+  gap:5px;
+  padding:0 12px;
+  display:inline-flex}
+.btn-primary {
+  background:var(--accent);
+  color:#fff;
+  border-color:var(--accent);
+  box-shadow:0 2px 10px var(--accent-shadow)}
+.btn-primary:hover {
+  box-shadow:0 4px 16px var(--accent-shadow);
+  transform:translateY(-1px)}
+.btn-primary:active {
+  transform:translateY(0)}
+.btn-ghost {
+  color:var(--text-2);
+  border-color:var(--border-control);
+  background:#ffffff80}
+.btn-ghost:hover {
+  box-shadow:var(--shadow-rest);
+  background:#fff}
+.btn-secondary {
+  color:var(--text-2);
+  border-color:var(--border-control);
+  background:#f8fafc}
+.btn-secondary:hover {
+  background:#f1f5f9}
+.btn-wizard-save {
+  color:#fff;
+  border-color:#534ab7;
+  background:#534ab7;
+  box-shadow:0 2px 10px #534ab733}
+.btn-wizard-save:hover:not(:disabled) {
+  background:#4338a8;
+  border-color:#4338a8;
+  box-shadow:0 4px 14px #534ab74d}
+.btn-wizard-save:disabled {
+  opacity:.55;
+  cursor:not-allowed}
+.btn-danger {
+  color:var(--danger);
+  background:0 0;
+  border-color:#dc262633}
+.btn-danger:hover {
+  background:var(--danger-soft);
+  border-color:#dc26264d}
+.btn-icon {
+  width:24px;
+  height:24px;
+  color:var(--text-3);
+  cursor:pointer;
+  border-radius:var(--radius-sm);
+  transition:all var(--duration) var(--ease-out);
+  background:0 0;
+  border:none;
+  justify-content:center;
+  align-items:center;
+  padding:0;
+  font-size:13px;
+  display:inline-flex}
+.btn-icon:hover {
+  color:var(--text-2);
+  box-shadow:var(--shadow-subtle);
+  background:#ffffffb3}
+.btn-icon.danger:hover {
+  color:var(--danger);
+  background:var(--danger-soft)}
+.stats-bar {
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:var(--text-3);
+  border-bottom:1px solid var(--border);
+  background:#fff3;
+  align-items:center;
+  gap:12px;
+  padding:7px 18px;
+  font-size:10px;
+  font-weight:600;
+  display:flex;
+  flex-shrink:0}
+.stat-pill {
+  border-radius:var(--radius-pill);
+  letter-spacing:.06em;
+  align-items:center;
+  gap:4px;
+  padding:2px 8px;
+  font-size:9px;
+  font-weight:700;
+  display:inline-flex}
+.stat-pill.mapped {
+  color:var(--success);
+  background:var(--success-soft)}
+.stat-pill.needs-values {
+  color:var(--warning);
+  background:var(--warning-soft)}
+.table-container {
+  flex:1;
+  padding:0;
+  position:relative;
+  overflow:auto;
+  min-height:0}
+.table {
+  border-collapse:separate;
+  border-spacing:0;
+  table-layout:fixed;
+  width:100%;
+  min-width:1100px}
+.table thead {
+  z-index:10;
+  position:sticky;
+  top:0}
+.table th {
+  background:var(--glass-strong);
+  -webkit-backdrop-filter:blur(16px);
+  text-align:left;
+  color:var(--text-3);
+  text-transform:uppercase;
+  letter-spacing:.1em;
+  border-bottom:1px solid var(--border);
+  white-space:nowrap;
+  overflow:hidden;
+  -webkit-user-select:none;
+  user-select:none;
+  cursor:pointer;
+  transition:color var(--duration) var(--ease-out);
+  padding:7px 12px;
+  font-size:9px;
+  font-weight:600}
+.table th:hover {
+  color:var(--text-4)}
+.table th.sorted {
+  color:var(--accent)}
+.table th .sort-arrow {
+  opacity:0;
+  transition:opacity var(--duration) var(--ease-out);
+  margin-left:3px;
+  font-size:8px;
+  display:inline-block}
+.table th:hover .sort-arrow,.table th.sorted .sort-arrow {
+  opacity:1}
+.table td {
+  border-bottom:1px solid var(--border);
+  vertical-align:top;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  padding:0;
+  position:relative}
+.table tr {
+  transition:background var(--duration) var(--ease-out)}
+.table tbody tr:hover {
+  background:#ffffff73}
+.table tbody tr.editing {
+  background:var(--accent-soft)}
+.table tbody tr.deleting {
+  background:var(--danger-soft);
+  opacity:.5}
+.cell {
+  color:var(--text-2);
+  cursor:text;
+  min-height:36px;
+  transition:all var(--duration) var(--ease-out);
+  word-break:break-word;
+  overflow-wrap:break-word;
+  white-space:normal;
+  letter-spacing:.01em;
+  border:1px solid #0000;
+  border-radius:0;
+  align-items:flex-start;
+  padding:8px 12px;
+  font-size:11px;
+  font-weight:400;
+  line-height:1.55;
+  display:flex}
+.cell:hover {
+  border-color:var(--border-control);
+  border-radius:var(--radius-sm);
+  background:#fff6}
+.cell.editing {
+  border-color:var(--accent);
+  border-radius:var(--radius-sm);
+  box-shadow:0 0 0 3px var(--accent-glow);
+  background:#ffffffd9}
+.cell-input {
+  width:100%;
+  color:var(--text-1);
+  font-size:11px;
+  font-family:var(--font);
+  resize:vertical;
+  letter-spacing:.01em;
+  background:0 0;
+  border:none;
+  outline:none;
+  min-height:18px;
+  padding:0;
+  font-weight:400;
+  line-height:1.55}
+.cell-id {
+  color:var(--text-3);
+  font-variant-numeric:tabular-nums;
+  font-size:10px;
+  font-weight:600}
+.cell-category {
+  color:var(--accent);
+  letter-spacing:.02em;
+  font-size:10px;
+  font-weight:600}
+.cell-chips {
+  display:flex;
+  flex-wrap:wrap;
+  gap:4px;
+  align-items:center}
+.cell-chip {
+  display:inline-flex;
+  align-items:center;
+  padding:2px 7px;
+  border-radius:var(--radius-pill);
+  background:#eef2f7;
+  color:var(--text-2);
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:.01em;
+  border:1px solid #e2e8f0;
+  white-space:nowrap;
+  line-height:1.4}
+.cell-chip-when {
+  background:#eef0fb;
+  border-color:#dde0f5;
+  color:#4338ca}
+.cell-chip-in {
+  background:#e8f5ee;
+  border-color:#cfe6da;
+  color:#0f6e56}
+.cell-chip-action {
+  background:#fdebe1;
+  border-color:#f4d2bd;
+  color:#9a3412}
+.cell-chip-category {
+  background:#f3e8ff;
+  border-color:#e2d2f5;
+  color:#6b21a8;
+  letter-spacing:.02em;
+  text-transform:uppercase;
+  font-size:9px}
+.cell.cell-param-size {
+  display:block}
+.param-method {
+  color:var(--text-1);
+  font-weight:700;
+  font-size:10px;
+  margin-bottom:3px}
+.param-rest {
+  color:var(--text-3);
+  font-weight:400;
+  font-size:10px;
+  line-height:1.5}
+.cell-status {
+  border-radius:var(--radius-pill);
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  align-items:center;
+  gap:4px;
+  padding:2px 8px;
+  font-size:9px;
+  font-weight:700;
+  display:inline-flex}
+.cell-status.mapped {
+  color:var(--success);
+  background:var(--success-soft)}
+.cell-status.needs-values {
+  color:#b45309;
+  background:var(--warning-soft)}
+.cell-status.dev-progress {
+  color:#2563eb;
+  background:#eff6ff}
+.cell-status.done {
+  color:#059669;
+  background:#ecfdf5}
+.cell-status.on-hold {
+  color:#6b7280;
+  background:#f3f4f6}
+.cell-status.rejected {
+  color:#dc2626;
+  background:#fef2f2}
+.status-chevron {
+  opacity:.45;
+  font-size:9px;
+  margin-left:1px}
+.cell-priority {
+  border-radius:var(--radius-pill);
+  letter-spacing:.04em;
+  align-items:center;
+  gap:4px;
+  padding:2px 8px;
+  font-size:9px;
+  font-weight:700;
+  display:inline-flex}
+.cell-priority.pri-1 {
+  color:var(--accent);
+  background:var(--accent-soft)}
+.cell-priority.pri-2 {
+  color:#7c3aed;
+  background:#f5f3ff}
+.cell-priority.pri-3 {
+  color:#dc2626;
+  background:#fef2f2}
+.row-actions {
+  opacity:0;
+  transition:opacity var(--duration) var(--ease-out);
+  align-items:center;
+  gap:2px;
+  padding:6px 8px;
+  display:flex}
+.table tbody tr:hover .row-actions {
+  opacity:1}
+.add-row-container {
+  border-top:2px solid var(--accent);
+  background:var(--accent-soft)}
+.add-row-container td {
+  border-bottom:none}
+.add-row-container .cell {
+  border-color:var(--border-control);
+  border-radius:var(--radius-sm);
+  background:#ffffffd9}
+.toast-container {
+  z-index:1000;
+  flex-direction:column;
+  gap:6px;
+  display:flex;
+  position:fixed;
+  bottom:16px;
+  right:16px}
+.toast {
+  border-radius:var(--radius);
+  animation:toast-in .3s var(--ease-out);
+  -webkit-backdrop-filter:blur(16px);
+  letter-spacing:.01em;
+  align-items:center;
+  gap:6px;
+  max-width:300px;
+  padding:8px 14px;
+  font-size:11px;
+  font-weight:500;
+  display:flex}
+.toast.success {
+  color:var(--success);
+  box-shadow:var(--shadow-rest);
+  background:#ffffffd9;
+  border:1px solid #16a34a26}
+.toast.error {
+  color:var(--danger);
+  box-shadow:var(--shadow-rest);
+  background:#ffffffd9;
+  border:1px solid #dc262626}
+.toast.info {
+  color:var(--accent);
+  box-shadow:var(--shadow-rest);
+  background:#ffffffd9;
+  border:1px solid #3b82f626}
+@keyframes toast-in {
+  0% {
+  opacity:0;
+  transform:translateY(6px)scale(.97)}
+to {
+  opacity:1;
+  transform:translateY(0)scale(1)}
+}
+.modal-overlay {
+  -webkit-backdrop-filter:blur(6px);
+  z-index:200;
+  animation:fade-in .2s var(--ease-out);
+  background:#0f172a33;
+  justify-content:center;
+  align-items:center;
+  display:flex;
+  position:fixed;
+  top:0;
+  right:0;
+  bottom:0;
+  left:0}
+.modal {
+  background:#fff;
+  border:1px solid var(--glass-border);
+  border-radius:var(--radius-lg);
+  width:90%;
+  max-width:420px;
+  box-shadow:var(--shadow-elevated);
+  animation:scale-in .25s var(--ease-out);
+  padding:20px}
+.modal h3 {
+  color:var(--text-1);
+  letter-spacing:.01em;
+  margin-bottom:10px;
+  font-size:13px;
+  font-weight:600}
+.modal p {
+  color:var(--text-4);
+  margin-bottom:16px;
+  font-size:11px;
+  font-weight:400;
+  line-height:1.6}
+.modal-actions {
+  justify-content:flex-end;
+  gap:6px;
+  display:flex}
+@keyframes fade-in {
+  0% {
+  opacity:0}
+to {
+  opacity:1}
+}
+@keyframes scale-in {
+  0% {
+  opacity:0;
+  transform:scale(.97)translateY(4px)}
+to {
+  opacity:1;
+  transform:scale(1)translateY(0)}
+}
+.empty-state {
+  color:var(--text-3);
+  text-align:center;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:6px;
+  padding:64px 24px;
+  display:flex}
+.empty-state-icon {
+  opacity:.3;
+  margin-bottom:6px;
+  font-size:28px}
+.empty-state h3 {
+  color:var(--text-4);
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  font-size:12px;
+  font-weight:600}
+.empty-state p {
+  color:var(--text-3);
+  font-size:11px;
+  font-weight:400}
+::-webkit-scrollbar {
+  width:5px;
+  height:5px}
+::-webkit-scrollbar-track {
+  background:0 0}
+::-webkit-scrollbar-thumb {
+  background:#00000014;
+  border-radius:3px}
+::-webkit-scrollbar-thumb:hover {
+  background:#00000024}
+.col-id {
+  width:44px}
+.col-category {
+  width:120px}
+.col-when {
+  width:130px}
+.col-in {
+  width:110px}
+.col-if {
+  width:170px}
+.col-action {
+  width:110px}
+.col-params {
+  width:150px}
+.col-summary {
+  min-width:170px}
+.col-priority {
+  text-align:center;
+  width:70px}
+.col-status {
+  width:115px}
+.col-note {
+  width:100px}
+.col-actions {
+  width:60px}
+.unsaved-dot {
+  background:var(--accent);
+  border-radius:50%;
+  width:5px;
+  height:5px;
+  margin-left:4px;
+  animation:1.5s ease-in-out infinite pulse;
+  display:inline-block}
+@keyframes pulse {
+  50% {
+  opacity:.5}
+}
+.app-header-center {
+  border-radius:var(--radius-pill);
+  background:#00000008;
+  align-items:center;
+  gap:2px;
+  padding:2px;
+  display:flex}
+.tab-btn {
+  border-radius:var(--radius-pill);
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  height:26px;
+  color:var(--text-3);
+  cursor:pointer;
+  font-size:10px;
+  font-weight:600;
+  font-family:var(--font);
+  transition:all var(--duration) var(--ease-out);
+  background:0 0;
+  border:none;
+  padding:0 14px}
+.tab-btn:hover {
+  color:var(--text-2)}
+.tab-btn.active {
+  color:var(--accent);
+  background:#fff;
+  box-shadow:0 1px 4px #0000000f}
+.viz-layout {
+  flex:1;
+  grid-template-columns:280px 1fr;
+  min-height:0;
+  display:grid;
+  overflow:hidden}
+.viz-list {
+  background:var(--glass);
+  -webkit-backdrop-filter:blur(16px);
+  border-right:1px solid var(--border);
+  flex-direction:column;
+  display:flex;
+  overflow:hidden}
+.viz-list-header {
+  padding:12px 14px 8px}
+.viz-search {
+  border:1px solid var(--border-control);
+  border-radius:var(--radius-sm);
+  width:100%;
+  height:30px;
+  color:var(--text-2);
+  font-size:11px;
+  font-weight:500;
+  font-family:var(--font);
+  transition:border-color var(--duration) var(--ease-out);
+  background:#fff9;
+  outline:none;
+  padding:0 10px}
+.viz-search:focus {
+  border-color:var(--accent);
+  box-shadow:0 0 0 3px var(--accent-glow)}
+.viz-cats {
+  flex-wrap:wrap;
+  gap:4px;
+  padding:0 14px 10px;
+  display:flex}
+.viz-cat-pill {
+  border:1px solid var(--border);
+  border-radius:var(--radius-pill);
+  color:var(--text-3);
+  cursor:pointer;
+  font-size:9px;
+  font-weight:500;
+  font-family:var(--font);
+  transition:all var(--duration) var(--ease-out);
+  white-space:nowrap;
+  background:0 0;
+  padding:3px 8px}
+.viz-cat-pill:hover {
+  border-color:var(--border-control);
+  background:#fff9}
+.viz-cat-pill.active {
+  background:var(--accent);
+  color:#fff;
+  border-color:var(--accent)}
+.viz-rules-scroll {
+  flex:1;
+  padding:0 10px 14px;
+  overflow-y:auto}
+.viz-group {
+  margin-bottom:6px}
+.viz-group-label {
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--text-3);
+  background:var(--glass);
+  -webkit-backdrop-filter:blur(8px);
+  backdrop-filter:blur(8px);
+  z-index:1;
+  padding:6px 4px 4px;
+  font-size:8px;
+  font-weight:600;
+  position:sticky;
+  top:0}
+.viz-rule-btn {
+  border-radius:var(--radius-sm);
+  cursor:pointer;
+  width:100%;
+  font-family:var(--font);
+  text-align:left;
+  transition:all var(--duration) var(--ease-out);
+  background:0 0;
+  border:1px solid #0000;
+  align-items:center;
+  gap:6px;
+  padding:6px 8px;
+  display:flex}
+.viz-rule-btn:hover {
+  border-color:var(--border-control);
+  background:#fff9}
+.viz-rule-btn.active {
+  background:var(--accent-soft);
+  box-shadow:var(--shadow-subtle);
+  border-color:#3b82f633}
+.viz-rule-num {
+  color:var(--accent);
+  font-variant-numeric:tabular-nums;
+  flex-shrink:0;
+  min-width:24px;
+  font-size:9px;
+  font-weight:700}
+.viz-rule-name {
+  color:var(--text-2);
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  font-size:10px;
+  font-weight:500;
+  overflow:hidden}
+.viz-detail {
+  background:var(--bg-gradient);
+  flex-direction:column;
+  gap:16px;
+  padding:28px 32px;
+  display:flex;
+  overflow-y:auto}
+.viz-detail-header {
+  align-items:center;
+  gap:8px;
+  display:flex}
+.viz-detail-id {
+  color:var(--accent);
+  font-variant-numeric:tabular-nums;
+  font-size:16px;
+  font-weight:700}
+.viz-detail-cat {
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--text-3);
+  border-radius:var(--radius-pill);
+  background:#0000000a;
+  padding:3px 8px;
+  font-size:9px;
+  font-weight:600}
+.viz-detail-title {
+  color:var(--text-1);
+  font-family:var(--font-display);
+  font-size:var(--h3-fs);
+  line-height:var(--h3-lh);
+  font-weight:var(--h3-fw);
+  letter-spacing:var(--h3-tr)}
+.viz-detail-sub {
+  color:var(--text-3);
+  font-size:var(--body-tiny-fs);
+  line-height:var(--body-tiny-lh);
+  font-weight:var(--fw-medium)}
+.viz-preview {
+  align-items:stretch;
+  gap:16px;
+  margin:8px 0;
+  display:flex}
+.viz-frame {
+  flex-direction:column;
+  flex:1;
+  display:flex}
+.viz-frame-label {
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--text-3);
+  background:var(--glass-strong);
+  border:1px solid var(--glass-border);
+  border-radius:var(--radius) var(--radius) 0 0;
+  border-bottom:none;
+  justify-content:space-between;
+  align-items:center;
+  padding:6px 10px;
+  font-size:9px;
+  font-weight:600;
+  display:flex}
+.viz-frame-label span {
+  color:var(--text-4);
+  font-variant-numeric:tabular-nums;
+  font-weight:500}
+.viz-frame-label.mobile {
+  color:var(--success)}
+.viz-frame-body {
+  border:1px solid var(--glass-border);
+  border-radius:0 0 var(--radius) var(--radius);
+  background:#fff9;
+  flex:1;
+  justify-content:center;
+  align-items:center;
+  min-height:140px;
+  padding:16px;
+  display:flex;
+  position:relative}
+.viz-frame-body.desktop {
+  background:repeating-linear-gradient(0deg,#0000,#0000 19px,#00000004 19px,#00000004 20px),repeating-linear-gradient(90deg,#0000,#0000 19px,#00000004 19px,#00000004 20px)}
+.viz-frame-body.mobile {
+  background:#fafbfc}
+.viz-arrow-col {
+  flex-direction:column;
+  flex-shrink:0;
+  justify-content:center;
+  align-items:center;
+  gap:4px;
+  width:60px;
+  display:flex}
+.viz-arrow-label {
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:var(--text-3);
+  text-align:center;
+  font-size:8px;
+  font-weight:600;
+  line-height:1.3}
+.viz-outcome {
+  background:var(--glass);
+  border:1px solid var(--glass-border);
+  border-radius:var(--radius);
+  flex-direction:column;
+  gap:6px;
+  padding:14px 16px;
+  display:flex}
+.viz-outcome-row {
+  align-items:baseline;
+  gap:10px;
+  display:flex}
+.viz-outcome-key {
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:var(--text-3);
+  flex-shrink:0;
+  min-width:70px;
+  font-size:9px;
+  font-weight:600}
+.viz-outcome-val {
+  color:var(--text-2);
+  font-size:11px;
+  font-weight:500;
+  line-height:1.5}
+.viz-outcome-val.accent {
+  color:var(--accent);
+  font-weight:600}
+.viz-outcome-val.note {
+  color:var(--warning);
+  font-size:10px;
+  font-style:italic}
+.viz-outcome-val.tag {
+  letter-spacing:.04em;
+  border-radius:var(--radius-pill);
+  padding:2px 8px;
+  font-size:9px;
+  font-weight:600}
+.viz-outcome-val.tag.mapped {
+  background:var(--success-soft);
+  color:var(--success)}
+.viz-outcome-val.tag.needs {
+  background:var(--warning-soft);
+  color:var(--warning)}
+.diagram-view-shell {
+  flex-direction:column;
+  flex:1;
+  min-height:0;
+  display:flex;
+  overflow:hidden}
+.diagram-section-tabs {
+  border-bottom:1px solid var(--border);
+  -webkit-backdrop-filter:blur(12px);
+  background:#ffffff4d;
+  flex-shrink:0;
+  align-items:center;
+  gap:2px;
+  padding:8px 18px;
+  display:flex}
+.diagram-section-tab {
+  border-radius:var(--radius-pill);
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  height:30px;
+  color:var(--text-3);
+  cursor:pointer;
+  font-size:10px;
+  font-weight:600;
+  font-family:var(--font);
+  transition:all var(--duration) var(--ease-out);
+  background:0 0;
+  border:1px solid #0000;
+  align-items:center;
+  gap:6px;
+  padding:0 14px;
+  display:inline-flex}
+.diagram-section-tab:hover {
+  color:var(--text-2);
+  border-color:var(--border-control);
+  background:#ffffff80}
+.diagram-section-tab.active {
+  color:var(--accent);
+  background:#fff;
+  border-color:#3b82f626;
+  box-shadow:0 1px 4px #0000000f}
+.diagram-section-count {
+  color:var(--text-3);
+  border-radius:var(--radius-pill);
+  font-variant-numeric:tabular-nums;
+  background:#0000000a;
+  padding:1px 6px;
+  font-size:9px;
+  font-weight:700}
+.diagram-section-tab.active .diagram-section-count {
+  color:var(--accent);
+  background:var(--accent-soft)}
+.diagram-section-body {
+  flex-direction:column;
+  flex:1;
+  min-height:0;
+  display:flex;
+  overflow:hidden}
+.diagram-layout {
+  flex:1;
+  grid-template-columns:240px 1fr;
+  min-height:0;
+  display:grid;
+  overflow:hidden}
+.diagram-sidebar {
+  background:var(--glass);
+  -webkit-backdrop-filter:blur(16px);
+  border-right:1px solid var(--border);
+  flex-direction:column;
+  display:flex;
+  overflow:hidden}
+.diagram-sidebar-header {
+  padding:12px 10px 8px}
+.diagram-sidebar-list {
+  flex-direction:column;
+  flex:1;
+  gap:1px;
+  padding:0 6px 14px;
+  display:flex;
+  overflow-y:auto}
+.diagram-nav-btn {
+  border-radius:var(--radius-sm);
+  cursor:pointer;
+  width:100%;
+  font-family:var(--font);
+  text-align:left;
+  transition:all var(--duration) var(--ease-out);
+  background:0 0;
+  border:1px solid #0000;
+  align-items:center;
+  gap:7px;
+  padding:6px 8px;
+  display:flex}
+.diagram-nav-btn:hover {
+  border-color:var(--border-control);
+  background:#fff9}
+.diagram-nav-btn.active {
+  background:var(--accent-soft);
+  box-shadow:var(--shadow-subtle);
+  border-color:#3b82f633}
+.diagram-nav-num {
+  color:var(--accent);
+  font-variant-numeric:tabular-nums;
+  flex-shrink:0;
+  min-width:20px;
+  font-size:9px;
+  font-weight:700}
+.diagram-nav-title {
+  color:var(--text-2);
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  flex:1;
+  font-size:10px;
+  font-weight:500;
+  overflow:hidden}
+.diagram-nav-count {
+  color:var(--text-3);
+  letter-spacing:.04em;
+  flex-shrink:0;
+  font-size:8px;
+  font-weight:600}
+.diagram-main {
+  background:var(--bg-gradient);
+  padding:24px 28px 48px;
+  overflow-y:auto}
+.diagram-main-header {
+  margin-bottom:20px}
+.diagram-main-title {
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--text-3);
+  margin-bottom:2px;
+  font-size:10px;
+  font-weight:600}
+.diagram-main-sub {
+  color:var(--text-4);
+  font-size:11px;
+  font-weight:400}
+.diagram-grid {
+  flex-direction:column;
+  gap:16px;
+  display:flex}
+.diagram-card {
+  background:var(--glass);
+  -webkit-backdrop-filter:blur(24px)saturate(180%);
+  border:1px solid var(--glass-border);
+  border-radius:var(--radius-lg);
+  box-shadow:var(--shadow-rest);
+  transition:box-shadow var(--duration) var(--ease-out);
+  padding:18px 20px;
+  scroll-margin-top:16px}
+.diagram-card:hover {
+  box-shadow:var(--shadow-hover)}
+.diagram-card-header {
+  align-items:center;
+  gap:10px;
+  margin-bottom:6px;
+  display:flex}
+.diagram-card-num {
+  border-radius:var(--radius-sm);
+  background:var(--accent);
+  color:#fff;
+  width:26px;
+  height:26px;
+  box-shadow:0 2px 10px var(--accent-shadow);
+  font-variant-numeric:tabular-nums;
+  flex-shrink:0;
+  justify-content:center;
+  align-items:center;
+  font-size:10px;
+  font-weight:700;
+  display:flex}
+.diagram-card-title {
+  color:var(--text-1);
+  letter-spacing:-.01em;
+  font-size:14px;
+  font-weight:600}
+.diagram-card-rules {
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:var(--text-3);
+  font-size:9px;
+  font-weight:600}
+.diagram-card-desc {
+  color:var(--text-4);
+  margin-bottom:14px;
+  padding-left:36px;
+  font-size:11px;
+  font-weight:400;
+  line-height:1.5}
+.output-strip {
+  margin-bottom:14px;
+  padding-left:36px}
+.output-strip-label {
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  color:var(--text-3);
+  margin-bottom:8px;
+  font-size:8px;
+  font-weight:700}
+.output-strip-grid {
+  flex-wrap:wrap;
+  gap:8px;
+  display:flex}
+.output-pair {
+  border-radius:var(--radius);
+  min-width:130px;
+  max-width:210px;
+  transition:transform var(--duration) var(--ease-out),box-shadow var(--duration) var(--ease-out);
+  flex-direction:column;
+  display:flex;
+  overflow:hidden;
+  box-shadow:0 2px 8px #0000000f}
+.output-pair:hover {
+  transform:translateY(-1px);
+  box-shadow:0 4px 16px #0000001a}
+.output-pair-op {
+  letter-spacing:.05em;
+  text-transform:uppercase;
+  text-align:center;
+  border:1px solid;
+  border-bottom:none;
+  padding:5px 10px;
+  font-size:9px;
+  font-weight:700;
+  line-height:1.3}
+.output-pair-card {
+  color:#fff;
+  background:#6d28d9;
+  flex-direction:column;
+  flex:1;
+  gap:2px;
+  padding:8px 10px;
+  display:flex}
+.output-pair-title {
+  letter-spacing:.01em;
+  font-size:10px;
+  font-weight:700;
+  line-height:1.4}
+.output-pair-detail {
+  opacity:.82;
+  font-size:9px;
+  font-weight:400;
+  line-height:1.4}
+.output-pair-count {
+  opacity:.6;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  margin-top:2px;
+  font-size:8px;
+  font-weight:600}
+.diagram-card-body {
+  border:1px solid var(--border-control);
+  border-radius:var(--radius);
+  background:#fff9;
+  padding:20px 16px;
+  overflow-x:auto}
+.diagram-mermaid {
+  justify-content:center;
+  display:flex}
+.diagram-mermaid svg {
+  max-width:100%;
+  height:auto}
+.diagram-card-note {
+  border-left:3px solid var(--warning);
+  background:var(--warning-soft);
+  border-radius:0 var(--radius-sm) var(--radius-sm) 0;
+  color:#92400e;
+  margin-top:10px;
+  padding:8px 12px;
+  font-size:10px;
+  font-weight:500;
+  line-height:1.5}
+.diagram-error {
+  color:var(--danger);
+  text-align:center;
+  padding:16px;
+  font-size:11px;
+  font-weight:500}
+.diagram-nav-divider {
+  background:var(--border);
+  height:1px;
+  margin:6px 4px}
+.taxonomy-grid {
+  flex-wrap:wrap;
+  gap:6px;
+  padding:4px 0 2px 36px;
+  display:flex}
+.taxonomy-pill {
+  border-radius:var(--radius-pill);
+  letter-spacing:.02em;
+  white-space:nowrap;
+  align-items:center;
+  padding:4px 10px;
+  font-size:10px;
+  font-weight:600;
+  display:inline-flex}
+.taxonomy-card {
+  border-left:3px solid #64748b}
+.diagram-source-tag {
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:#fff;
+  background:var(--accent);
+  border-radius:var(--radius-sm);
+  vertical-align:middle;
+  margin-right:6px;
+  padding:2px 6px;
+  font-size:8px;
+  font-weight:700;
+  display:inline-block}
+.diagram-mermaid .nodeElement>rect,.diagram-mermaid .nodeElement>polygon {
+  fill:#eef2ff!important;
+  stroke:#3b82f6!important;
+  stroke-width:1.5px!important;
+  rx:8px!important;
+  ry:8px!important}
+.diagram-mermaid .nodeDecision>rect,.diagram-mermaid .nodeDecision>polygon {
+  fill:#f8fafc!important;
+  stroke:#94a3b8!important;
+  stroke-width:1.5px!important}
+.diagram-mermaid .nodeOutput>rect,.diagram-mermaid .nodeOutput>polygon {
+  fill:#3b82f6!important;
+  stroke:#3b82f6!important;
+  stroke-width:1.5px!important;
+  rx:8px!important;
+  ry:8px!important}
+.diagram-mermaid .nodeOutput .nodeLabel {
+  color:#fff!important}
+.diagram-mermaid .nodeSuccess>rect,.diagram-mermaid .nodeSuccess>polygon {
+  fill:#dcfce7!important;
+  stroke:#16a34a!important;
+  stroke-width:1.5px!important;
+  rx:8px!important;
+  ry:8px!important}
+.diagram-mermaid .nodeSuccess .nodeLabel {
+  color:#15803d!important}
+.diagram-mermaid .nodeDanger>rect,.diagram-mermaid .nodeDanger>polygon {
+  fill:#fef2f2!important;
+  stroke:#dc2626!important;
+  stroke-width:1.5px!important;
+  rx:8px!important;
+  ry:8px!important}
+.diagram-mermaid .nodeDanger .nodeLabel {
+  color:#b91c1c!important}
+.diagram-mermaid .nodeCondition>rect,.diagram-mermaid .nodeCondition>polygon {
+  fill:#f1f5f9!important;
+  stroke:#cbd5e1!important;
+  stroke-width:1px!important;
+  rx:8px!important;
+  ry:8px!important}
+.diagram-mermaid .nodeKeep>rect,.diagram-mermaid .nodeKeep>polygon {
+  fill:#f5f3ff!important;
+  stroke:#7c3aed!important;
+  stroke-width:1.5px!important;
+  rx:8px!important;
+  ry:8px!important}
+.diagram-mermaid .nodeKeep .nodeLabel {
+  color:#6d28d9!important}
+.diagram-mermaid .nodeWarn>rect,.diagram-mermaid .nodeWarn>polygon {
+  fill:#fffbeb!important;
+  stroke:#f59e0b!important;
+  stroke-width:1.5px!important;
+  rx:8px!important;
+  ry:8px!important}
+.diagram-mermaid .nodeWarn .nodeLabel {
+  color:#92400e!important}
+.diagram-mermaid .nodeList>rect,.diagram-mermaid .nodeList>polygon {
+  fill:#f8fafc!important;
+  stroke:#e2e8f0!important;
+  stroke-width:1px!important;
+  rx:8px!important;
+  ry:8px!important}
+.diagram-mermaid .nodeList .nodeLabel {
+  color:#64748b!important}
+.diagram-mermaid .nodeSkip>rect,.diagram-mermaid .nodeSkip>polygon {
+  fill:#f8fafc!important;
+  stroke:#e2e8f0!important;
+  stroke-width:1px!important;
+  rx:8px!important;
+  ry:8px!important}
+.diagram-mermaid .nodeSkip .nodeLabel {
+  color:#94a3b8!important}
+.diagram-mermaid .edgePath .path {
+  stroke:#94a3b8!important;
+  stroke-width:1.5px!important}
+.diagram-mermaid .edgeLabel {
+  color:#64748b!important;
+  background:#fff!important;
+  border-radius:4px!important;
+  padding:2px 6px!important;
+  font-size:10px!important;
+  font-weight:500!important}
+.diagram-mermaid marker path {
+  fill:#94a3b8!important}
+.diagram-mermaid .nodeLabel {
+  font-family:var(--font)!important;
+  font-size:11px!important;
+  font-weight:500!important;
+  line-height:1.4!important}
+/* —— Add Rule Wizard (full-page, Lucas Berghoef-palette aesthetic) ——
+   Wizard-local tokens are aliases onto the global LB palette ladder
+   so the whole wizard inherits the Athens → Pearl ladder + Chartreuse
+   pop. The semantic accent colours (green/blue/amber/red) are kept
+   for legacy operator chips and validation states, but pulled toward
+   the palette's quiet neutrality (less saturated, closer to ink). */
+.wiz-page {
+  --wiz-purple:var(--lb-arsenic);
+  --wiz-purple-soft:var(--lb-athens-soft);
+  --wiz-pop:var(--lb-chartreuse);
+  --wiz-pop-soft:var(--lb-chartreuse-soft);
+  --wiz-pop-tint:var(--lb-chartreuse-tint);
+  --wiz-green:#1f3d34;
+  --wiz-green-soft:#e7eee9;
+  --wiz-blue:#2c3946;
+  --wiz-blue-soft:#e9eef3;
+  --wiz-coral:#3d2520;
+  --wiz-coral-soft:#f1ebe8;
+  --wiz-amber:#3a2a18;
+  --wiz-amber-soft:#f1ede5;
+  --wiz-red:#3a1f1f;
+  --wiz-red-soft:#f1e9e9;
+  --wiz-dark:var(--lb-pearl);
+  --wiz-gray:var(--lb-athens-soft);
+  --wiz-accent:var(--lb-pearl);
+  --wiz-accent-soft:var(--lb-athens-soft);
+  --wiz-canvas:#f3f4f5;
+  position:fixed;
+  inset:0;
+  z-index:300;
+  background:#ffffff;
+  flex-direction:column;
+  display:flex;
+  animation:wiz-fadein .25s var(--ease-out)}
+@keyframes wiz-fadein {
+  from{opacity:0}
+  to{opacity:1}}
+
+/* ── Top bar (title + close) ── */
+.wiz-topbar {
+  flex-shrink:0;
+  height:60px;
+  border-bottom:1px solid #eef0f4;
+  background:#ffffff;
+  display:flex;
+  align-items:center;
+  padding:0 28px;
+  gap:12px}
+.wiz-topbar-title {
+  font-family:var(--font);
+  font-size:var(--h5-fs);
+  line-height:var(--h5-lh);
+  font-weight:var(--h5-fw);
+  letter-spacing:var(--h5-tr);
+  color:#1a1d24;
+  margin:0;
+  flex:1}
+.wiz-topbar-close {
+  width:32px;
+  height:32px;
+  border-radius:8px;
+  border:none;
+  background:transparent;
+  color:#5b6371;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:all var(--duration) var(--ease-out);
+  flex-shrink:0}
+.wiz-topbar-close:hover {
+  background:#f0f1f4;
+  color:#1a1d24}
+.wiz-close-x {
+  font-size:20px;
+  line-height:1;
+  font-weight:400}
+
+/* ── Scrollable body ── */
+.wiz-scroll {
+  flex:1;
+  overflow-y:auto;
+  display:flex;
+  justify-content:center;
+  padding:24px 24px 80px}
+.wiz-center {
+  width:100%;
+  max-width:960px;
+  display:flex;
+  flex-direction:column;
+  align-items:center}
+
+/* ── Split layout: chooser left (~40%), diagram right (~60%) ── */
+.wiz-scroll-split {
+  display:grid;
+  grid-template-columns:minmax(360px, 480px) minmax(0, 1fr);
+  gap:0;
+  align-items:stretch;
+  max-width:none;
+  margin:0;
+  width:100%;
+  padding:0;
+  justify-content:initial;
+  overflow:hidden}
+.wiz-scroll-split > .wiz-center {
+  max-width:none;
+  min-width:0;
+  align-items:stretch;
+  padding:36px 36px 28px;
+  overflow-y:auto;
+  scrollbar-gutter:stable;
+  height:100%;
+  border-right:1px solid #eef0f4;
+  background:#ffffff}
+.wiz-scroll.wiz-scroll-split {
+  overflow:hidden;
+  padding:0}
+
+/* ── Preview panel: live mobile vs. desktop rendering ── */
+.wiz-preview {
+  position:sticky;
+  top:24px;
+  align-self:start;
+  background:#ffffffcc;
+  -webkit-backdrop-filter:blur(18px);
+  backdrop-filter:blur(18px);
+  border:1px solid #0000000f;
+  border-radius:16px;
+  padding:18px;
+  box-shadow:0 6px 32px #0f172a12, 0 1px 3px #0f172a08;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  animation:wiz-fadein .3s var(--ease-out)}
+.wiz-preview-head {
+  display:flex;
+  flex-direction:column;
+  gap:4px}
+.wiz-preview-badge {
+  align-self:flex-start;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  padding:4px 10px;
+  border-radius:999px;
+  margin-bottom:4px}
+.wiz-preview-title {
+  font-size:var(--h5-fs);
+  line-height:var(--h5-lh);
+  font-weight:var(--h5-fw);
+  letter-spacing:var(--h5-tr);
+  color:var(--text-1)}
+.wiz-preview-subtitle {
+  font-size:var(--body-tiny-fs);
+  line-height:var(--body-tiny-lh);
+  color:var(--text-3);
+  line-height:1.4}
+
+/* Rule sentence strip */
+.wiz-preview-sentence {
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:6px;
+  padding:10px 12px;
+  background:#f8fafc;
+  border:1px solid #0000000a;
+  border-radius:10px;
+  font-size:11px;
+  line-height:1.5}
+.wiz-preview-sentence.muted {color:var(--text-3);font-style:italic}
+.wiz-preview-sent {
+  font-weight:500}
+.wiz-preview-sent-when {color:#534ab7;background:#534ab710;padding:2px 8px;border-radius:999px;font-weight:600}
+.wiz-preview-sent-in {color:#185fa5;background:#185fa510;padding:2px 8px;border-radius:999px;font-weight:600}
+.wiz-preview-sent-if {color:#e65100;background:#e6510010;padding:2px 8px;border-radius:999px;font-weight:600}
+.wiz-preview-sent-then {color:#0f6e56;background:#0f6e5610;padding:2px 8px;border-radius:999px;font-weight:600}
+.wiz-preview-sent-params {color:#712b13;background:#712b1310;padding:2px 8px;border-radius:999px;font-weight:500}
+.wiz-preview-sent-glue {color:var(--text-3);font-weight:400}
+
+/* Device frames grid */
+.wiz-preview-frame-grid {
+  display:grid;
+  grid-template-columns:1.15fr 0.85fr;
+  gap:14px;
+  align-items:stretch}
+.wiz-preview-vp-block {
+  display:flex;
+  flex-direction:column;
+  min-width:0}
+.wiz-preview-vp-chrome {
+  display:flex;
+  align-items:center;
+  gap:4px;
+  height:22px;
+  padding:0 10px;
+  background:#e2e6ef;
+  border-radius:8px 8px 0 0;
+  border:1px solid #0000000f;
+  border-bottom:none}
+.wiz-preview-vp-dot {
+  width:7px;height:7px;border-radius:50%;background:#c9cfdb}
+.wiz-preview-vp-dot:nth-child(1){background:#f08a7a}
+.wiz-preview-vp-dot:nth-child(2){background:#f2c45a}
+.wiz-preview-vp-dot:nth-child(3){background:#7dc79a}
+.wiz-preview-vp-label {
+  margin-left:auto;
+  font-size:9px;
+  font-weight:700;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:#534ab7}
+.wiz-preview-vp-label.mobile {
+  margin:8px 0 0;
+  text-align:center;
+  color:#64748b;
+  display:block}
+.wiz-preview-vp-label.mobile.fired {color:#92400e}
+.wiz-preview-vp-label.mobile.inactive {color:#94a3b8}
+.wiz-preview-vp-stage {
+  background:#fff;
+  border:1px solid #0000000f;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  padding:10px;
+  min-height:180px;
+  position:relative}
+.wiz-preview-vp-stage.desktop {border-radius:0 0 8px 8px}
+.wiz-preview-vp-stage.mobile {border-radius:10px;padding:8px;min-height:200px}
+.wiz-preview-phone {
+  background:#1a1a1f;
+  border-radius:18px;
+  padding:16px 6px 8px;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  box-shadow:0 4px 14px #0f172a26, inset 0 0 0 1px #ffffff0d}
+.wiz-preview-phone-notch {
+  position:absolute;top:5px;left:50%;transform:translateX(-50%);
+  width:42px;height:6px;background:#000;border-radius:999px}
+
+/* ═════════════ Page-scene composition ═════════════ */
+/* A "real case" preview: header · body (hero / grid / box / filler) · footer.
+   The slot matching the chosen context is marked .is-target and hosts the target element. */
+
+.wiz-scene {
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  border-radius:8px;
+  overflow:hidden;
+  background:#fff;
+  border:1px solid #e2e8f0;
+  min-height:180px;
+  position:relative}
+.wiz-scene.mobile {min-height:220px}
+
+/* ── Header stripe ── */
+.wiz-scene-header {
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  gap:8px;
+  align-items:center;
+  padding:6px 10px;
+  background:#ffffff;
+  border-bottom:1px solid #e2e8f0;
+  min-height:34px;
+  position:relative}
+.wiz-scene-header-logo {
+  background:linear-gradient(135deg,#2563eb,#1d4ed8);
+  color:#fff;
+  font-size:8px;
+  font-weight:700;
+  padding:3px 8px;
+  border-radius:4px;
+  letter-spacing:.05em;
+  justify-self:start}
+.wiz-scene-header-nav {display:flex;gap:6px;justify-self:center}
+.wiz-scene-header-nav span {width:18px;height:3px;background:#cbd5e1;border-radius:999px}
+.wiz-scene-header-ham {display:flex;flex-direction:column;gap:2px;width:14px;justify-self:end}
+.wiz-scene-header-ham span {width:100%;height:1.5px;background:#475569;border-radius:2px}
+
+/* ── Body ── */
+.wiz-scene-body {
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  padding:8px 10px;
+  flex:1;
+  background:linear-gradient(180deg,#ffffff,#f8fafc)}
+.wiz-scene-section {
+  border-radius:6px;
+  padding:10px;
+  background:#ffffff;
+  border:1px dashed #e2e8f0;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  gap:6px;
+  min-height:60px}
+.wiz-scene-section.hero {
+  background:linear-gradient(135deg,#eef2ff,#f0f9ff);
+  border:1px solid #e0e7ff;
+  min-height:72px;
+  justify-content:center}
+.wiz-scene-section.filler {
+  background:#f8fafc;
+  border-style:solid;
+  border-color:#e2e8f0;
+  opacity:.55;
+  min-height:40px}
+.wiz-scene-section.grid {padding:8px}
+.wiz-scene-section.box {padding:10px}
+
+.wiz-scene-hero-title {
+  height:10px;
+  width:55%;
+  border-radius:3px;
+  background:linear-gradient(90deg,#1e293b,#475569)}
+.wiz-scene-hero-title.short {width:30%;height:6px}
+.wiz-scene-hero-sub {
+  height:4px;
+  width:72%;
+  border-radius:2px;
+  background:#cbd5e1}
+.wiz-scene-hero-sub.short {width:40%}
+
+/* Grid / cell slot */
+.wiz-scene-grid {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:4px}
+.wiz-scene-cell {
+  min-height:42px;
+  border-radius:4px;
+  background:#fff;
+  border:1px dashed #cbd5e1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:4px}
+.wiz-scene-cell.ghost {
+  position:relative;
+  background:#f8fafc}
+.wiz-scene-cell.ghost::after {
+  content:"";
+  width:60%;
+  height:40%;
+  background:repeating-linear-gradient(135deg,#e2e8f0 0 4px,transparent 4px 8px);
+  border-radius:3px;
+  opacity:.55}
+.wiz-scene-cell.focus {
+  border-style:solid;
+  border-color:#3b82f6;
+  background:#eff6ff}
+.wiz-scene.rule-fired .wiz-scene-cell.focus {
+  border-color:#f59e0b;
+  background:#fffbeb}
+
+/* Bare row — used inside single-slot contexts like grid cell */
+.wiz-preview-row-bare {justify-content:center !important}
+
+/* Box slot */
+.wiz-scene-box-frame {
+  border:2px dashed #94a3b8;
+  border-radius:6px;
+  padding:8px;
+  background:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:56px}
+
+/* Footer */
+.wiz-scene-footer {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  padding:10px;
+  background:#1e293b;
+  border-top:1px solid #334155;
+  min-height:36px;
+  position:relative}
+.wiz-scene-footer-dot {width:26px;height:4px;background:#64748b;border-radius:999px}
+
+/* Target slot highlight — blue everywhere until a rule action fires.
+   When the rule fires on the mobile side (.rule-fired), the target turns amber. */
+.wiz-scene-section.is-target,
+.wiz-scene-header.is-target,
+.wiz-scene-footer.is-target {
+  outline:2px solid #3b82f6;
+  outline-offset:-1px;
+  box-shadow:0 0 0 4px #3b82f61a}
+.wiz-scene.rule-fired .wiz-scene-section.is-target,
+.wiz-scene.rule-fired .wiz-scene-header.is-target,
+.wiz-scene.rule-fired .wiz-scene-footer.is-target {
+  outline-color:#f59e0b;
+  box-shadow:0 0 0 4px #f59e0b1f}
+
+/* Slot tag — tiny label in the corner of the target slot */
+.wiz-scene-slot-tag {
+  position:absolute;
+  top:-8px;
+  left:6px;
+  font-size:8px;
+  font-weight:800;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  padding:2px 6px;
+  border-radius:999px;
+  background:#3b82f6;
+  color:#fff;
+  white-space:nowrap}
+.wiz-scene.rule-fired .wiz-scene-slot-tag {background:#f59e0b;color:#1e1b0f}
+
+/* ─── Row of target + siblings ─── */
+.wiz-preview-row {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  flex-wrap:wrap;
+  width:100%}
+
+.wiz-preview-sibling {
+  width:38px;
+  min-height:22px;
+  padding:3px 4px;
+  border-radius:4px;
+  background:#eef2f6;
+  border:1px solid #e2e8f0;
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  justify-content:center}
+.wiz-preview-sibling.small {width:28px;min-height:18px}
+.wiz-preview-sibling-bar {height:3px;background:#cbd5e1;border-radius:2px;width:100%}
+.wiz-preview-sibling-bar.short {width:60%;background:#dbe2ec}
+
+.wiz-preview-blank {
+  font-size:9px;
+  color:#94a3b8;
+  font-style:italic;
+  padding:10px;
+  border:1px dashed #cbd5e1;
+  border-radius:6px;
+  width:100%;
+  text-align:center;
+  background:repeating-linear-gradient(45deg,#f8fafc 0 6px,#ffffff 6px 12px)}
+
+/* ─── Element wrapper + ring tones ─── */
+.wiz-preview-el-wrap {
+  display:inline-flex;
+  flex-direction:column;
+  align-items:center;
+  gap:3px;
+  padding:4px;
+  border-radius:6px;
+  transition:all .25s var(--ease-out);
+  position:relative}
+.wiz-preview-el-wrap.ring-blue {
+  background:#eff6ff;
+  box-shadow:inset 0 0 0 1.5px #3b82f6}
+.wiz-preview-el-wrap.ring-amber {
+  background:#fef3c7;
+  box-shadow:inset 0 0 0 1.5px #f59e0b}
+.wiz-preview-el {transition:all .25s var(--ease-out);transform-origin:center}
+.wiz-preview-el-label {
+  font-size:7px;
+  font-weight:700;
+  color:#475569;
+  text-transform:uppercase;
+  letter-spacing:.06em}
+.wiz-preview-el-wrap.ring-amber .wiz-preview-el-label {color:#92400e}
+
+/* ─── Applied-action chip (mobile side only) ─── */
+.wiz-preview-action-chip {
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  margin:6px auto 0;
+  font-size:9px;
+  font-weight:700;
+  letter-spacing:.02em;
+  padding:4px 9px;
+  border-radius:999px;
+  background:#fef3c7;
+  color:#92400e;
+  border:1px solid #fcd34d;
+  max-width:100%;
+  text-align:center}
+.wiz-preview-action-dot {
+  width:6px;
+  height:6px;
+  border-radius:999px;
+  background:#f59e0b;
+  box-shadow:0 0 0 3px #f59e0b33}
+
+/* Condition strip below frames */
+.wiz-preview-cond-strip {
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:6px;
+  padding:8px 10px;
+  background:#fff7ed;
+  border:1px solid #fed7aa;
+  border-radius:8px}
+.wiz-preview-cond-prefix {
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:.1em;
+  color:#9a3412}
+.wiz-preview-cond-and {
+  font-size:9px;
+  font-weight:700;
+  color:#c2410c}
+.wiz-preview-cond-chip {
+  font-size:10px;
+  font-weight:600;
+  padding:3px 8px;
+  border-radius:999px;
+  background:#fed7aa;
+  color:#9a3412}
+
+@media(max-width:900px) {
+  .wiz-scroll-split {
+    grid-template-columns:1fr;
+    grid-template-rows:auto auto}
+  .wiz-scroll-split > .wiz-center {
+    border-right:none;
+    border-bottom:1px solid #eef0f4;
+    height:auto;
+    overflow-y:visible}
+  .wd-wrap {
+    padding:24px 28px}
+  .wd-canvas {
+    min-height:280px}
+}
+
+/* ── Question heading (left-aligned in chooser column) ── */
+.wiz-head {
+  width:100%;
+  margin-bottom:22px}
+.wiz-step-tag {
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:5px 11px;
+  background:#f4f4f5;
+  color:#71717a;
+  font-size:10.5px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  font-weight:600;
+  border-radius:999px;
+  margin-bottom:14px}
+.wiz-step-tag-dot {
+  width:6px;
+  height:6px;
+  border-radius:999px;
+  background:currentColor}
+.wiz-question {
+  color:#1a1d24;
+  font-family:var(--font-display);
+  font-size:var(--h2-fs);
+  line-height:var(--h2-lh);
+  font-weight:var(--h2-fw);
+  letter-spacing:var(--h2-tr);
+  text-align:left;
+  margin:0 0 8px}
+.wiz-subtitle {
+  color:#6b7280;
+  font-family:var(--font);
+  font-size:var(--body-small-fs);
+  line-height:var(--body-small-lh);
+  font-weight:var(--fw-regular);
+  text-align:left;
+  margin:0}
+
+/* ── Group section headers inside step body (Step 1 + Step 3) ── */
+.wiz-group-head {
+  margin:18px 0 10px;
+  font-size:var(--h6-fs);
+  line-height:var(--h6-lh);
+  letter-spacing:var(--tracking-100);
+  text-transform:uppercase;
+  color:#71717a;
+  font-weight:var(--fw-semibold);
+  width:100%}
+.wiz-group-head:first-child {
+  margin-top:0}
+.wiz-inline-link {
+  font:inherit;
+  color:var(--wiz-accent);
+  background:none;
+  border:none;
+  padding:0;
+  cursor:pointer;
+  text-decoration:none;
+  font-weight:500}
+.wiz-inline-link:hover {
+  text-decoration:underline}
+
+/* ── Tabs (Elements / Library) ── */
+.wiz-tabs {
+  display:flex;
+  gap:0;
+  border-bottom:1px solid #e5e7eb;
+  margin-bottom:18px;
+  width:100%}
+.wiz-tab {
+  font-family:var(--font);
+  font-size:13.5px;
+  font-weight:500;
+  color:#6b7280;
+  background:none;
+  border:none;
+  padding:10px 18px 12px;
+  cursor:pointer;
+  position:relative;
+  transition:color .15s var(--ease-out);
+  margin-bottom:-1px}
+.wiz-tab:hover {
+  color:#1a1d24}
+.wiz-tab.active {
+  color:var(--wiz-accent);
+  font-weight:600}
+.wiz-tab.active::after {
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  height:2px;
+  background:var(--wiz-accent);
+  border-radius:2px 2px 0 0}
+
+.wiz-tile-empty {
+  grid-column:1 / -1;
+  text-align:center;
+  color:#9ca3af;
+  font-size:12px;
+  padding:32px 12px;
+  background:#fafafa;
+  border:1px dashed #e5e7eb;
+  border-radius:10px}
+.wiz-tile-empty em {
+  color:var(--wiz-accent);
+  font-style:normal;
+  font-weight:600}
+
+/* ── Step body ── */
+.wiz-step-body {
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center}
+.wiz-step-lanes {
+  width:100%;
+  padding:0;
+  align-items:center}
+
+/* ── Tile grid ── */
+.wiz-tile-grid {
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:12px;
+  padding:4px 0 10px;
+  width:100%}
+.wiz-tile-grid-3 {
+  grid-template-columns:repeat(3, 1fr)}
+
+/* ── Catch-all / wildcard fold ── */
+.wiz-catchall-fold {
+  width:100%;
+  margin-top:4px;
+  border-top:1px dashed #00000012;
+  padding:0}
+.wiz-catchall-fold[open] {
+  padding-bottom:4px}
+.wiz-catchall-toggle {
+  font-family:var(--font);
+  font-size:11px;
+  font-weight:500;
+  color:var(--text-3);
+  letter-spacing:.02em;
+  cursor:pointer;
+  list-style:none;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:6px;
+  padding:12px 0 10px;
+  user-select:none;
+  transition:color .2s var(--ease-out)}
+.wiz-catchall-toggle::-webkit-details-marker { display:none }
+.wiz-catchall-toggle::after {
+  content:'›';
+  display:inline-block;
+  font-size:14px;
+  transition:transform .2s var(--ease-out)}
+.wiz-catchall-fold[open] > .wiz-catchall-toggle::after {
+  transform:rotate(90deg)}
+.wiz-catchall-toggle:hover {
+  color:var(--wiz-purple)}
+.wiz-catchall-row {
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:8px}
+.wiz-catchall-pill {
+  font-family:var(--font);
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:8px 16px;
+  border:1.5px dashed var(--text-3);
+  border-radius:999px;
+  background:transparent;
+  color:var(--text-2);
+  font-size:12px;
+  font-weight:600;
+  cursor:pointer;
+  transition:all .2s var(--ease-out);
+  user-select:none}
+.wiz-catchall-pill:hover {
+  border-color:var(--wiz-purple);
+  color:var(--wiz-purple);
+  background:#534ab70a}
+.wiz-catchall-pill.selected {
+  border-color:var(--wiz-purple);
+  border-style:solid;
+  color:var(--wiz-purple);
+  background:#534ab712;
+  box-shadow:0 0 0 2px #534ab71a}
+.wiz-catchall-icon {
+  width:18px;
+  height:18px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-shrink:0}
+.wiz-catchall-icon svg {
+  width:100%;
+  height:100%;
+  display:block}
+
+/* ── Tile (option card inside lane) ── */
+.wiz-tile {
+  font-family:var(--font);
+  position:relative;
+  min-height:96px;
+  border:1px solid #e5e7eb;
+  border-radius:10px;
+  background:#ffffff;
+  padding:14px 8px 12px;
+  cursor:pointer;
+  transition:all .15s var(--ease-out);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  text-align:center;
+  box-shadow:none;
+  user-select:none}
+.wiz-tile:hover {
+  border-color:#cbd5e1;
+  background:#fafbfc}
+.wiz-tile.selected {
+  border-color:var(--wiz-accent);
+  background:var(--wiz-accent-soft);
+  box-shadow:0 0 0 1px var(--wiz-accent) inset}
+.wiz-tile:disabled {
+  opacity:.35;
+  cursor:not-allowed;
+  pointer-events:none}
+.wiz-tile-icon {
+  width:30px;
+  height:30px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:#4b5563;
+  transition:color .15s var(--ease-out)}
+.wiz-tile-icon svg {
+  width:100%;
+  height:100%;
+  display:block}
+.wiz-tile.selected .wiz-tile-icon {
+  color:var(--wiz-accent)}
+.wiz-tile-name {
+  color:#374151;
+  font-size:11px;
+  font-weight:500;
+  line-height:1.3;
+  word-break:break-word;
+  letter-spacing:.01em}
+.wiz-tile.selected .wiz-tile-name {
+  color:var(--wiz-accent);
+  font-weight:600}
+.wiz-tile-desc {
+  color:var(--text-3);
+  font-size:10.5px;
+  font-weight:400;
+  line-height:1.35}
+.wiz-tile-check {
+  position:absolute;
+  top:6px;
+  right:6px;
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  background:var(--wiz-purple);
+  color:#fff;
+  font-size:10px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 2px 6px #534ab74d}
+.wiz-tile-action {
+  min-height:108px;
+  padding-top:18px;
+  position:relative}
+
+/* Category tag — small uppercase chip pinned to the top of size/font-size
+   action tiles. Names a use-case (Reset Scaling / Resize to Aspect Ratio /
+   Reduce by % / Custom / Generic Heuristics / Auto) so the picker reads as
+   a typed catalog instead of a flat list. Each category is themed via a
+   modifier class so distinct buckets are visually scannable. */
+.wiz-tile-tag {
+  position:absolute;
+  top:6px;
+  left:50%;
+  transform:translateX(-50%);
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-size:8.5px;
+  font-weight:800;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  padding:2px 8px;
+  border-radius:999px;
+  line-height:1.4;
+  background:#eef2ff;
+  color:var(--wiz-purple);
+  border:1px solid #e2e7f8;
+  white-space:nowrap;
+  max-width:calc(100% - 12px);
+  overflow:hidden;
+  text-overflow:ellipsis;
+  z-index:1}
+/* Category tag chips — Lucas Berghoef palette: a darkness ladder of
+   neutrals from Pearl Black down to Athens Grey, with Chartreuse
+   reserved as the single editorial pop on the user-authored "Custom"
+   category. Light text (white) on dark backgrounds, Pearl text on
+   the two lightest backgrounds for contrast. */
+.wiz-tile-tag-reset-scaling          {background:var(--lb-pearl);  color:var(--lb-white); border-color:var(--lb-pearl)}
+.wiz-tile-tag-resize-to-aspect-ratio {background:var(--lb-ebony);  color:var(--lb-white); border-color:var(--lb-ebony)}
+.wiz-tile-tag-reduce-by              {background:var(--lb-arsenic); color:var(--lb-white); border-color:var(--lb-arsenic)}
+.wiz-tile-tag-custom                 {background:var(--lb-chartreuse); color:var(--lb-ebony); border-color:var(--lb-chartreuse)}
+.wiz-tile-tag-generic-heuristics     {background:var(--lb-chateau); color:var(--lb-white); border-color:var(--lb-chateau)}
+.wiz-tile-tag-auto                   {background:var(--lb-athens); color:var(--lb-ebony); border-color:var(--lb-athens)}
+
+.wiz-tile.selected .wiz-tile-tag {
+  filter:saturate(1.15)}
+
+/* ── Step 4 action gate banner (shows allowed-action restriction) ── */
+.wiz-action-gate {
+  display:flex;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+  padding:8px 12px;
+  border:1px dashed var(--border-control);
+  border-radius:var(--radius-sm);
+  background:#f8fafc;
+  font-size:12px;
+  color:var(--text-2)}
+.wiz-action-gate-text {
+  flex:1;
+  min-width:200px}
+.wiz-action-gate-link {
+  appearance:none;
+  background:none;
+  border:none;
+  color:var(--accent);
+  font-family:var(--font);
+  font-size:12px;
+  font-weight:600;
+  cursor:pointer;
+  padding:0;
+  text-decoration:underline;
+  text-underline-offset:2px}
+.wiz-action-gate-link:hover {
+  color:var(--accent-hover, var(--accent))}
+
+/* ── Add button ── */
+.wiz-add-btn {
+  font-family:var(--font);
+  color:var(--wiz-purple);
+  font-size:12px;
+  font-weight:600;
+  letter-spacing:.01em;
+  background:none;
+  border:none;
+  cursor:pointer;
+  padding:6px 0;
+  margin-bottom:16px;
+  transition:color var(--duration) var(--ease-out)}
+.wiz-add-btn:hover {
+  color:#3d35a0}
+.wiz-add-btn.amber {
+  color:var(--wiz-amber)}
+
+/* ── Step 4: ELSE branch (optional fallback action) ──
+   Sits at the bottom of Step 4. Collapsed = a dashed "+ Add ELSE branch"
+   tile; expanded = a self-contained panel with action picker + params,
+   styled with the same amber accent used by ELSE chips elsewhere. */
+.wiz-else-section {
+  margin-top:24px;
+  padding-top:20px;
+  border-top:1px dashed #e5e7eb}
+.wiz-else-add-btn {
+  width:100%;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:14px 16px;
+  background:#fffbeb;
+  border:1px dashed #f59e0b;
+  border-radius:12px;
+  color:#92400e;
+  cursor:pointer;
+  text-align:left;
+  font-family:var(--font);
+  transition:background var(--duration) var(--ease-out), border-color var(--duration) var(--ease-out), transform var(--duration) var(--ease-out)}
+.wiz-else-add-btn:hover {
+  background:#fef3c7;
+  border-color:#d97706;
+  transform:translateY(-1px)}
+.wiz-else-add-glyph {
+  width:32px;
+  height:32px;
+  border-radius:50%;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-size:var(--fs-600);
+  font-weight:var(--fw-bold);
+  background:#fef3c7;
+  color:#92400e;
+  flex:none}
+.wiz-else-add-body {
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  min-width:0}
+.wiz-else-add-name {
+  font-size:13px;
+  font-weight:700;
+  letter-spacing:.04em;
+  text-transform:uppercase}
+.wiz-else-add-desc {
+  font-size:12px;
+  font-weight:500;
+  color:#92400ec0}
+
+.wiz-else-panel {
+  border:1px solid #fde68a;
+  border-radius:12px;
+  background:linear-gradient(180deg, #fffbeb 0%, #ffffff 32%);
+  padding:18px 18px 16px;
+  display:flex;
+  flex-direction:column;
+  gap:14px}
+.wiz-else-panel-head {
+  display:flex;
+  align-items:center;
+  gap:10px}
+.wiz-else-tag {
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  padding:4px 9px;
+  border-radius:999px;
+  background:#fef3c7;
+  color:#92400e;
+  border:1px solid #fde68a}
+.wiz-else-panel-title {
+  font-size:14px;
+  font-weight:700;
+  color:var(--text-1);
+  flex:1}
+.wiz-else-remove {
+  font-family:var(--font);
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.04em;
+  text-transform:uppercase;
+  color:#92400e;
+  background:transparent;
+  border:1px solid #fde68a;
+  border-radius:999px;
+  padding:5px 12px;
+  cursor:pointer;
+  transition:background var(--duration) var(--ease-out)}
+.wiz-else-remove:hover {
+  background:#fef3c7}
+.wiz-else-panel-hint {
+  margin:0;
+  color:var(--text-3);
+  font-size:12px;
+  line-height:1.55}
+.wiz-else-panel-hint strong {color:#92400e; font-weight:600}
+
+/* Review row separator + ELSE block in Step 5 */
+.wiz-review-row-divider {
+  margin-top:8px;
+  padding-top:10px;
+  border-top:1px dashed #fde68a}
+.wiz-review-row-else .wiz-review-key {color:#92400e}
+.wiz-pill.else-pill {
+  background:#fef3c7;
+  color:#92400e;
+  border:1px solid #fde68a}
+
+/* ── Step 3: Condition — type picker, configurator, offers, slider ── */
+
+/* Selected-chips strip (shows active conditions joined by AND) */
+.wiz-cond-selected {
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  align-items:center;
+  padding:10px 12px;
+  background:var(--wiz-blue-soft);
+  border:1px solid #c9def0;
+  border-radius:8px;
+  margin-bottom:4px}
+.wiz-cond-and {
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.12em;
+  color:var(--wiz-blue);
+  padding:0 2px}
+
+/* Operator pill (AND/OR/ELSE) shown between selected condition chips
+   and inside the pendingOperator notice in the picker view. */
+.wiz-cond-op {
+  display:inline-flex;
+  align-items:center;
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  padding:2px 7px;
+  border-radius:5px;
+  background:#f1f5f9;
+  color:#475569;
+  line-height:1}
+.wiz-cond-op-and {background:#dcfce7; color:#166534}
+.wiz-cond-op-or {background:#dbeafe; color:#1e40af}
+.wiz-cond-op-else {background:#fef3c7; color:#92400e}
+
+.wiz-notice-op {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap}
+.wiz-notice-op .wiz-cond-op {margin:0 2px}
+
+/* +AND / +OR operator action row — appears at the bottom of a
+   configurator after at least one condition has been added so the user
+   can chain a second condition. ELSE has been promoted to an optional
+   fallback branch on Step 4 (no longer a between-conditions join). */
+.wiz-cond-add-ops {
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0, 1fr));
+  gap:10px}
+.wiz-op-hint {
+  margin:8px 0 0;
+  color:var(--text-3);
+  font-size:11.5px;
+  line-height:1.55}
+.wiz-op-hint strong {color:var(--text-1); font-weight:600}
+.wiz-op-btn {
+  font-family:var(--font);
+  display:grid;
+  grid-template-columns:32px 1fr;
+  align-items:center;
+  column-gap:12px;
+  padding:12px 14px;
+  background:#fff;
+  border:1px solid #e5e7eb;
+  border-radius:10px;
+  cursor:pointer;
+  text-align:left;
+  transition:all .15s var(--ease-out)}
+.wiz-op-btn:hover {
+  border-color:var(--wiz-purple);
+  background:#fafbfc;
+  transform:translateY(-1px);
+  box-shadow:0 4px 14px #0d114212}
+.wiz-op-glyph {
+  width:32px;
+  height:32px;
+  border-radius:50%;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-size:var(--fs-600);
+  font-weight:var(--fw-bold);
+  background:#eef2ff;
+  color:var(--wiz-purple);
+  line-height:1}
+.wiz-op-and .wiz-op-glyph {background:#dcfce7; color:#166534}
+.wiz-op-or .wiz-op-glyph {background:#dbeafe; color:#1e40af}
+.wiz-op-else .wiz-op-glyph {background:#fef3c7; color:#92400e}
+.wiz-op-body {
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  min-width:0}
+.wiz-op-name {
+  font-size:13px;
+  font-weight:700;
+  color:#111827;
+  letter-spacing:.04em}
+.wiz-op-desc {
+  font-size:11.5px;
+  font-weight:400;
+  color:var(--text-3);
+  line-height:1.3}
+
+@media (max-width: 640px) {
+  .wiz-cond-add-ops {grid-template-columns:1fr}
+}
+.wiz-cond-chip {
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  background:#fff;
+  border:1px solid #c9def0;
+  border-radius:999px;
+  padding:4px 4px 4px 10px;
+  font-size:11.5px;
+  font-weight:500;
+  color:var(--wiz-blue);
+  line-height:1.4}
+.wiz-cond-chip-text {
+  white-space:nowrap}
+.wiz-cond-chip-x {
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  border:none;
+  background:transparent;
+  color:#64748b;
+  font-size:14px;
+  line-height:1;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:background .15s var(--ease-out), color .15s var(--ease-out)}
+.wiz-cond-chip-x:hover {
+  background:#fee2e2;
+  color:#b91c1c}
+
+/* Type picker grid — single full-width column at every breakpoint. */
+.wiz-cond-types {
+  display:grid;
+  grid-template-columns:1fr;
+  width:100%;
+  gap:10px}
+.wiz-cond-types-3col {
+  grid-template-columns:1fr;
+  width:100%}
+.wiz-cond-type-tile {
+  font-family:var(--font);
+  position:relative;
+  border:1px solid #e5e7eb;
+  border-radius:10px;
+  background:#fff;
+  padding:10px 12px;
+  cursor:pointer;
+  text-align:left;
+  transition:all .15s var(--ease-out);
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-height:44px}
+.wiz-cond-type-tile:hover {
+  border-color:var(--wiz-purple);
+  background:#fafbfc;
+  transform:translateY(-1px);
+  box-shadow:0 4px 14px #0d114212}
+.wiz-cond-type-tile .wiz-tile-icon {
+  width:28px;
+  height:28px;
+  border-radius:8px;
+  background:var(--wiz-purple-soft);
+  color:var(--wiz-purple);
+  flex:0 0 28px;
+  display:flex;
+  align-items:center;
+  justify-content:center}
+.wiz-cond-type-tile .wiz-tile-icon svg {
+  width:16px;
+  height:16px}
+.wiz-cond-type-label {
+  font-size:13px;
+  font-weight:600;
+  color:#1f2937;
+  line-height:1.25}
+
+/* "Always applies" escape tile — full-width below the type grid */
+.wiz-cond-any {
+  font-family:var(--font);
+  border:1px dashed #cbd5e1;
+  border-radius:10px;
+  background:#fff;
+  padding:14px 18px;
+  cursor:pointer;
+  text-align:left;
+  transition:all .15s var(--ease-out);
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  width:100%}
+.wiz-cond-any:hover {
+  border-color:var(--wiz-purple);
+  background:var(--wiz-purple-soft)}
+.wiz-cond-any.on {
+  border-style:solid;
+  border-color:var(--wiz-purple);
+  background:var(--wiz-purple-soft);
+  box-shadow:0 0 0 1px var(--wiz-purple) inset}
+.wiz-cond-any-title {
+  font-size:13px;
+  font-weight:600;
+  color:var(--wiz-purple)}
+.wiz-cond-any-desc {
+  font-size:11.5px;
+  color:var(--text-3)}
+
+/* ── Condition type dropdown (replaces the tile grid) ─────────────────
+   Single full-width trigger that opens a popover listing every condition
+   type plus the "Always applies" escape hatch. */
+.wiz-cond-type-dropdown {
+  position:relative;
+  width:100%}
+.wiz-cond-type-trigger {
+  font-family:var(--font);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  width:100%;
+  padding:14px 16px;
+  border:1px solid #e5e7eb;
+  border-radius:12px;
+  background:#fff;
+  font-size:14px;
+  font-weight:500;
+  color:#1f2937;
+  cursor:pointer;
+  transition:all .15s var(--ease-out)}
+.wiz-cond-type-trigger:hover {
+  border-color:var(--wiz-purple)}
+.wiz-cond-type-trigger.is-open {
+  border-color:var(--wiz-purple);
+  box-shadow:0 0 0 3px rgba(99, 102, 241, .15)}
+.wiz-cond-type-trigger.has-pick {
+  border-color:var(--wiz-purple);
+  background:var(--wiz-purple-soft)}
+.wiz-cond-type-trigger-icon {
+  width:24px;
+  height:24px;
+  border-radius:6px;
+  background:#fff;
+  color:var(--wiz-purple);
+  flex:0 0 24px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border:1px solid #ede9fe}
+.wiz-cond-type-trigger-icon svg {
+  width:14px;
+  height:14px}
+.wiz-cond-type-trigger-label {
+  flex:1 1 auto;
+  text-align:left;
+  color:#6b7280}
+.wiz-cond-type-trigger-label.has-pick {
+  color:var(--wiz-purple);
+  font-weight:600}
+.wiz-cond-type-trigger-chevron {
+  font-size:11px;
+  line-height:1;
+  color:#94a3b8;
+  transition:transform .15s var(--ease-out)}
+.wiz-cond-type-trigger.is-open .wiz-cond-type-trigger-chevron {
+  transform:rotate(180deg);
+  color:var(--wiz-purple)}
+
+.wiz-cond-type-popover {
+  position:absolute;
+  top:calc(100% + 6px);
+  left:0;
+  right:0;
+  z-index:30;
+  max-height:380px;
+  overflow-y:auto;
+  border:1px solid #e5e7eb;
+  border-radius:12px;
+  background:#fff;
+  box-shadow:0 12px 32px rgba(15, 23, 42, .14), 0 2px 6px rgba(15, 23, 42, .08);
+  padding:6px;
+  font-family:var(--font)}
+.wiz-cond-type-popover-divider {
+  height:1px;
+  background:#f1f5f9;
+  margin:6px 4px}
+.wiz-cond-type-option {
+  font-family:var(--font);
+  display:flex;
+  align-items:center;
+  gap:12px;
+  width:100%;
+  padding:10px 12px;
+  border:0;
+  background:transparent;
+  border-radius:8px;
+  cursor:pointer;
+  text-align:left;
+  transition:background-color .12s var(--ease-out)}
+.wiz-cond-type-option:hover {
+  background:#f8fafc}
+.wiz-cond-type-option.on {
+  background:var(--wiz-purple-soft)}
+.wiz-cond-type-option-icon {
+  width:28px;
+  height:28px;
+  border-radius:8px;
+  background:var(--wiz-purple-soft);
+  color:var(--wiz-purple);
+  flex:0 0 28px;
+  display:flex;
+  align-items:center;
+  justify-content:center}
+.wiz-cond-type-option-icon svg {
+  width:16px;
+  height:16px}
+.wiz-cond-type-option-text {
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  flex:1 1 auto;
+  min-width:0}
+.wiz-cond-type-option-label {
+  font-size:13px;
+  font-weight:600;
+  color:#1f2937;
+  line-height:1.25}
+.wiz-cond-type-option-desc {
+  font-size:11.5px;
+  color:var(--text-3);
+  line-height:1.35}
+.wiz-cond-type-option-any .wiz-cond-type-option-label {
+  color:var(--wiz-purple)}
+.wiz-cond-type-option-any.on .wiz-cond-type-option-label {
+  color:var(--wiz-purple)}
+
+/* Back button shown on configurator views */
+.wiz-cond-back {
+  font-family:var(--font);
+  align-self:flex-start;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  font-size:12px;
+  font-weight:500;
+  color:var(--wiz-purple);
+  background:none;
+  border:none;
+  cursor:pointer;
+  padding:4px 0;
+  transition:color .15s var(--ease-out)}
+.wiz-cond-back:hover {
+  color:#3d35a0}
+.wiz-cond-back > span[aria-hidden] {
+  font-size:16px;
+  line-height:1}
+
+/* Configurator header */
+.wiz-cond-config-head {
+  display:flex;
+  flex-direction:column;
+  gap:2px;
+  margin-bottom:2px}
+.wiz-cond-config-title {
+  font-size:var(--h5-fs);
+  line-height:var(--h5-lh);
+  font-weight:var(--h5-fw);
+  letter-spacing:var(--h5-tr);
+  color:#111827;
+  margin:0}
+.wiz-cond-config-sub {
+  font-size:var(--body-tiny-fs);
+  line-height:var(--body-tiny-lh);
+  color:var(--text-3);
+  margin:0}
+
+/* Offers row — previously-used presets with count badge */
+.wiz-offers-row {
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-bottom:6px}
+.wiz-offer-chip {
+  font-family:var(--font);
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  border:1px solid #e5e7eb;
+  border-radius:999px;
+  background:#fff;
+  padding:6px 6px 6px 12px;
+  font-size:12px;
+  font-weight:500;
+  color:#374151;
+  cursor:pointer;
+  transition:all .15s var(--ease-out)}
+.wiz-offer-chip:hover {
+  border-color:var(--wiz-purple);
+  color:var(--wiz-purple)}
+.wiz-offer-chip.on {
+  border-color:var(--wiz-purple);
+  background:var(--wiz-purple-soft);
+  color:var(--wiz-purple)}
+.wiz-offer-chip-text {
+  white-space:nowrap}
+.wiz-offer-count {
+  font-size:10.5px;
+  font-weight:700;
+  letter-spacing:.02em;
+  color:#fff;
+  background:#94a3b8;
+  border-radius:999px;
+  padding:2px 7px;
+  line-height:1.3;
+  min-width:22px;
+  text-align:center}
+.wiz-offer-chip:hover .wiz-offer-count,
+.wiz-offer-chip.on .wiz-offer-count {
+  background:var(--wiz-purple)}
+
+/* Position State configurator — flat templated rows.
+   Rows are not bordered cards: they are simple `label : dropdown` lines
+   stacked vertically with a thin divider so the configurator stays compact. */
+.wiz-cond-templates {
+  display:flex;
+  flex-direction:column;
+  gap:0;
+  width:100%}
+.wiz-cond-template-row {
+  display:flex;
+  align-items:center;
+  gap:14px;
+  width:100%;
+  padding:10px 0;
+  border:0;
+  border-bottom:1px solid #f1f5f9;
+  border-radius:0;
+  background:transparent}
+.wiz-cond-template-row:last-of-type {
+  border-bottom:0}
+.wiz-cond-template-row:hover {
+  border-bottom-color:#e5e7eb}
+.wiz-cond-template-label {
+  font-family:var(--font);
+  font-size:14px;
+  font-weight:500;
+  color:#1f2937;
+  flex:0 0 auto;
+  min-width:140px}
+.wiz-cond-template-chips {
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  flex:1 1 auto;
+  justify-content:flex-end}
+.wiz-cond-template-chip {
+  font-family:var(--font);
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  border:1px solid #e5e7eb;
+  border-radius:999px;
+  background:#fff;
+  padding:7px 14px;
+  font-size:13px;
+  font-weight:500;
+  color:#374151;
+  cursor:pointer;
+  transition:all .15s var(--ease-out)}
+.wiz-cond-template-chip:hover {
+  border-color:var(--wiz-purple);
+  color:var(--wiz-purple)}
+.wiz-cond-template-chip.on {
+  border-color:var(--wiz-purple);
+  background:var(--wiz-purple-soft);
+  color:var(--wiz-purple)}
+.wiz-cond-template-chip-check {
+  font-size:11px;
+  line-height:1;
+  color:var(--wiz-purple)}
+.wiz-cond-template-atom {
+  font-family:var(--font);
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:flex-start;
+  gap:10px;
+  width:100%;
+  padding:10px 0;
+  border:0;
+  border-bottom:1px solid #f1f5f9;
+  border-radius:0;
+  background:transparent;
+  font-size:14px;
+  font-weight:500;
+  color:#1f2937;
+  cursor:pointer;
+  transition:color .15s var(--ease-out), border-bottom-color .15s var(--ease-out)}
+.wiz-cond-template-atom:last-of-type {
+  border-bottom:0}
+.wiz-cond-template-atom:hover {
+  color:var(--wiz-purple);
+  border-bottom-color:#e5e7eb}
+.wiz-cond-template-atom.on {
+  color:var(--wiz-purple);
+  background:transparent;
+  border-bottom-color:var(--wiz-purple-soft)}
+.wiz-cond-template-atom-label {
+  flex:1 1 auto;
+  text-align:left}
+.wiz-cond-template-atom .wiz-tile-check {
+  position:static;
+  margin-right:2px}
+
+@media (max-width: 720px) {
+  .wiz-cond-template-row {
+    flex-direction:column;
+    align-items:flex-start;
+    gap:8px}
+  .wiz-cond-template-chips {
+    justify-content:flex-start;
+    width:100%}
+  .wiz-cond-template-label {
+    min-width:0}
+}
+
+/* ── Position State row → multi-row layout when picks present ───────── */
+/* When at least one element has been picked for a row, allow the picks
+   strip to wrap onto a new line below the trigger. */
+.wiz-cond-template-row.has-picks {
+  flex-wrap:wrap;
+  align-items:flex-start;
+  row-gap:10px}
+
+.wiz-cond-template-row.is-open {
+  border-bottom-color:var(--wiz-purple)}
+
+/* ── Position State dropdown trigger ─────────────────────────────────── */
+/* The trigger replaces the static chip strip. It opens a popover that
+   lists meta options + every element grouped by ELEMENT_GROUPS.label. */
+.wiz-cond-template-row .wiz-cond-template-chips {
+  position:relative;
+  flex-wrap:nowrap}
+
+.wiz-pos-trigger {
+  font-family:var(--font);
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  border:1px solid #e5e7eb;
+  border-radius:999px;
+  background:#fff;
+  padding:7px 14px;
+  font-size:13px;
+  font-weight:500;
+  color:#6b7280;
+  cursor:pointer;
+  min-width:180px;
+  transition:all .15s var(--ease-out)}
+.wiz-pos-trigger:hover {
+  border-color:var(--wiz-purple);
+  color:var(--wiz-purple)}
+.wiz-pos-trigger.has-picks {
+  border-color:var(--wiz-purple);
+  background:var(--wiz-purple-soft);
+  color:var(--wiz-purple)}
+.wiz-pos-trigger.is-open {
+  border-color:var(--wiz-purple);
+  box-shadow:0 0 0 3px rgba(99, 102, 241, .15)}
+.wiz-pos-trigger-label {
+  flex:1 1 auto;
+  text-align:left;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis}
+.wiz-pos-trigger-chevron {
+  font-size:10px;
+  line-height:1;
+  transition:transform .15s var(--ease-out)}
+.wiz-pos-trigger.is-open .wiz-pos-trigger-chevron {
+  transform:rotate(180deg)}
+
+/* ── Position State popover (listbox) ────────────────────────────────── */
+.wiz-pos-popover {
+  position:absolute;
+  top:calc(100% + 6px);
+  right:0;
+  z-index:30;
+  min-width:240px;
+  max-width:320px;
+  max-height:340px;
+  overflow-y:auto;
+  border:1px solid #e5e7eb;
+  border-radius:12px;
+  background:#fff;
+  box-shadow:0 12px 32px rgba(15, 23, 42, .14), 0 2px 6px rgba(15, 23, 42, .08);
+  padding:8px;
+  font-family:var(--font)}
+.wiz-pos-popover-head {
+  padding:8px 10px 4px;
+  font-size:11px;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+  color:#9ca3af}
+.wiz-pos-popover-divider {
+  height:1px;
+  background:#f1f5f9;
+  margin:6px 4px}
+.wiz-pos-popover-options {
+  display:flex;
+  flex-direction:column;
+  gap:2px}
+.wiz-pos-popover-group + .wiz-pos-popover-group {
+  margin-top:4px}
+.wiz-pos-popover-group-head {
+  padding:6px 10px 2px;
+  font-size:11px;
+  font-weight:500;
+  color:#94a3b8}
+.wiz-pos-option {
+  font-family:var(--font);
+  display:flex;
+  align-items:center;
+  gap:8px;
+  width:100%;
+  padding:8px 10px;
+  border:0;
+  background:transparent;
+  border-radius:8px;
+  font-size:13px;
+  font-weight:500;
+  color:#1f2937;
+  text-align:left;
+  cursor:pointer;
+  transition:background-color .12s var(--ease-out)}
+.wiz-pos-option:hover {
+  background:#f8fafc}
+.wiz-pos-option.on {
+  background:var(--wiz-purple-soft);
+  color:var(--wiz-purple)}
+.wiz-pos-option-check {
+  font-size:11px;
+  line-height:1;
+  color:var(--wiz-purple);
+  width:12px;
+  text-align:center}
+.wiz-pos-option:not(.on) .wiz-pos-option-check {
+  visibility:hidden}
+.wiz-pos-option-label {
+  flex:1 1 auto}
+
+/* ── Per-row pick chips (under the trigger) ──────────────────────────── */
+.wiz-pos-row-picks {
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  width:100%;
+  margin-left:154px}
+.wiz-pos-pick {
+  font-family:var(--font);
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:4px 10px 4px 12px;
+  border:1px solid var(--wiz-purple);
+  border-radius:999px;
+  background:var(--wiz-purple-soft);
+  color:var(--wiz-purple);
+  font-size:12px;
+  font-weight:500;
+  cursor:pointer;
+  transition:background-color .12s var(--ease-out)}
+.wiz-pos-pick:hover {
+  background:#ede9fe}
+.wiz-pos-pick-x {
+  font-size:14px;
+  line-height:1;
+  opacity:.7}
+
+@media (max-width: 720px) {
+  .wiz-pos-popover {
+    right:auto;
+    left:0;
+    min-width:220px;
+    max-width:calc(100vw - 48px)}
+  .wiz-pos-row-picks {
+    margin-left:0}
+}
+
+/* Size configurator — expandable template picker.
+   Patterned after the WIX Design System "List item select" / "List item
+   action" / "Radio" components: a single containerized list with hairline
+   row dividers (no per-card borders or shadows), a radio dot on the left
+   of each row, and a soft purple-tinted fill on the selected row.
+
+   Top-level rows fall into two shapes:
+     • Multi-alt template — clicking expands a nested radio list of
+       alternatives (Reset Scaling, Resize to Aspect Ratio). A chevron
+       at the right edge rotates 180° on open.
+     • Leaf template — clicking selects directly. Leaf templates may
+       carry inline inputs (Reduce by %) which appear under the row
+       when selected, or carry no inputs at all (Generic Heuristics).
+
+   Selection is radio-style across the whole picker — only one
+   row OR alternative is "selected" at a time, tracked via the
+   `sizeTemplatePath` state; editing the Custom Min/Max card below
+   clears it. */
+.wiz-size-tpl-list {
+  display:flex;
+  flex-direction:column;
+  width:100%;
+  margin:4px 0 6px;
+  border:1px solid var(--lb-athens);
+  border-radius:12px;
+  background:var(--lb-white);
+  overflow:hidden}
+
+/* Group wraps a top-level template row + (when expanded) its alternatives.
+   Hairline divider lives on the group so the divider sits below the entire
+   expansion, not between the row and its sub-rows. */
+.wiz-size-tpl-group {
+  display:flex;
+  flex-direction:column;
+  border-bottom:1px solid var(--lb-athens-soft);
+  background:var(--lb-white);
+  transition:background .12s var(--ease-out)}
+.wiz-size-tpl-group:last-child {
+  border-bottom:0}
+.wiz-size-tpl-group.open {
+  background:var(--lb-athens-soft)}
+
+.wiz-size-tpl-row {
+  position:relative;
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  gap:12px;
+  width:100%;
+  padding:12px 16px;
+  border:0;
+  background:transparent;
+  font-family:var(--font);
+  cursor:pointer;
+  text-align:left;
+  transition:background .12s var(--ease-out)}
+.wiz-size-tpl-row:hover {
+  background:var(--lb-athens-soft)}
+.wiz-size-tpl-row:focus-visible {
+  outline:none;
+  background:var(--wiz-pop-tint);
+  box-shadow:inset 0 0 0 2px var(--lb-chartreuse)}
+.wiz-size-tpl-row.selected {
+  background:var(--wiz-pop-tint)}
+.wiz-size-tpl-group.has-selected {
+  border-bottom-color:var(--lb-athens)}
+
+/* Radio dot on the left — empty ring by default, filled on selected. */
+.wiz-size-tpl-radio {
+  flex:0 0 auto;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:18px;
+  height:18px;
+  border-radius:999px;
+  border:1.5px solid var(--lb-chateau);
+  background:var(--lb-white);
+  transition:border-color .12s var(--ease-out),
+              background .12s var(--ease-out)}
+.wiz-size-tpl-radio-dot {
+  width:8px;
+  height:8px;
+  border-radius:999px;
+  background:transparent;
+  transition:background .12s var(--ease-out)}
+.wiz-size-tpl-row:hover .wiz-size-tpl-radio {
+  border-color:var(--lb-raven)}
+.wiz-size-tpl-row.selected .wiz-size-tpl-radio {
+  border-color:var(--lb-pearl);
+  background:var(--lb-white)}
+.wiz-size-tpl-row.selected .wiz-size-tpl-radio-dot {
+  background:var(--lb-chartreuse)}
+
+/* Primary identifier on the LEFT of each template row — uppercase,
+   editorial. Replaces the verbose template name (which now only appears
+   in the diagram once the rule is applied). The classification is the
+   row's "title" here. */
+.wiz-size-tpl-tag {
+  flex:1 1 auto;
+  min-width:0;
+  font-size:var(--fs-200);
+  line-height:var(--lh-200);
+  font-weight:var(--fw-semibold);
+  letter-spacing:var(--tracking-100);
+  text-transform:uppercase;
+  color:var(--lb-arsenic);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  transition:color .12s var(--ease-out)}
+.wiz-size-tpl-row:hover .wiz-size-tpl-tag {
+  color:var(--lb-pearl)}
+.wiz-size-tpl-row.selected .wiz-size-tpl-tag {
+  color:var(--lb-pearl)}
+.wiz-size-tpl-name {
+  flex:1 1 auto;
+  min-width:0;
+  font-size:13px;
+  font-weight:600;
+  color:#1f2937;
+  letter-spacing:-.005em;
+  line-height:1.3;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis}
+.wiz-size-tpl-row.selected .wiz-size-tpl-name {
+  color:var(--lb-pearl)}
+/* Dimensional summary on the RIGHT of each row — quiet, tabular,
+   right-aligned so every row's values line up vertically. */
+.wiz-size-tpl-summary {
+  flex:0 0 auto;
+  margin-left:auto;
+  padding-left:16px;
+  font-size:var(--body-tiny-fs);
+  line-height:var(--body-tiny-lh);
+  font-weight:var(--fw-medium);
+  color:var(--text-3);
+  letter-spacing:.005em;
+  font-variant-numeric:tabular-nums;
+  white-space:nowrap;
+  text-align:right}
+.wiz-size-tpl-row.selected .wiz-size-tpl-summary,
+.wiz-size-tpl-alt.selected .wiz-size-tpl-summary {
+  color:var(--lb-arsenic)}
+
+/* Chevron — appears at the right edge of multi-alt rows. Rotates 180°
+   when the group is expanded so it points up. */
+.wiz-size-tpl-chevron {
+  flex:0 0 auto;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  width:18px;
+  height:18px;
+  margin-left:4px;
+  color:var(--lb-chateau);
+  transition:transform .18s var(--ease-out),
+              color .12s var(--ease-out)}
+.wiz-size-tpl-row:hover .wiz-size-tpl-chevron {
+  color:var(--lb-arsenic)}
+.wiz-size-tpl-chevron.open {
+  transform:rotate(180deg);
+  color:var(--lb-arsenic)}
+
+/* Multi-alt expansion list — sub-rows nested under the group's primary
+   row. Each alt has the same hairline divider treatment as the top-level
+   list; the leftmost radio dot is indented to visually nest. */
+.wiz-size-tpl-alts {
+  display:flex;
+  flex-direction:column;
+  background:var(--lb-white);
+  border-top:1px solid var(--lb-athens-soft)}
+.wiz-size-tpl-alt {
+  display:flex;
+  flex-direction:column;
+  border-bottom:1px solid var(--lb-athens-soft)}
+.wiz-size-tpl-alt:last-child {
+  border-bottom:0}
+.wiz-size-tpl-alt-row {
+  position:relative;
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  gap:12px;
+  width:100%;
+  padding:10px 16px 10px 32px;
+  border:0;
+  background:transparent;
+  font-family:var(--font);
+  cursor:pointer;
+  text-align:left;
+  transition:background .12s var(--ease-out)}
+.wiz-size-tpl-alt-row:hover {
+  background:var(--lb-athens-soft)}
+.wiz-size-tpl-alt-row:focus-visible {
+  outline:none;
+  background:var(--wiz-pop-tint);
+  box-shadow:inset 0 0 0 2px var(--lb-chartreuse)}
+.wiz-size-tpl-alt.selected .wiz-size-tpl-alt-row {
+  background:var(--wiz-pop-tint)}
+.wiz-size-tpl-alt.selected .wiz-size-tpl-radio {
+  border-color:var(--lb-pearl)}
+.wiz-size-tpl-alt.selected .wiz-size-tpl-radio-dot {
+  background:var(--lb-chartreuse)}
+
+.wiz-size-tpl-alt-label {
+  flex:1 1 auto;
+  min-width:0;
+  font-size:var(--body-small-fs);
+  line-height:var(--body-small-lh);
+  font-weight:var(--fw-medium);
+  color:var(--text-2);
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  transition:color .12s var(--ease-out)}
+.wiz-size-tpl-alt.selected .wiz-size-tpl-alt-label {
+  color:var(--lb-pearl);
+  font-weight:var(--fw-semibold)}
+
+/* Inline inputs — used by leaf templates with parameters (Reduce by %)
+   and by alts that carry input fields (Aspect bounded). The grid wraps
+   responsively so 2-input alts stay on one line and 6-input leafs flow
+   onto two rows. */
+.wiz-size-tpl-leaf-body {
+  padding:0 16px 14px}
+.wiz-size-tpl-alt .wiz-size-tpl-inputs {
+  padding:0 16px 12px 32px}
+.wiz-size-tpl-inputs {
+  display:grid;
+  grid-template-columns:repeat(auto-fit, minmax(120px, 1fr));
+  gap:8px 12px;
+  width:100%}
+.wiz-size-tpl-input {
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  min-width:0}
+.wiz-size-tpl-input-label {
+  font-size:var(--fs-200);
+  line-height:var(--lh-200);
+  font-weight:var(--fw-medium);
+  color:var(--text-3);
+  letter-spacing:.01em;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis}
+.wiz-size-tpl-input-field {
+  display:flex;
+  align-items:center;
+  gap:0;
+  width:100%;
+  height:32px;
+  padding:0 4px 0 10px;
+  border:1px solid var(--lb-athens);
+  border-radius:8px;
+  background:var(--lb-white);
+  transition:border-color .12s var(--ease-out),
+              box-shadow .12s var(--ease-out)}
+.wiz-size-tpl-input-field:focus-within {
+  border-color:var(--lb-pearl);
+  box-shadow:0 0 0 3px var(--wiz-pop-tint)}
+.wiz-size-tpl-input-field input[type="number"] {
+  flex:1 1 auto;
+  min-width:0;
+  width:100%;
+  height:100%;
+  padding:0;
+  border:0;
+  outline:0;
+  background:transparent;
+  font-family:var(--font);
+  font-size:var(--body-small-fs);
+  line-height:var(--body-small-lh);
+  font-weight:var(--fw-medium);
+  color:var(--text-1);
+  font-variant-numeric:tabular-nums}
+.wiz-size-tpl-input-suffix {
+  flex:0 0 auto;
+  padding:0 8px 0 4px;
+  font-size:var(--fs-200);
+  line-height:var(--lh-200);
+  font-weight:var(--fw-medium);
+  color:var(--text-3);
+  letter-spacing:.01em}
+
+/* Narrow viewports — keep tag and summary on a single row by tightening
+   the gap; ellipsis on the tag handles overflow. */
+@media (max-width: 520px) {
+  .wiz-size-tpl-row {
+    padding:12px 14px;
+    gap:10px}
+  .wiz-size-tpl-summary {
+    padding-left:8px}
+  .wiz-size-tpl-alt-row {
+    padding:10px 14px 10px 28px;
+    gap:10px}
+  .wiz-size-tpl-alt .wiz-size-tpl-inputs {
+    padding:0 14px 12px 28px}
+  .wiz-size-tpl-leaf-body {
+    padding:0 14px 12px}
+}
+
+/* Inline hint next to a wiz-group-head — a sibling text used for the
+   "Pick a starting shape, then fine-tune below" sub-label. */
+.wiz-group-head .wiz-group-hint {
+  margin-left:8px;
+  font-size:11px;
+  font-weight:500;
+  color:var(--text-3);
+  text-transform:none;
+  letter-spacing:.01em}
+
+/* Size configurator — range slider card */
+.wiz-range-card {
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  width:100%;
+  box-sizing:border-box;
+  border:1px solid #e5e7eb;
+  border-radius:10px;
+  background:#fff;
+  padding:14px 16px}
+
+/* Unified Width + Height card — two rows separated by a hairline. */
+.wiz-range-card-stacked {
+  gap:0;
+  padding:0}
+.wiz-range-card-stacked .wiz-range-row {
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  padding:14px 16px}
+.wiz-range-card-stacked .wiz-range-row + .wiz-range-row {
+  border-top:1px solid #e5e7eb}
+.wiz-range-row-head {
+  display:flex;
+  align-items:baseline;
+  gap:10px;
+  flex-wrap:wrap}
+.wiz-range-row-dim {
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:#6b7280;
+  min-width:48px}
+.wiz-range-preview {
+  font-size:12px;
+  color:#374151;
+  line-height:1.5}
+.wiz-range-preview strong {
+  color:var(--wiz-purple);
+  font-weight:600}
+.wiz-range-dash {
+  color:#9ca3af;
+  font-weight:500;
+  margin:0 2px}
+
+/* "Previously selected" recap shown when a pendingOperator is active in
+   the picker view — keeps condition #1's tile(s) in selected state above
+   the type-picker grid for condition #2. */
+.wiz-prev-recap {
+  display:grid;
+  gap:8px;
+  padding:12px;
+  border:1px dashed #d1d5db;
+  border-radius:10px;
+  background:#fafbfc}
+.wiz-prev-recap-head {
+  margin:0;
+  text-transform:uppercase;
+  letter-spacing:.04em;
+  font-size:11px;
+  color:#6b7280}
+.wiz-tile-grid-recap {
+  margin:0}
+.wiz-tile-locked {
+  cursor:default;
+  pointer-events:none;
+  opacity:.95}
+
+/* Min/max number inputs + Add CTA aligned in one row */
+.wiz-range-inputs {
+  display:flex;
+  align-items:flex-end;
+  gap:10px;
+  flex-wrap:wrap}
+.wiz-range-inputs label {
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+  font-size:11px;
+  color:var(--text-3);
+  font-weight:500;
+  letter-spacing:.01em}
+.wiz-range-inputs input {
+  font-family:var(--font);
+  width:90px;
+  border:1px solid #d1d5db;
+  border-radius:6px;
+  padding:6px 8px;
+  font-size:12.5px;
+  color:#111827;
+  background:#fff;
+  transition:border-color .15s var(--ease-out), box-shadow .15s var(--ease-out)}
+.wiz-range-inputs input:focus {
+  outline:none;
+  border-color:var(--wiz-purple);
+  box-shadow:0 0 0 3px #534ab726}
+.wiz-cond-add-cta {
+  font-family:var(--font);
+  margin-left:auto;
+  align-self:flex-end;
+  border:none;
+  border-radius:8px;
+  background:var(--wiz-purple);
+  color:#fff;
+  font-size:12.5px;
+  font-weight:600;
+  padding:8px 16px;
+  cursor:pointer;
+  transition:background .15s var(--ease-out), transform .12s var(--ease-out)}
+.wiz-cond-add-cta:hover {
+  background:#3d35a0}
+.wiz-cond-add-cta:active {
+  transform:translateY(1px)}
+.wiz-cond-add-cta:disabled {
+  background:#cbd5e1;
+  color:#fff;
+  cursor:not-allowed}
+
+/* Coupled Width + Height action row — one CTA below the stacked card.
+   Left side: a quiet hint reminding the user the two dimensions are
+   added together. Right side: the single "Add condition" button that
+   emits both canonicals as a coupled AND pair. */
+.wiz-size-coupled-actions {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+  margin:10px 0 0;
+  padding:0 2px;
+  width:100%}
+.wiz-size-coupled-hint {
+  flex:1 1 auto;
+  font-size:var(--body-tiny-fs);
+  line-height:var(--body-tiny-lh);
+  font-weight:var(--fw-regular);
+  color:var(--text-3);
+  letter-spacing:.005em}
+.wiz-size-coupled-actions .wiz-cond-add-cta {
+  margin-left:0;
+  align-self:auto;
+  flex:0 0 auto}
+@media (max-width: 520px) {
+  .wiz-size-coupled-actions {
+    flex-direction:column;
+    align-items:stretch;
+    gap:8px}
+  .wiz-size-coupled-actions .wiz-cond-add-cta {
+    width:100%}
+}
+
+/* Secondary "Any" shortcut next to the primary Add CTA — outline style so it
+   reads as a quieter alternative ("match any value for this dimension"). */
+.wiz-cond-any-btn {
+  font-family:var(--font);
+  margin-left:auto;
+  align-self:flex-end;
+  border:1px solid var(--wiz-purple);
+  border-radius:8px;
+  background:#fff;
+  color:var(--wiz-purple);
+  font-size:12.5px;
+  font-weight:600;
+  padding:7px 14px;
+  cursor:pointer;
+  transition:background .15s var(--ease-out), color .15s var(--ease-out), transform .12s var(--ease-out)}
+.wiz-cond-any-btn + .wiz-cond-add-cta {
+  margin-left:0}
+.wiz-cond-any-btn:hover {
+  background:var(--wiz-purple-soft)}
+.wiz-cond-any-btn:active {
+  transform:translateY(1px)}
+.wiz-cond-any-btn:disabled {
+  border-color:#cbd5e1;
+  color:#94a3b8;
+  background:#f8fafc;
+  cursor:not-allowed}
+
+@media (max-width: 720px) {
+  .wiz-cond-types,
+  .wiz-cond-types-3col {
+    grid-template-columns:1fr}
+  .wiz-cond-add-cta,
+  .wiz-cond-any-btn {
+    margin-left:0;
+    width:100%}
+}
+
+/* ── Modal (add new element/context/condition) ── */
+.wiz-modal-backdrop {
+  position:fixed;
+  inset:0;
+  z-index:1000;
+  background:rgba(15, 23, 42, 0.42);
+  backdrop-filter:blur(2px);
+  -webkit-backdrop-filter:blur(2px);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+  animation:wiz-modal-fade 160ms var(--ease-out)}
+.wiz-modal {
+  width:min(460px, 100%);
+  background:#fff;
+  border:1px solid var(--border-subtle, #e5e7eb);
+  border-radius:16px;
+  box-shadow:0 24px 60px -12px rgba(15, 23, 42, 0.28), 0 8px 20px -8px rgba(15, 23, 42, 0.18);
+  overflow:hidden;
+  animation:wiz-modal-pop 180ms var(--ease-out)}
+.wiz-modal-header {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:18px 20px 0}
+.wiz-modal-title {
+  color:var(--text-1);
+  font-size:15px;
+  font-weight:600;
+  letter-spacing:-0.01em}
+.wiz-modal-close {
+  width:28px;
+  height:28px;
+  border-radius:8px;
+  border:0;
+  background:transparent;
+  color:var(--text-3);
+  font-size:20px;
+  line-height:1;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  transition:background-color var(--duration) var(--ease-out), color var(--duration) var(--ease-out)}
+.wiz-modal-close:hover {
+  background:#f3f4f6;
+  color:var(--text-1)}
+.wiz-modal-body {
+  padding:16px 20px 20px}
+@keyframes wiz-modal-fade {
+  from { opacity:0 }
+  to   { opacity:1 }
+}
+@keyframes wiz-modal-pop {
+  from { opacity:0; transform:translateY(6px) scale(0.98) }
+  to   { opacity:1; transform:none }
+}
+/* Legacy inline panel styles (kept for any straggler usages) */
+.wiz-inline-panel {
+  width:100%;
+  border:1px solid var(--border-subtle, #e5e7eb);
+  background:#fff;
+  border-radius:12px;
+  padding:18px 20px;
+  margin-bottom:20px}
+.wiz-inline-panel.amber {
+  border-color:#e6510040;
+  background:#fff}
+.wiz-inline-panel-title {
+  color:var(--text-1);
+  font-size:13px;
+  font-weight:600;
+  margin-bottom:12px}
+.wiz-panel-field {
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+  margin-bottom:12px;
+  color:var(--text-3);
+  font-size:11px;
+  font-weight:500}
+.wiz-panel-field input,.wiz-panel-field select {
+  border:1px solid var(--border-control);
+  border-radius:var(--radius);
+  color:var(--text-1);
+  font-size:13px;
+  font-family:var(--font);
+  padding:10px 12px;
+  background:#fff;
+  outline:none;
+  transition:border-color var(--duration) var(--ease-out)}
+.wiz-panel-field input:focus,.wiz-panel-field select:focus {
+  border-color:var(--wiz-purple);
+  box-shadow:0 0 0 3px #534ab714}
+.wiz-panel-actions {
+  display:flex;
+  gap:8px;
+  justify-content:flex-end;
+  margin-top:4px}
+.wiz-panel-hint {
+  color:var(--text-3);
+  font-size:11px;
+  margin:0 0 12px;
+  line-height:1.4}
+
+/* ── Notice banners ── */
+.wiz-notice {
+  width:100%;
+  border-radius:10px;
+  padding:12px 16px;
+  font-size:12px;
+  font-weight:500;
+  line-height:1.5;
+  margin-bottom:20px}
+.wiz-notice.green {
+  color:var(--wiz-green);
+  background:var(--wiz-green-soft)}
+.wiz-notice.blue {
+  color:var(--wiz-blue);
+  background:var(--wiz-blue-soft)}
+.wiz-notice.red {
+  color:var(--wiz-red);
+  background:var(--wiz-red-soft)}
+
+/* ── Params section (step 4) ── */
+.wiz-params-section {
+  width:100%;
+  background:#fff;
+  border:1px solid #0000000a;
+  border-radius:12px;
+  padding:20px 22px;
+  margin-bottom:20px}
+.wiz-params-title {
+  color:var(--text-2);
+  font-size:13px;
+  font-weight:600;
+  margin-bottom:16px}
+.wiz-params-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px}
+.wiz-param-field {
+  display:flex;
+  flex-direction:column;
+  gap:5px}
+.wiz-param-label {
+  color:var(--text-3);
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.04em;
+  text-transform:uppercase}
+.wiz-param-field input,.wiz-param-field select {
+  border:1px solid var(--border-control);
+  border-radius:var(--radius);
+  color:var(--text-1);
+  font-size:13px;
+  font-family:var(--font);
+  padding:10px 12px;
+  background:#fff;
+  outline:none;
+  transition:border-color var(--duration) var(--ease-out)}
+.wiz-param-field input:focus,.wiz-param-field select:focus {
+  border-color:var(--wiz-purple);
+  box-shadow:0 0 0 3px #534ab714}
+
+/* Number input with trailing unit suffix (e.g. "px", "%") */
+.wiz-param-number {
+  position:relative;
+  display:flex;
+  align-items:stretch}
+.wiz-param-number input {
+  flex:1;
+  padding-right:34px;
+  width:100%}
+.wiz-param-suffix {
+  position:absolute;
+  right:10px;
+  top:50%;
+  transform:translateY(-50%);
+  color:var(--text-3);
+  font-size:12px;
+  font-weight:600;
+  pointer-events:none;
+  text-transform:lowercase;
+  letter-spacing:.02em}
+
+/* Info / preset locked field — display-only chip-style value */
+.wiz-param-field-info .wiz-param-info-value {
+  display:inline-flex;
+  align-items:center;
+  min-height:38px;
+  padding:8px 12px;
+  border:1px dashed var(--border-control);
+  border-radius:var(--radius);
+  background:#f5f3fb;
+  color:var(--text-2);
+  font-size:13px;
+  font-weight:600;
+  letter-spacing:.01em}
+.wiz-queue {
+  color:var(--text-3);
+  font-size:11px;
+  padding-left:18px;
+  margin:0 0 12px;
+  line-height:1.6}
+
+/* ── Review step (step 5) ── */
+.wiz-review {
+  align-items:stretch}
+.wiz-sentence {
+  background:#fff;
+  border:1px solid #0000000a;
+  border-radius:12px;
+  padding:18px 22px;
+  font-size:15px;
+  font-weight:400;
+  line-height:1.6;
+  margin-bottom:20px;
+  color:var(--wiz-dark)}
+.wiz-sent-glue { color:var(--wiz-dark); font-weight:400 }
+.wiz-sent-when { color:var(--wiz-purple); font-weight:600 }
+.wiz-sent-in   { color:var(--wiz-green); font-weight:600 }
+.wiz-sent-if   { color:var(--wiz-blue); font-weight:600 }
+.wiz-sent-then { color:var(--wiz-coral); font-weight:600 }
+
+.wiz-review-grid {
+  background:#fff;
+  border:1px solid #0000000a;
+  border-radius:12px;
+  overflow:hidden;
+  margin-bottom:20px}
+.wiz-review-row {
+  display:grid;
+  grid-template-columns:100px 1fr;
+  gap:12px;
+  padding:12px 18px;
+  align-items:center}
+.wiz-review-row:not(:last-child) {
+  border-bottom:1px solid #0000000a}
+.wiz-review-key {
+  letter-spacing:.06em;
+  text-transform:uppercase;
+  color:var(--text-3);
+  font-size:10px;
+  font-weight:700}
+.wiz-review-val {
+  color:var(--text-2);
+  font-size:14px;
+  font-weight:500;
+  line-height:1.4}
+.wiz-review-pills {
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  align-items:center}
+.wiz-review-and {
+  font-size:9px;
+  color:var(--text-3);
+  font-weight:700;
+  letter-spacing:.04em}
+.wiz-pill {
+  border-radius:var(--radius-pill);
+  width:fit-content;
+  padding:4px 12px;
+  font-size:12px;
+  font-weight:600}
+.wiz-pill.when { color:var(--wiz-purple); background:var(--wiz-purple-soft) }
+.wiz-pill.in   { color:var(--wiz-green); background:var(--wiz-green-soft) }
+.wiz-pill.if   { color:var(--wiz-blue); background:var(--wiz-blue-soft) }
+.wiz-pill.then { color:var(--wiz-coral); background:var(--wiz-coral-soft) }
+.wiz-review-extras {
+  background:#fff;
+  border:1px solid #0000000a;
+  border-radius:12px;
+  padding:20px 22px;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  margin-bottom:20px}
+
+/* ── Footer (stepper + Next button) ── */
+.wiz-footer {
+  flex-shrink:0;
+  min-height:80px;
+  border-top:1px solid #eef0f4;
+  background:#ffffff;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:24px;
+  padding:14px 32px}
+.wiz-stepper {
+  list-style:none;
+  margin:0;
+  padding:0;
+  display:flex;
+  align-items:flex-start;
+  gap:0;
+  flex:1;
+  width:100%}
+.wiz-stepper-item {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:6px;
+  flex-shrink:0}
+.wiz-stepper-dot {
+  width:18px;
+  height:18px;
+  border-radius:50%;
+  border:1.5px solid #d1d5db;
+  background:#ffffff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:default;
+  padding:0;
+  color:#ffffff;
+  transition:all .18s var(--ease-out);
+  position:relative}
+.wiz-stepper-item.done .wiz-stepper-dot {
+  background:var(--wiz-accent);
+  border-color:var(--wiz-accent);
+  color:#ffffff;
+  cursor:pointer}
+.wiz-stepper-item.active .wiz-stepper-dot {
+  border-color:var(--wiz-accent);
+  background:#ffffff}
+.wiz-stepper-dot-inner {
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:var(--wiz-accent)}
+.wiz-stepper-dot:focus-visible {
+  outline:2px solid var(--wiz-accent);
+  outline-offset:2px}
+.wiz-stepper-label {
+  font-size:12px;
+  font-weight:500;
+  color:#9ca3af;
+  letter-spacing:.005em;
+  line-height:1;
+  white-space:nowrap}
+.wiz-stepper-item.active .wiz-stepper-label {
+  color:#1a1d24;
+  font-weight:600}
+.wiz-stepper-item.done .wiz-stepper-label {
+  color:#4b5563}
+.wiz-stepper-line {
+  flex:1;
+  height:1.5px;
+  margin:9px 8px 0;
+  border-top:1.5px dashed #d1d5db;
+  min-width:32px;
+  align-self:flex-start;
+  transition:border-color .18s var(--ease-out)}
+.wiz-stepper-line.done {
+  border-top-color:var(--wiz-accent);
+  border-top-style:solid}
+
+.wiz-footer-actions {
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-shrink:0}
+.wiz-back-btn {
+  font-family:var(--font);
+  font-size:13px;
+  font-weight:500;
+  color:#4b5563;
+  background:none;
+  border:none;
+  cursor:pointer;
+  padding:9px 16px;
+  border-radius:8px;
+  transition:all var(--duration) var(--ease-out)}
+.wiz-back-btn:hover {
+  background:#f3f4f6;
+  color:#1a1d24}
+.wiz-next-btn {
+  font-family:var(--font);
+  font-size:13px;
+  font-weight:600;
+  color:#fff;
+  background:var(--wiz-accent);
+  border:none;
+  cursor:pointer;
+  padding:10px 26px;
+  border-radius:999px;
+  letter-spacing:.005em;
+  box-shadow:0 1px 2px #2d6cf63d;
+  transition:all var(--duration) var(--ease-out)}
+.wiz-next-btn:hover {
+  background:#1d5beb;
+  box-shadow:0 3px 10px #2d6cf64d;
+  transform:translateY(-1px)}
+.wiz-next-btn:active {
+  transform:translateY(0)}
+.wiz-next-btn.disabled {
+  opacity:.4;
+  cursor:not-allowed;
+  box-shadow:none}
+.wiz-next-btn.disabled:hover {
+  transform:none;
+  background:var(--wiz-accent)}
+.wiz-next-btn.save {
+  background:var(--wiz-green);
+  box-shadow:0 1px 2px #0f6e563d}
+.wiz-next-btn.save:hover {
+  background:#0a5a45;
+  box-shadow:0 3px 10px #0f6e564d}
+
+/* ═════════════ WizardDiagram (right canvas) ═════════════ */
+/* Visual language inspired by classic flowcharts: dark navy decision/subject
+   nodes (white text), vivid violet result block, sharp black arrow connectors. */
+.wd-wrap {
+  --wd-navy:#0d1142;
+  --wd-navy-soft:#191e5a;
+  --wd-violet:#3a1ee8;
+  --wd-violet-soft:#5536ff;
+  --wd-line:#1a1d24;
+  display:flex;
+  flex-direction:column;
+  height:100%;
+  background:#fafbfd;
+  padding:32px 40px;
+  overflow:hidden}
+.wd-head {
+  flex-shrink:0;
+  margin-bottom:20px}
+.wd-head-eyebrow {
+  font-size:10px;
+  font-weight:700;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:#9ca3af;
+  margin-bottom:4px}
+.wd-head-title {
+  font-size:14px;
+  font-weight:600;
+  color:#1a1d24}
+.wd-head-sub {
+  font-size:12px;
+  color:#6b7280;
+  margin-top:2px}
+
+.wd-canvas {
+  flex:1;
+  min-height:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:auto;
+  scrollbar-gutter:stable;
+  padding:8px 0}
+.wd-stack {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:0;
+  width:100%;
+  max-width:560px}
+
+.wd-node {
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  font-family:var(--font);
+  font-size:14px;
+  font-weight:600;
+  color:#fff;
+  transition:opacity .25s var(--ease-out), transform .25s var(--ease-out), background-color .25s var(--ease-out), box-shadow .25s var(--ease-out);
+  box-sizing:border-box;
+  word-break:break-word}
+.wd-node.off {
+  opacity:.32;
+  filter:grayscale(.4)}
+
+/* Stadium (rounded ends) — Subject */
+.wd-stadium {
+  border-radius:9999px;
+  background:var(--wd-navy);
+  padding:14px 22px;
+  min-height:48px;
+  flex-direction:column;
+  gap:4px;
+  box-shadow:0 1px 2px #0d114226}
+.wd-stadium.on {
+  background:var(--wd-navy);
+  box-shadow:0 4px 14px #0d114230}
+.wd-stadium-text {
+  font-weight:700;
+  font-size:15px;
+  letter-spacing:-.005em;
+  color:#fff}
+
+/* Small role tag inside diagram nodes (WHEN / IN / THEN) — IF lives in diamond-prefix */
+.wd-node-tag {
+  font-size:9.5px;
+  font-weight:800;
+  letter-spacing:.16em;
+  color:rgba(255, 255, 255, 0.85);
+  text-transform:uppercase;
+  line-height:1}
+.wd-node.off .wd-node-tag {
+  color:rgba(255, 255, 255, 0.7)}
+.wd-stadium-multi {
+  border-radius:22px;
+  padding:11px 14px}
+.wd-stadium-list {
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+  justify-content:center;
+  align-items:center}
+.wd-stadium-chip {
+  display:inline-flex;
+  align-items:center;
+  font-weight:600;
+  font-size:12.5px;
+  letter-spacing:-.002em;
+  color:#fff;
+  background:#2a2f78;
+  border:1px solid #3b4196;
+  border-radius:9999px;
+  padding:5px 12px;
+  line-height:1.2;
+  white-space:nowrap}
+
+/* Rectangle — Subject in Context */
+.wd-rect {
+  border-radius:6px;
+  background:var(--wd-navy);
+  padding:14px 22px 16px;
+  min-height:62px;
+  flex-direction:column;
+  gap:4px;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 1px 2px #0d114226;
+  font-weight:600;
+  font-size:14px;
+  letter-spacing:-.002em;
+  color:#fff;
+  text-align:center}
+.wd-rect-text {
+  font-weight:600;
+  font-size:14px;
+  letter-spacing:-.002em;
+  color:#fff;
+  line-height:1.35;
+  word-break:break-word}
+.wd-rect.on {
+  background:var(--wd-navy);
+  box-shadow:0 4px 14px #0d114230}
+
+/* Condition — same silhouette as the IN rect, but inverted: white fill + dark stroke */
+.wd-cond {
+  border-radius:6px;
+  background:#fff;
+  border:1.5px solid var(--wd-navy);
+  padding:14px 22px 16px;
+  min-height:62px;
+  flex-direction:column;
+  gap:6px;
+  align-items:center;
+  justify-content:center;
+  color:var(--wd-navy);
+  text-align:center;
+  box-shadow:0 1px 2px #0d114212}
+.wd-cond.on {
+  background:#fff;
+  border-color:var(--wd-navy);
+  box-shadow:0 4px 14px #0d114220}
+.wd-cond-prefix {
+  font-size:9.5px;
+  font-weight:800;
+  letter-spacing:.16em;
+  color:#fff;
+  background:var(--wd-navy);
+  padding:3px 10px;
+  border-radius:999px;
+  flex-shrink:0;
+  line-height:1.4}
+.wd-cond.off .wd-cond-prefix {
+  background:#a1a4c9;
+  color:#fff}
+.wd-cond-text {
+  font-weight:600;
+  font-size:14px;
+  letter-spacing:-.002em;
+  color:var(--wd-navy);
+  line-height:1.35;
+  word-break:break-word}
+.wd-cond.off .wd-cond-text {
+  color:#7a7e9c}
+.wd-cond.off {
+  background:#fff;
+  border-style:dashed;
+  border-color:#c7cae0}
+
+/* Result (vivid violet) — Action + parameters */
+.wd-result {
+  border-radius:6px;
+  background:var(--wd-violet);
+  padding:14px 22px 16px;
+  min-height:80px;
+  flex-direction:column;
+  gap:5px;
+  align-items:center;
+  text-align:center;
+  color:#fff;
+  box-shadow:0 2px 6px #3a1ee82e}
+.wd-result.on {
+  background:var(--wd-violet);
+  box-shadow:0 6px 18px #3a1ee83d}
+.wd-result-title {
+  font-size:14.5px;
+  font-weight:700;
+  letter-spacing:-.005em;
+  color:#fff}
+
+/* Category tag — small uppercase chip rendered above the action title in
+   the diagram's THEN/ELSE result node. Mirrors `.wiz-tile-tag` so the
+   picker and the preview visually agree on which use-case bucket the
+   selected action belongs to. */
+.wd-result-tag {
+  display:inline-flex;
+  align-items:center;
+  font-size:8.5px;
+  font-weight:800;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  padding:2px 8px;
+  margin-bottom:4px;
+  border-radius:999px;
+  line-height:1.4;
+  background:rgba(255,255,255,.18);
+  color:#fff;
+  border:1px solid rgba(255,255,255,.22);
+  white-space:nowrap}
+.wd-result-tag-reset-scaling          {background:#fee2e2; color:#991b1b; border-color:#fecaca}
+.wd-result-tag-resize-to-aspect-ratio {background:#fef3c7; color:#92400e; border-color:#fde68a}
+.wd-result-tag-reduce-by              {background:#fce7f3; color:#9d174d; border-color:#fbcfe8}
+.wd-result-tag-custom                 {background:#dbeafe; color:#1e40af; border-color:#bfdbfe}
+.wd-result-tag-generic-heuristics     {background:#e2e8f0; color:#475569; border-color:#cbd5e1}
+.wd-result-tag-auto                   {background:#dcfce7; color:#166534; border-color:#bbf7d0}
+.wd-result-list {
+  list-style:none;
+  margin:0;
+  padding:0;
+  font-size:12.5px;
+  font-weight:500;
+  line-height:1.55;
+  color:rgba(255, 255, 255, 0.9)}
+.wd-result-list li {
+  margin:0}
+.wd-result-ghost {
+  color:rgba(255, 255, 255, 0.78);
+  font-weight:500;
+  font-size:13px}
+
+/* Connector arrows — sharp black orthogonal flow */
+.wd-connector {
+  width:2px;
+  height:30px;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  color:#1a1d24;
+  transition:opacity .25s var(--ease-out)}
+.wd-connector.off {
+  opacity:.32}
+.wd-connector-line {
+  flex:1;
+  width:2px;
+  background:currentColor;
+  align-self:center}
+.wd-connector-tip {
+  display:block;
+  margin-top:-1px;
+  filter:drop-shadow(0 0 0 transparent)}
+
+/* ── Grouped condition block ──────────────────────────────────────
+   Rendered when there are ≥2 conditions in the rule. Consecutive
+   conditions joined by the same operator are wrapped in a single
+   dashed-bordered frame and separated by a `+` (AND) or `/` (OR)
+   glyph. When the operator changes, a new frame opens and a small
+   chip on the connecting trunk shows the joining operator.
+*/
+.wd-cond-split {
+  width:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  gap:0;
+  color:#1a1d24;
+  transition:opacity .25s var(--ease-out)}
+.wd-cond-split.off {
+  opacity:.32}
+
+/* Operator pill — kept here as the single source of truth for
+   AND/OR/ELSE colours. Used by the group tag, separator glyphs and
+   the inter-group chip. */
+.wd-cond-op {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-size:9.5px;
+  font-weight:800;
+  letter-spacing:.16em;
+  text-transform:uppercase;
+  padding:3px 10px;
+  border-radius:999px;
+  line-height:1.4;
+  background:#eef2ff;
+  color:var(--wiz-purple);
+  border:1px solid #e2e7f8;
+  white-space:nowrap}
+.wd-cond-op-and {background:#dcfce7; color:#166534; border-color:#bbf7d0}
+.wd-cond-op-or  {background:#dbeafe; color:#1e40af; border-color:#bfdbfe}
+.wd-cond-op-else{background:#fef3c7; color:#92400e; border-color:#fde68a}
+
+/* Dashed group container. Holds 2+ condition cards joined by the
+   same operator. The tag in the top-left names the operator; cards
+   sit in a horizontal row separated by `+` or `/` glyphs. */
+.wd-cond-group {
+  position:relative;
+  width:100%;
+  padding:18px 12px 12px 12px;
+  border:1.5px dashed #cbd5e1;
+  border-radius:14px;
+  background:#fafbfd}
+.wd-cond-group-and {
+  border-color:#bbf7d0;
+  background:#f6fdf8}
+.wd-cond-group-or {
+  border-color:#bfdbfe;
+  background:#f6f9fe}
+.wd-cond-group-tag {
+  position:absolute;
+  top:-9px;
+  left:14px;
+  z-index:1;
+  /* tag inherits AND/OR colours via .wd-cond-op-* */}
+.wd-cond-group-row {
+  display:flex;
+  flex-direction:row;
+  align-items:stretch;
+  gap:0;
+  width:100%}
+
+/* Separator glyph between cards inside a group. Bigger than the
+   surrounding type so the `+` / `/` reads as a logical connector,
+   not a stray character. Color tracks the group's operator. */
+.wd-cond-sep {
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  flex:0 0 auto;
+  width:24px;
+  font-size:var(--fs-700);
+  font-weight:var(--fw-bold);
+  line-height:1;
+  user-select:none}
+.wd-cond-sep-and {color:#166534}
+.wd-cond-sep-or {color:#1e40af}
+
+/* Inter-group connector — short trunk with a centred chip showing
+   the joining operator. Only appears when consecutive groups carry
+   different operators. */
+.wd-cond-group-link {
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:0;
+  height:36px;
+  color:#1a1d24}
+.wd-cond-group-link-line {
+  flex:1;
+  width:2px;
+  background:currentColor}
+.wd-cond-group-chip {
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
+  z-index:1}
+
+/* ── ELSE result branch (diagram) ─────────────────────────────────
+   Rendered after the primary THEN ResultNode when the user has
+   enabled an ELSE fallback in Step 4. The connector carries an
+   inline ELSE chip so the fork is unambiguous. */
+.wd-connector-else {
+  height:36px;
+  color:#92400e}
+.wd-connector-op {
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%);
+  font-size:10px;
+  font-weight:800;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  padding:2px 8px;
+  border-radius:999px;
+  border:1px solid #e2e7f8;
+  background:#fff;
+  white-space:nowrap;
+  z-index:2}
+.wd-result-else {
+  background:#7a3d10 !important;
+  box-shadow:0 2px 6px #92400e2e !important}
+.wd-result-else.on {
+  background:#7a3d10 !important;
+  box-shadow:0 6px 18px #92400e3d !important}
+.wd-node-tag-else {
+  color:#fde68a !important}
+
+/* Condition cell — used inside a group's horizontal row, and as a
+   solo (un-framed) card for single-item groups in mixed-operator
+   rules. Cells share the row width equally via flex:1. */
+.wd-cond-cell {
+  display:flex;
+  flex-direction:column;
+  align-items:stretch;
+  flex:1 1 0;
+  min-width:0}
+.wd-cond-cell-solo {
+  align-items:center}
+.wd-cond-cell .wd-cond {
+  width:100%;
+  padding:10px 12px;
+  min-height:auto;
+  font-size:12.5px}
+.wd-cond-cell .wd-cond-text {
+  font-size:12.5px;
+  line-height:1.3}
+
+/* On narrow viewports the group row stacks so cards don't crush. */
+@media(max-width:640px) {
+  .wd-cond-group-row {
+  flex-direction:column;
+  align-items:stretch}
+.wd-cond-sep {
+  width:auto;
+  padding:2px 0}
+}
+
+@media(max-width:768px) {
+  .app-header {
+  padding:0 14px}
+.toolbar {
+  padding:8px 14px}
+.stats-bar {
+  padding:6px 14px}
+.search-input {
+  width:150px}
+.viz-layout {
+  grid-template-columns:1fr}
+.viz-list {
+  display:none}
+.viz-preview {
+  flex-direction:column}
+.viz-arrow-col {
+  flex-direction:row;
+  width:auto}
+.diagram-layout {
+  grid-template-columns:1fr}
+.diagram-sidebar {
+  display:none}
+.diagram-main {
+  padding:16px 14px 48px}
+.diagram-card-desc,.output-strip {
+  padding-left:0}
+.output-pair {
+  flex:1;
+  min-width:110px;
+  max-width:none}
+.wiz-scroll {
+  padding:24px 16px 80px}
+.wiz-scroll-split > .wiz-center {
+  padding:24px 18px}
+.wd-wrap {
+  padding:18px}
+.wiz-question {
+  font-size:var(--h3-fs);
+  line-height:var(--h3-lh)}
+.wiz-tile-grid {
+  grid-template-columns:repeat(3, 1fr);
+  gap:8px}
+.wiz-tile {
+  min-height:84px;
+  padding:10px 6px 10px}
+.wiz-tile-icon {
+  width:26px;
+  height:26px}
+.wiz-tile-name {
+  font-size:10.5px}
+.wiz-tile-action {
+  min-height:84px}
+.wiz-params-grid {
+  grid-template-columns:1fr}
+.wiz-stepper-label {
+  display:none}
+.wiz-footer {
+  padding:12px 16px}
+}
+
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
