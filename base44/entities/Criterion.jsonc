@@ -1,0 +1,36 @@
+{
+  "name": "Criterion",
+  "type": "object",
+  "properties": {
+    "framework_id": {
+      "type": "string",
+      "description": "Reference to the parent Framework"
+    },
+    "title": {
+      "type": "string",
+      "description": "Name of the criterion"
+    },
+    "description": {
+      "type": "string",
+      "description": "Detailed description or guiding question"
+    },
+    "weight": {
+      "type": "number",
+      "description": "Importance weight (1-5)",
+      "default": 3
+    },
+    "order": {
+      "type": "number",
+      "description": "Display order within the framework",
+      "default": 0
+    },
+    "guidance": {
+      "type": "string",
+      "description": "Examples or hints for evaluators"
+    }
+  },
+  "required": [
+    "framework_id",
+    "title"
+  ]
+}

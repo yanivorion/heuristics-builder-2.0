@@ -17,15 +17,9 @@ import AddRuleWizard from './components/AddRuleWizard'
 import AddRuleWizardV2 from './components/AddRuleWizardV2'
 import CustomSelect from './components/CustomSelect'
 
-// Studio V2 wizard opt-in: enable via ?wizard=v2 URL param.
-// Loads its own stylesheet on demand so it can't affect the default UI.
-const WIZARD_V2_ENABLED =
-  typeof window !== 'undefined' &&
-  new URLSearchParams(window.location.search).get('wizard') === 'v2'
-
-if (WIZARD_V2_ENABLED) {
-  import('./styles/wizardV2.css')
-}
+// Studio V2 wizard — always enabled.
+const WIZARD_V2_ENABLED = true
+import('./styles/wizardV2.css')
 
 function App() {
   const [activeTab, setActiveTab] = useState('main')

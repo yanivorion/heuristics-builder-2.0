@@ -1,0 +1,56 @@
+{
+  "name": "Evaluation",
+  "type": "object",
+  "properties": {
+    "framework_id": {
+      "type": "string",
+      "description": "Reference to the Framework being used"
+    },
+    "title": {
+      "type": "string",
+      "description": "Name of this evaluation run"
+    },
+    "subject": {
+      "type": "string",
+      "description": "What is being evaluated (e.g. feature name, candidate, proposal)"
+    },
+    "notes": {
+      "type": "string",
+      "description": "Overall notes or context"
+    },
+    "scores": {
+      "type": "array",
+      "description": "Array of criterion scores",
+      "items": {
+        "type": "object",
+        "properties": {
+          "criterion_id": {
+            "type": "string"
+          },
+          "score": {
+            "type": "number"
+          },
+          "note": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "total_score": {
+      "type": "number",
+      "description": "Computed weighted total score"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "in_progress",
+        "completed"
+      ],
+      "default": "in_progress"
+    }
+  },
+  "required": [
+    "framework_id",
+    "title"
+  ]
+}
