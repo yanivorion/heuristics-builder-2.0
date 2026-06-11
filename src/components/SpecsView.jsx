@@ -11,10 +11,10 @@ export default function SpecsView() {
   const ActiveComponent = SPECS.find(s => s.key === activeSpec)?.component
 
   return (
-    <div>
+    <div style={{ display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0, overflow: 'hidden' }}>
       <div style={{
         display: 'flex', gap: 0, borderBottom: '1px solid #e2e8f0',
-        padding: '0 32px', background: '#f8fafc'
+        padding: '0 32px', background: '#f8fafc', flexShrink: 0
       }}>
         {SPECS.map((spec, i) => (
           <button
@@ -38,7 +38,7 @@ export default function SpecsView() {
         ))}
       </div>
 
-      <div>
+      <div style={{ flex: 1, overflowY: 'auto' }}>
         {ActiveComponent && <ActiveComponent />}
       </div>
     </div>
