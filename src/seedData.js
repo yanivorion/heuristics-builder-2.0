@@ -138,7 +138,11 @@ export const SEED_DATA = [
 
   // Alignment inside repeater
   { rule_id: 120, category: "Repeater", when: "Repeater", "in": "Any Parent", "if": "Alignment: Left (desktop)", action: "Set Alignment", parameters: "Value: Left", summary: "Set Alignment | Value: Left", priority: 2, status: "Mapped", note: "" },
-  { rule_id: 121, category: "Repeater", when: "Repeater", "in": "Any Parent", "if": "Alignment: Center (desktop)", action: "Set Alignment", parameters: "Value: Center", summary: "Set Alignment | Value: Center", priority: 2, status: "Mapped", note: "" }
+  { rule_id: 121, category: "Repeater", when: "Repeater", "in": "Any Parent", "if": "Alignment: Center (desktop)", action: "Set Alignment", parameters: "Value: Center", summary: "Set Alignment | Value: Center", priority: 2, status: "Mapped", note: "" },
+
+  // Repeater Cell Container children margins
+  { rule_id: 122, category: "Repeater Cell", when: "Any Child Element", "in": "Repeater Cell", "if": "Is First", action: "Set Margin", parameters: "Margin Top: 40px", summary: "Set Margin | Margin Top: 40px", priority: 2, status: "Mapped", note: "First child in repeater cell gets top margin" },
+  { rule_id: 123, category: "Repeater Cell", when: "Any Child Element", "in": "Repeater Cell", "if": "Is Last", action: "Set Margin", parameters: "Margin Bottom: 40px", summary: "Set Margin | Margin Bottom: 40px", priority: 2, status: "Mapped", note: "Last child in repeater cell gets bottom margin" }
 ]
 
 export const COLUMNS = [
