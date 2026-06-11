@@ -126,7 +126,7 @@ export default function RepeaterSpec() {
             ['Repeater (any layout)', '100%', 'Auto', '—', 'Base rule — applies before layout-specific rules'],
             ['Cards', '100%', 'Auto', '1', '—'],
             ['List', '100%', 'Auto', '1 (forced)', '—'],
-            ['Grid', '100%', 'Auto', 'Desktop columns − 1 (e.g. 4→3, 3→2, 2→1)', 'Column min width set to viewport'],
+            ['Grid', '100%', 'Auto', '4+ cols → 2, 1–3 cols → 1', 'Column min width set to viewport'],
             ['Slider', '100%', 'Auto', '1', 'Scroll snap: Start · Scrollbar: Hidden'],
           ]}
         />
