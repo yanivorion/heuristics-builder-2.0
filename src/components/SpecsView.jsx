@@ -2,11 +2,13 @@ import React, { useState } from 'react'
 import RepeaterSpec from './RepeaterSpec'
 import RepeaterDiagrams from './RepeaterDiagrams'
 import MeasurementViz from './MeasurementViz'
+import PinnedToSectionSpec from './PinnedToSectionSpec'
 
 const SPECS = [
   { key: 'repeater', label: 'Repeater Spec', component: RepeaterSpec },
   { key: 'repeater-diagrams', label: 'Repeater Diagrams', component: RepeaterDiagrams },
-  { key: 'measurements', label: 'Measurements', component: MeasurementViz }
+  { key: 'measurements', label: 'Measurements', component: MeasurementViz },
+  { key: 'pinned-to-section', label: 'Pinned to Section', component: PinnedToSectionSpec }
 ]
 
 export default function SpecsView() {
