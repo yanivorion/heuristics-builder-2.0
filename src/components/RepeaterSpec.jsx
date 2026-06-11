@@ -1,7 +1,11 @@
 import React from 'react'
 import { SEED_DATA } from '../seedData'
 
-const REPEATER_RULES = SEED_DATA.filter(r => r.rule_id >= 100 && r.rule_id <= 123)
+const REPEATER_RULES = SEED_DATA.filter(r =>
+  r.when === 'Repeater' || r.when === 'Repeater Cell' ||
+  r.in === 'Repeater' || r.in === 'Repeater Cell' ||
+  (r.category && r.category.startsWith('Repeater'))
+)
 
 function SpecSection({ number, title, children }) {
   return (
@@ -104,25 +108,26 @@ export default function RepeaterSpec() {
         </div>
         <div>
           <StatPill label="Rules" value={String(REPEATER_RULES.length)} />
-          <StatPill label="Categories" value="8" color="#4a90e2" />
-          <StatPill label="Action types" value="5" color="#f5a623" />
+          <StatPill label="Categories" value="9" color="#4a90e2" />
+          <StatPill label="Action types" value="6" color="#f5a623" />
         </div>
       </div>
 
-      {/* 01 — Layout */}
-      <SpecSection number={1} title="Layout Type">
+      {/* 01 — Layout & Base Sizing */}
+      <SpecSection number={1} title="Layout & Base Sizing">
         <SectionIntro>
-          The Repeater supports four layout modes — Cards, List, Grid, and Slider. On mobile,
-          every layout collapses to a single-column flow except Grid, which may retain two columns
-          depending on the original desktop count.
+          Regardless of layout mode, the Repeater always expands to 100% width with auto height
+          on mobile. The four layout modes — Cards, List, Grid, and Slider — each have additional
+          transformation rules.
         </SectionIntro>
         <SpecTable
-          columns={['Layout', 'Mobile width', 'Items per row', 'Additional behavior']}
+          columns={['Scope', 'Mobile width', 'Mobile height', 'Items per row', 'Additional behavior']}
           rows={[
-            ['Cards', '100%', '1', '—'],
-            ['List', '100%', '1 (forced)', '—'],
-            ['Grid', '100%', 'Desktop count − 1 (min 1)', 'Column min width set to viewport'],
-            ['Slider', '100%', '1', 'Scroll snap: Start · Scrollbar: Hidden'],
+            ['Repeater (any layout)', '100%', 'Auto', '—', 'Base rule — applies before layout-specific rules'],
+            ['Cards', '100%', 'Auto', '1', '—'],
+            ['List', '100%', 'Auto', '1 (forced)', '—'],
+            ['Grid', '100%', 'Auto', 'Desktop count − 1 (min 1)', 'Column min width set to viewport'],
+            ['Slider', '100%', 'Auto', '1', 'Scroll snap: Start · Scrollbar: Hidden'],
           ]}
         />
       </SpecSection>
