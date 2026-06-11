@@ -321,6 +321,35 @@ function App() {
   const currentSortKey = activeTab === 'header' ? headerSortKey : sortKey
   const currentSortDir = activeTab === 'header' ? headerSortDir : sortDir
 
+  const CSV_HEADERS = ['rule_id', 'category', 'when', 'in', 'if', 'action', 'parameters', 'summary', 'priority', 'status', 'note', 'type']
+  function escapeCSV(val) {
+    const s = val == null ? '' : String(val)
+    if (s.includes(',') || s.includes('"') || s.includes('\n') || s.includes('\r')) return '"' + s.replace(/"/g, '""') + '"'
+    return s
+  }
+  function downloadCSV(csvText) {
+    const blob = new Blob([csvText], { type: 'text/csv' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a'); a.href = url; a.download = 'heuristics.csv'; a.click()
+    URL.revokeObjectURL(url)
+  }
+  async function handleExportCSV() {
+    try {
+      if (isConnected()) {
+        const { base44 } = await import('./api/base44Client')
+        const res = await base44.functions.invoke('exportHeuristicsCSV')
+        downloadCSV(res.data)
+        toast('CSV exported')
+        return
+      }
+    } catch (e) { /* fall through to local export */ }
+    const lines = [CSV_HEADERS.join(',')]
+    for (const r of rows) lines.push(CSV_HEADERS.map(h => h === 'type' ? 'main' : escapeCSV(r[h])).join(','))
+    for (const r of headerRows) lines.push(CSV_HEADERS.map(h => h === 'type' ? 'header' : escapeCSV(r[h])).join(','))
+    downloadCSV(lines.join('\n'))
+    toast('CSV exported (local)')
+  }
+
   function renderTable() {
     if (loading) {
       return (
@@ -493,7 +522,8 @@ function App() {
             </div>
             <div className="toolbar-right">
               <button className="btn btn-ghost" style={{ '--i': 0 }} onClick={loadData}>Refresh</button>
-              <button type="button" className="btn btn-primary" style={{ '--i': 1 }} onClick={() => setShowAddWizard(true)}>+ Add Rule</button>
+              <button className="btn btn-ghost" style={{ '--i': 1 }} onClick={handleExportCSV}>Export CSV</button>
+              <button type="button" className="btn btn-primary" style={{ '--i': 2 }} onClick={() => setShowAddWizard(true)}>+ Add Rule</button>
             </div>
           </div>
 
