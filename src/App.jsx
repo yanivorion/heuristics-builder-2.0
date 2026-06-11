@@ -14,6 +14,7 @@ import EditableCell from './components/EditableCell'
 import DiagramsView from './components/DiagramsView'
 import Simulator from './components/Simulator'
 import SpecsView from './components/SpecsView'
+import Measurements from './pages/Measurements'
 import AddRuleWizard from './components/AddRuleWizard'
 import AddRuleWizardV2 from './components/AddRuleWizardV2'
 import CustomSelect from './components/CustomSelect'
@@ -436,6 +437,7 @@ function App() {
           <button className={`tab-btn ${activeTab === 'simulator' ? 'active' : ''}`} onClick={() => setActiveTab('simulator')}>Simulator</button>
           <button className={`tab-btn ${activeTab === 'diagrams' ? 'active' : ''}`} onClick={() => setActiveTab('diagrams')}>Diagrams</button>
           <button className={`tab-btn ${activeTab === 'specs' ? 'active' : ''}`} onClick={() => setActiveTab('specs')}>Specs</button>
+          <button className={`tab-btn ${activeTab === 'measurements' ? 'active' : ''}`} onClick={() => setActiveTab('measurements')}>Measurements</button>
         </div>
         <div className="app-header-right">
           <button
@@ -463,6 +465,8 @@ function App() {
         <DiagramsView />
       ) : activeTab === 'specs' ? (
         <SpecsView />
+      ) : activeTab === 'measurements' ? (
+        <Measurements />
       ) : activeTab === 'simulator' ? (
         <Simulator rows={rows} headerRows={headerRows} />
       ) : (
