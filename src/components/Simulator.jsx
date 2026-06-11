@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react'
 import ElementMock, { HiddenMock, Annotation, PaddingIndicator, MarginIndicator, parseElements } from './ElementMock'
 import RepeaterVisualization from './RepeaterVisualization'
+import RepeaterSpec from './RepeaterSpec'
 import { CANONICAL_COMPONENTS, CANONICAL_CONTEXTS } from '../seedData'
 
 function matchRule(rule, component, context) {
@@ -40,6 +41,7 @@ export default function Simulator({ rows = [], headerRows = [] }) {
   const [selectedComponent, setSelectedComponent] = useState('Any')
   const [selectedContext, setSelectedContext] = useState('Any')
   const [showHeader, setShowHeader] = useState(false)
+  const [showSpec, setShowSpec] = useState(false)
 
   const activeRules = showHeader ? headerRows : rows
 
@@ -175,6 +177,42 @@ export default function Simulator({ rows = [], headerRows = [] }) {
         </div>
         )}
       </div>
+
+      {/* Repeater Spec — collapsible */}
+      {selectedComponent === 'Repeater' && (
+        <div style={{ marginTop: 20 }}>
+          <button
+            onClick={() => setShowSpec(!showSpec)}
+            style={{
+              width: '100%', padding: '10px 16px',
+              background: showSpec ? '#f0f0f0' : '#fafafa',
+              border: '1px solid #e0e0e0', borderRadius: 8,
+              fontSize: 13, fontWeight: 600, color: '#333',
+              cursor: 'pointer', display: 'flex', alignItems: 'center',
+              justifyContent: 'space-between',
+            }}
+          >
+            <span>
+              <span style={{
+                display: 'inline-block', width: 8, height: 8, borderRadius: '50%',
+                background: '#00e6b8', marginRight: 8,
+              }} />
+              Heuristic Specification — Repeater Component
+            </span>
+            <span style={{ fontSize: 16, color: '#888', transition: 'transform 0.2s', transform: showSpec ? 'rotate(180deg)' : 'none' }}>
+              ▾
+            </span>
+          </button>
+          {showSpec && (
+            <div style={{
+              marginTop: 12, border: '1px solid #e0e0e0', borderRadius: 8,
+              background: '#fff', overflow: 'auto', maxHeight: '80vh',
+            }}>
+              <RepeaterSpec />
+            </div>
+          )}
+        </div>
+      )}
     </div>
   )
 }
