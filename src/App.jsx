@@ -13,6 +13,7 @@ import ConfirmModal from './components/ConfirmModal'
 import EditableCell from './components/EditableCell'
 import DiagramsView from './components/DiagramsView'
 import Simulator from './components/Simulator'
+import SpecsView from './components/SpecsView'
 import AddRuleWizard from './components/AddRuleWizard'
 import AddRuleWizardV2 from './components/AddRuleWizardV2'
 import CustomSelect from './components/CustomSelect'
@@ -434,6 +435,7 @@ function App() {
           <button className={`tab-btn ${activeTab === 'header' ? 'active' : ''}`} onClick={() => setActiveTab('header')}>Header</button>
           <button className={`tab-btn ${activeTab === 'simulator' ? 'active' : ''}`} onClick={() => setActiveTab('simulator')}>Simulator</button>
           <button className={`tab-btn ${activeTab === 'diagrams' ? 'active' : ''}`} onClick={() => setActiveTab('diagrams')}>Diagrams</button>
+          <button className={`tab-btn ${activeTab === 'specs' ? 'active' : ''}`} onClick={() => setActiveTab('specs')}>Specs</button>
         </div>
         <div className="app-header-right">
           <button
@@ -459,6 +461,8 @@ function App() {
 
       {activeTab === 'diagrams' ? (
         <DiagramsView />
+      ) : activeTab === 'specs' ? (
+        <SpecsView />
       ) : activeTab === 'simulator' ? (
         <Simulator rows={rows} headerRows={headerRows} />
       ) : (

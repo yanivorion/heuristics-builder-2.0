@@ -1,0 +1,46 @@
+import React, { useState } from 'react'
+import RepeaterSpec from './RepeaterSpec'
+
+const SPECS = [
+  { key: 'repeater', label: 'Repeater', component: RepeaterSpec }
+]
+
+export default function SpecsView() {
+  const [activeSpec, setActiveSpec] = useState('repeater')
+
+  const ActiveComponent = SPECS.find(s => s.key === activeSpec)?.component
+
+  return (
+    <div>
+      <div style={{
+        display: 'flex', gap: 0, borderBottom: '1px solid #e2e8f0',
+        padding: '0 32px', background: '#f8fafc'
+      }}>
+        {SPECS.map((spec, i) => (
+          <button
+            key={spec.key}
+            onClick={() => setActiveSpec(spec.key)}
+            style={{
+              padding: '10px 20px',
+              fontSize: 13,
+              fontWeight: activeSpec === spec.key ? 600 : 400,
+              color: activeSpec === spec.key ? '#0f172a' : '#64748b',
+              background: activeSpec === spec.key ? '#fff' : 'transparent',
+              border: 'none',
+              borderBottom: activeSpec === spec.key ? '2px solid #00e6b8' : '2px solid transparent',
+              cursor: 'pointer',
+              transition: 'all 0.15s ease',
+              marginBottom: -1,
+            }}
+          >
+            {spec.label}
+          </button>
+        ))}
+      </div>
+
+      <div>
+        {ActiveComponent && <ActiveComponent />}
+      </div>
+    </div>
+  )
+}
