@@ -425,6 +425,10 @@ function App() {
     return <Measurements />
   }
 
+  if (activeTab === 'diagrams') {
+    return <DiagramsView />
+  }
+
   return (
     <>
       <header className="app-header">
@@ -465,9 +469,7 @@ function App() {
         </div>
       </header>
 
-      {activeTab === 'diagrams' ? (
-        <DiagramsView />
-      ) : activeTab === 'specs' ? (
+      {activeTab === 'specs' ? (
         <SpecsView />
       ) : activeTab === 'simulator' ? (
         <Simulator rows={rows} headerRows={headerRows} />
