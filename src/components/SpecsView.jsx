@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import RepeaterSpec from './RepeaterSpec'
 import RepeaterDiagrams from './RepeaterDiagrams'
+import MeasurementViz from './MeasurementViz'
 
 const SPECS = [
   { key: 'repeater', label: 'Repeater Spec', component: RepeaterSpec },
-  { key: 'repeater-diagrams', label: 'Repeater Diagrams', component: RepeaterDiagrams }
+  { key: 'repeater-diagrams', label: 'Repeater Diagrams', component: RepeaterDiagrams },
+  { key: 'measurements', label: 'Measurements', component: MeasurementViz }
 ]
 
 export default function SpecsView() {
