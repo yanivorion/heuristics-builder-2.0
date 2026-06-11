@@ -1,0 +1,40 @@
+{
+  "name": "HeaderHeuristic",
+  "type": "object",
+  "properties": {
+    "rule_id": {
+      "type": "number"
+    },
+    "category": {
+      "type": "string"
+    },
+    "when": {
+      "type": "string"
+    },
+    "in": {
+      "type": "string"
+    },
+    "if": {
+      "type": "string"
+    },
+    "action": {
+      "type": "string"
+    },
+    "parameters": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "string"
+    },
+    "priority": {
+      "type": "number"
+    },
+    "status": {
+      "type": "string"
+    },
+    "note": {
+      "type": "string"
+    }
+  },
+  "required": []
+}
