@@ -12,10 +12,8 @@ import { HEADER_SEED_DATA, HEADER_COLUMNS } from './headerSeedData'
 import Toast from './components/Toast'
 import ConfirmModal from './components/ConfirmModal'
 import EditableCell from './components/EditableCell'
-import DiagramsView from './components/DiagramsView'
 import Simulator from './components/Simulator'
 import SpecsView from './components/SpecsView'
-import Measurements from './pages/Measurements'
 import AddRuleWizard from './components/AddRuleWizard'
 import AddRuleWizardV2 from './components/AddRuleWizardV2'
 import CustomSelect from './components/CustomSelect'
@@ -426,14 +424,6 @@ function App() {
 
 
 
-  if (location.pathname === '/measurements') {
-    return <Measurements />
-  }
-
-  if (location.pathname === '/diagrams') {
-    return <DiagramsView />
-  }
-
   if (location.pathname === '/specs') {
     return <SpecsView />
   }
@@ -452,9 +442,7 @@ function App() {
           <button className={`tab-btn ${activeTab === 'main' ? 'active' : ''}`} onClick={() => { navigate('/'); setActiveTab('main') }}>Table</button>
           <button className={`tab-btn ${activeTab === 'header' ? 'active' : ''}`} onClick={() => { navigate('/'); setActiveTab('header') }}>Header</button>
           <button className={`tab-btn ${activeTab === 'simulator' ? 'active' : ''}`} onClick={() => { navigate('/'); setActiveTab('simulator') }}>Simulator</button>
-          <button className={`tab-btn ${location.pathname === '/diagrams' ? 'active' : ''}`} onClick={() => navigate('/diagrams')}>Diagrams</button>
           <button className={`tab-btn ${location.pathname === '/specs' ? 'active' : ''}`} onClick={() => navigate('/specs')}>Specs</button>
-          <button className={`tab-btn ${location.pathname === '/measurements' ? 'active' : ''}`} onClick={() => navigate('/measurements')}>Measurements</button>
         </div>
         <div className="app-header-right">
           <button
