@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react'
 import ElementMock, { HiddenMock, Annotation, PaddingIndicator, MarginIndicator, parseElements } from './ElementMock'
+import RepeaterVisualization from './RepeaterVisualization'
 import { CANONICAL_COMPONENTS, CANONICAL_CONTEXTS } from '../seedData'
 
 function matchRule(rule, component, context) {
@@ -100,25 +101,35 @@ export default function Simulator({ rows = [], headerRows = [] }) {
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 24 }}>
         {/* Visual preview */}
         <div style={{
-          background: '#f8fafc', border: '1px solid #e2e8f0', borderRadius: 12, padding: 24,
-          display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: 200
+          background: selectedComponent === 'Repeater' ? '#fff' : '#f8fafc',
+          border: '1px solid #e2e8f0', borderRadius: 12, padding: selectedComponent === 'Repeater' ? 20 : 24,
+          display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+          minHeight: 200,
+          gridColumn: selectedComponent === 'Repeater' ? '1 / -1' : undefined,
         }}>
-          <div style={{ fontSize: 11, fontWeight: 600, color: '#94a3b8', marginBottom: 12, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-            Preview
-          </div>
-          {isHidden ? (
-            <HiddenMock name={selectedComponent} />
+          {selectedComponent === 'Repeater' ? (
+            <RepeaterVisualization matchingRules={matchingRules} />
           ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
-              <ElementMock name={selectedComponent} />
-              <Annotation color="blue">
-                {selectedComponent} in {selectedContext}
-              </Annotation>
-            </div>
+            <>
+              <div style={{ fontSize: 11, fontWeight: 600, color: '#94a3b8', marginBottom: 12, textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                Preview
+              </div>
+              {isHidden ? (
+                <HiddenMock name={selectedComponent} />
+              ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
+                  <ElementMock name={selectedComponent} />
+                  <Annotation color="blue">
+                    {selectedComponent} in {selectedContext}
+                  </Annotation>
+                </div>
+              )}
+            </>
           )}
         </div>
 
-        {/* Matching rules */}
+        {/* Matching rules — hidden when Repeater (visualization shows its own) */}
+        {selectedComponent !== 'Repeater' && (
         <div style={{
           background: 'white', border: '1px solid #e2e8f0', borderRadius: 12, padding: 24, minHeight: 200
         }}>
@@ -162,6 +173,7 @@ export default function Simulator({ rows = [], headerRows = [] }) {
             </div>
           )}
         </div>
+        )}
       </div>
     </div>
   )
