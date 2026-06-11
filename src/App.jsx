@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom'
 import {
   isConnected, initConnection, getConnectionError,
   fetchHeuristics, fetchHeaderHeuristics,
@@ -24,6 +25,8 @@ const WIZARD_V2_ENABLED = true
 import('./styles/wizardV2.css')
 
 function App() {
+  const navigate = useNavigate()
+  const location = useLocation()
   const [activeTab, setActiveTab] = useState('main')
   const [rows, setRows] = useState([])
   const [headerRows, setHeaderRows] = useState([])
@@ -421,12 +424,18 @@ function App() {
     )
   }
 
-  if (activeTab === 'measurements') {
+
+
+  if (location.pathname === '/measurements') {
     return <Measurements />
   }
 
-  if (activeTab === 'diagrams') {
+  if (location.pathname === '/diagrams') {
     return <DiagramsView />
+  }
+
+  if (location.pathname === '/specs') {
+    return <SpecsView />
   }
 
   return (
@@ -440,12 +449,12 @@ function App() {
           </div>
         </div>
         <div className="app-header-center">
-          <button className={`tab-btn ${activeTab === 'main' ? 'active' : ''}`} onClick={() => setActiveTab('main')}>Table</button>
-          <button className={`tab-btn ${activeTab === 'header' ? 'active' : ''}`} onClick={() => setActiveTab('header')}>Header</button>
-          <button className={`tab-btn ${activeTab === 'simulator' ? 'active' : ''}`} onClick={() => setActiveTab('simulator')}>Simulator</button>
-          <button className={`tab-btn ${activeTab === 'diagrams' ? 'active' : ''}`} onClick={() => setActiveTab('diagrams')}>Diagrams</button>
-          <button className={`tab-btn ${activeTab === 'specs' ? 'active' : ''}`} onClick={() => setActiveTab('specs')}>Specs</button>
-          <button className={`tab-btn ${activeTab === 'measurements' ? 'active' : ''}`} onClick={() => setActiveTab('measurements')}>Measurements</button>
+          <button className={`tab-btn ${activeTab === 'main' ? 'active' : ''}`} onClick={() => { navigate('/'); setActiveTab('main') }}>Table</button>
+          <button className={`tab-btn ${activeTab === 'header' ? 'active' : ''}`} onClick={() => { navigate('/'); setActiveTab('header') }}>Header</button>
+          <button className={`tab-btn ${activeTab === 'simulator' ? 'active' : ''}`} onClick={() => { navigate('/'); setActiveTab('simulator') }}>Simulator</button>
+          <button className={`tab-btn ${location.pathname === '/diagrams' ? 'active' : ''}`} onClick={() => navigate('/diagrams')}>Diagrams</button>
+          <button className={`tab-btn ${location.pathname === '/specs' ? 'active' : ''}`} onClick={() => navigate('/specs')}>Specs</button>
+          <button className={`tab-btn ${location.pathname === '/measurements' ? 'active' : ''}`} onClick={() => navigate('/measurements')}>Measurements</button>
         </div>
         <div className="app-header-right">
           <button
