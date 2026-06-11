@@ -1,31 +1,17 @@
 import React from 'react'
 import { SEED_DATA } from '../seedData'
 
-const REPEATER_RULES = SEED_DATA.filter(r =>
-  r.rule_id >= 100 && r.rule_id <= 123
-)
-
-const REORDERED_CATEGORIES = [
-  'Repeater — Layout',
-  'Repeater — Items Per Row',
-  'Repeater — Column & Row Sizing',
-  'Repeater — Single Row',
-  'Repeater — Spacing & Padding',
-  'Repeater — Overflow & Scroll',
-  'Repeater — Alignment',
-  'Repeater Cell'
-]
+const REPEATER_RULES = SEED_DATA.filter(r => r.rule_id >= 100 && r.rule_id <= 123)
 
 function SpecSection({ number, title, children }) {
   return (
-    <div style={{ marginBottom: 32 }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 12 }}>
+    <div style={{ marginBottom: 36 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
         <span style={{
           width: 22, height: 22, borderRadius: '50%',
           background: '#00e6b8', color: '#000',
-          fontSize: 11, fontWeight: 700,
+          fontSize: 11, fontWeight: 700, flexShrink: 0,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
-          flexShrink: 0,
         }}>
           {String(number).padStart(2, '0')}
         </span>
@@ -66,13 +52,10 @@ function SpecTable({ columns, rows }) {
       </thead>
       <tbody>
         {rows.map((row, i) => (
-          <tr key={i} style={{
-            background: i % 2 === 0 ? '#fff' : '#fafafa',
-          }}>
+          <tr key={i} style={{ background: i % 2 === 0 ? '#fff' : '#fafafa' }}>
             {row.map((cell, j) => (
               <td key={j} style={{
-                padding: '8px 14px',
-                borderRight: '1px solid #eee',
+                padding: '8px 14px', borderRight: '1px solid #eee',
                 borderBottom: '1px solid #eee',
                 color: j === 0 ? '#333' : '#555',
                 fontWeight: j === 0 ? 600 : 400,
@@ -95,77 +78,168 @@ function StatPill({ label, value, color = '#00e6b8' }) {
       background: '#fff', border: '1px solid #e0e0e0',
       borderRadius: 6, padding: '5px 12px', marginRight: 8, marginBottom: 8,
     }}>
-      <span style={{
-        width: 8, height: 8, borderRadius: '50%', background: color, flexShrink: 0,
-      }} />
+      <span style={{ width: 8, height: 8, borderRadius: '50%', background: color, flexShrink: 0 }} />
       <span style={{ fontSize: 11, color: '#666' }}>{label}</span>
       <span style={{ fontSize: 13, fontWeight: 700, color: '#000' }}>{value}</span>
     </div>
   )
 }
 
-function mergeIds(ids) {
-  if (ids.length <= 3) return ids.join(', ')
-  let ranges = []
-  let start = ids[0], end = ids[0]
-  for (let i = 1; i < ids.length; i++) {
-    if (ids[i] === end + 1) { end = ids[i] }
-    else { ranges.push(start === end ? `${start}` : `${start}–${end}`); start = ids[i]; end = ids[i] }
-  }
-  ranges.push(start === end ? `${start}` : `${start}–${end}`)
-  return ranges.join(', ')
+function SectionIntro({ children }) {
+  return <p style={{ fontSize: 13, color: '#555', lineHeight: 1.6, marginBottom: 14, maxWidth: 720 }}>{children}</p>
 }
 
 export default function RepeaterSpec() {
-  const categories = REORDERED_CATEGORIES.filter(cat =>
-    REPEATER_RULES.some(r => r.category === cat)
-  )
-
-  const catRules = (cat) => REPEATER_RULES.filter(r => r.category === cat).sort((a, b) => a.rule_id - b.rule_id)
-  const totalRules = REPEATER_RULES.length
+  const rulesByCat = cat => REPEATER_RULES.filter(r => r.category === cat).sort((a, b) => a.rule_id - b.rule_id)
 
   return (
-    <div style={{
-      maxWidth: 960, margin: '0 auto', padding: '32px 24px',
-      fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-      color: '#000',
-    }}>
-      {/* Header */}
-      <div style={{ marginBottom: 28 }}>
+    <div style={{ maxWidth: 960, margin: '0 auto', padding: '32px 24px', fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif', color: '#000' }}>
+      <div style={{ marginBottom: 32 }}>
         <div style={{ fontSize: 22, fontWeight: 800, color: '#000', marginBottom: 4 }}>
-          Repeater Component — Heuristic Specification
+          Repeater — Mobile Transformation Specification
         </div>
-        <div style={{ fontSize: 13, color: '#666', marginBottom: 16 }}>
-          Rules governing how the Repeater component transforms from desktop to mobile.
-          All rules sourced directly from the heuristic database.
+        <div style={{ fontSize: 13, color: '#666', marginBottom: 16, maxWidth: 680, lineHeight: 1.6 }}>
+          When moving from desktop to mobile, the Repeater component adjusts its layout, sizing, spacing,
+          and overflow behavior. This spec documents every transformation rule that the heuristics engine applies.
         </div>
         <div>
-          <StatPill label="Total Rules" value={String(totalRules)} />
-          <StatPill label="Categories" value={String(categories.length)} color="#4a90e2" />
-          <StatPill label="Actions" value={String([...new Set(REPEATER_RULES.map(r => r.action))].length)} color="#f5a623" />
+          <StatPill label="Rules" value={String(REPEATER_RULES.length)} />
+          <StatPill label="Categories" value="8" color="#4a90e2" />
+          <StatPill label="Action types" value="5" color="#f5a623" />
         </div>
       </div>
 
-      {categories.map((cat, ci) => {
-        const rules = catRules(cat)
-        const ids = mergeIds(rules.map(r => r.rule_id))
-        return (
-          <SpecSection key={cat} number={ci + 1} title={`${cat} (#${ids})`}>
-            <SpecTable
-              columns={['ID', 'When', 'In', 'If', 'Action', 'Parameters', 'Note']}
-              rows={rules.map(r => [
-                String(r.rule_id),
-                r.when,
-                r.in,
-                r.if,
-                r.action,
-                r.parameters,
-                r.note || '—'
-              ])}
-            />
-          </SpecSection>
-        )
-      })}
+      {/* 01 — Layout */}
+      <SpecSection number={1} title="Layout Type">
+        <SectionIntro>
+          The Repeater supports four layout modes — Cards, List, Grid, and Slider. On mobile,
+          every layout collapses to a single-column flow except Grid, which may retain two columns
+          depending on the original desktop count.
+        </SectionIntro>
+        <SpecTable
+          columns={['Layout', 'Mobile width', 'Items per row', 'Additional behavior']}
+          rows={[
+            ['Cards', '100%', '1', '—'],
+            ['List', '100%', '1 (forced)', '—'],
+            ['Grid', '100%', 'Desktop count − 1 (min 1)', 'Column min width set to viewport'],
+            ['Slider', '100%', '1', 'Scroll snap: Start · Scrollbar: Hidden'],
+          ]}
+        />
+      </SpecSection>
+
+      {/* 02 — Items Per Row */}
+      <SpecSection number={2} title="Items Per Row">
+        <SectionIntro>
+          When a Repeater uses explicit column counts, those counts are reduced for mobile
+          readability. Auto-fit mode uses the viewport width as the column minimum instead.
+        </SectionIntro>
+        <SpecTable
+          columns={['Desktop columns', 'Mobile columns', 'Rule']}
+          rows={[
+            ['4 or more', '2', 'Collapse to two-column grid for readability'],
+            ['2 or 3', '1', 'Collapse to single column'],
+            ['Auto-fit (by min width)', '1', 'Column min width = 100% viewport'],
+            ['1', '1', 'Already single column — no change'],
+          ]}
+        />
+      </SpecSection>
+
+      {/* 03 — Column & Row Sizing */}
+      <SpecSection number={3} title="Column & Row Sizing">
+        <SectionIntro>
+          Column minimum width is set to 280px on mobile regardless of the desktop value,
+          preventing cards from becoming unreadably narrow. Row height behavior depends on
+          whether the designer chose equal-height rows.
+        </SectionIntro>
+        <SpecTable
+          columns={['Property', 'Condition', 'Mobile value']}
+          rows={[
+            ['Column min width', 'Any desktop value', '280px'],
+            ['Row min height', 'Keep Rows Equal: On', 'Keep desktop value (floor: 200px)'],
+            ['Row min height', 'Keep Rows Equal: Off', 'Auto (content-driven)'],
+          ]}
+        />
+      </SpecSection>
+
+      {/* 04 — Single Row */}
+      <SpecSection number={4} title="Single Row Behavior">
+        <SectionIntro>
+          When a Repeater contains only one row of items, the designer can choose to stretch
+          columns to fill the available width or preserve the column structure with empty space.
+        </SectionIntro>
+        <SpecTable
+          columns={['Setting', 'Mobile behavior']}
+          rows={[
+            ['Stretch Columns to Fill Row', 'Items stretch to fill full width'],
+            ['Keep Empty Columns', 'Column count preserved — empty columns remain'],
+          ]}
+        />
+      </SpecSection>
+
+      {/* 05 — Spacing & Padding */}
+      <SpecSection number={5} title="Spacing & Padding">
+        <SectionIntro>
+          Inter-item gaps and outer padding are reduced on mobile to conserve screen space.
+          Gaps above 24px on desktop compact to 16px; padding above 12px compacts to 12px.
+        </SectionIntro>
+        <SpecTable
+          columns={['Spacing type', 'Desktop threshold', 'Mobile value']}
+          rows={[
+            ['Horizontal gap between items', '> 24px', '16px'],
+            ['Vertical gap between items', '> 24px', '16px'],
+            ['Repeater outer padding', '> 12px', '12px'],
+          ]}
+        />
+      </SpecSection>
+
+      {/* 06 — Overflow & Scroll */}
+      <SpecSection number={6} title="Overflow & Scroll">
+        <SectionIntro>
+          Slider layouts use horizontal swipe navigation on mobile with the scrollbar hidden
+          and snap-to-start behavior. Non-slider layouts keep overflow clipped.
+        </SectionIntro>
+        <SpecTable
+          columns={['Layout', 'Overflow setting', 'Mobile behavior']}
+          rows={[
+            ['Slider', 'Show', 'Scroll snap: Start · Scrollbar: Hidden'],
+            ['Any except Slider', 'Hide', 'Overflow: Hidden'],
+          ]}
+        />
+      </SpecSection>
+
+      {/* 07 — Alignment */}
+      <SpecSection number={7} title="Alignment">
+        <SectionIntro>
+          The Repeater's horizontal alignment is preserved as-is from desktop to mobile.
+          Left-aligned repeaters stay left-aligned; center-aligned stay centered.
+        </SectionIntro>
+        <SpecTable
+          columns={['Desktop alignment', 'Mobile alignment']}
+          rows={[
+            ['Left', 'Left'],
+            ['Center', 'Center'],
+          ]}
+        />
+      </SpecSection>
+
+      {/* 08 — Cell Internals */}
+      <SpecSection number={8} title="Repeater Cell">
+        <SectionIntro>
+          Each cell inside the Repeater fills its column at 100% width with auto height.
+          Inner padding is set to 16px on all sides. After the Repeater resizes, standard
+          heuristics are applied recursively to every child element inside each cell.
+        </SectionIntro>
+        <SpecTable
+          columns={['Scope', 'Property', 'Mobile value']}
+          rows={[
+            ['Cell itself', 'Size', 'Width: 100% · Height: Auto'],
+            ['Cell itself', 'Padding', '16px (all sides)'],
+            ['First child in cell', 'Margin top', '40px'],
+            ['Last child in cell', 'Margin bottom', '40px'],
+            ['All children in cell', 'Recursive rules', 'Apply existing heuristics after resize'],
+          ]}
+        />
+      </SpecSection>
     </div>
   )
 }
