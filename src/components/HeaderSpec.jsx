@@ -50,12 +50,9 @@ function HeaderLayoutViz() {
   return (
     <div style={{ padding: '24px 0', fontFamily: '-apple-system, sans-serif' }}>
 
-      {/* Full reference frame at top */}
+      {/* Logo */}
       <div style={{ textAlign: 'center', marginBottom: 28 }}>
-        <div style={{ fontSize: 11, fontWeight: 600, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 12 }}>
-          Reference Design
-        </div>
-        <img src={ICONS.frame} alt="Header frame reference" style={{ maxWidth: '100%', height: 'auto', borderRadius: 8, border: '1px solid #e2e8f0' }} />
+        <img src={ICONS.frame} alt="Logo" style={{ maxHeight: 48, height: 'auto' }} />
       </div>
 
       <div style={{ fontSize: 11, fontWeight: 600, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 16, textAlign: 'center' }}>
@@ -76,13 +73,9 @@ function HeaderLayoutViz() {
             background: '#fff', borderBottom: '1px solid #e2e8f0',
             height: 56, display: 'flex', alignItems: 'center',
           }}>
-            {/* Left: Logo placeholder */}
+            {/* Left: Logo */}
             <div style={{ marginLeft: 24, flex: '0 0 auto' }}>
-              <div style={{
-                width: 32, height: 32, borderRadius: 4,
-                background: '#00e6b8', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: 11, fontWeight: 800, color: '#000',
-              }}>Logo</div>
+              <img src={ICONS.frame} alt="Logo" style={{ height: 32, width: 'auto' }} />
             </div>
 
             <div style={{ flex: 1 }} />
@@ -104,7 +97,7 @@ function HeaderLayoutViz() {
         {/* Annotations */}
         <div style={{ marginTop: 16, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
           {[
-            { color: '#00e6b8', label: 'Logo', desc: 'Left-aligned · Margin Left: 24px', icon: null },
+            { color: '#00e6b8', label: 'Logo', desc: 'Left-aligned · Margin Left: 24px', icon: ICONS.frame },
             { color: '#64748b', label: 'Search', desc: 'Right group · icon only on mobile', icon: ICONS.search },
             { color: '#f59e0b', label: 'Order / Cart', desc: 'Right group · Margin Right: 24px', icon: ICONS.order },
             { color: '#334155', label: 'Hamburger', desc: 'Right-most · 20×14px', icon: ICONS.menu },
@@ -136,7 +129,7 @@ function HeaderLayoutViz() {
           border: '1.5px solid #334155', borderRadius: 8, overflow: 'hidden',
         }}>
           {[
-            { label: 'Cell A', content: 'Logo', align: 'left', bg: '#f0fdf4' },
+            { label: 'Cell A', align: 'left', bg: '#f0fdf4', icons: [ICONS.frame] },
             { label: 'Cell B', content: 'Nav / Menu', align: 'center', bg: '#f8fafc' },
             {
               label: 'Cell C', align: 'right', bg: '#eff6ff',
@@ -149,7 +142,7 @@ function HeaderLayoutViz() {
             }}>
               <div style={{ fontSize: 9, fontWeight: 600, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 6 }}>{cell.label}</div>
               {cell.icons ? (
-                <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 6, marginBottom: 4 }}>
+                <div style={{ display: 'flex', justifyContent: cell.align === 'right' ? 'flex-end' : 'flex-start', gap: 6, marginBottom: 4 }}>
                   {cell.icons.map((ic, idx) => <img key={idx} src={ic} alt="" style={{ width: 14, height: 14 }} />)}
                 </div>
               ) : (
