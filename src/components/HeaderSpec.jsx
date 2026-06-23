@@ -42,7 +42,7 @@ const ICONS = {
   order:  'https://media.base44.com/images/public/69e443859428256538e445b7/f6e46d698_Order.svg',
   search: 'https://media.base44.com/images/public/69e443859428256538e445b7/4f82087f3_Search.svg',
   menu:   'https://media.base44.com/images/public/69e443859428256538e445b7/bcb87ffe9_Menu.svg',
-  frame:  'https://media.base44.com/images/public/69e443859428256538e445b7/328d7759e_Frame95.svg',
+  frame:  'https://media.base44.com/images/public/69e443859428256538e445b7/d426738aa_Frame95.svg',
   login:  'https://media.base44.com/images/public/69e443859428256538e445b7/6c656b5f3_Avatar.svg',
 }
 
