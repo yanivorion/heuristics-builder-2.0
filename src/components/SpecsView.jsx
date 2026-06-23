@@ -3,12 +3,14 @@ import RepeaterSpec from './RepeaterSpec'
 import RepeaterDiagrams from './RepeaterDiagrams'
 import MeasurementViz from './MeasurementViz'
 import PinnedToSectionSpec from './PinnedToSectionSpec'
+import LoginSpec from './LoginSpec'
 
 const SPECS = [
   { key: 'repeater', label: 'Repeater Spec', component: RepeaterSpec },
   { key: 'repeater-diagrams', label: 'Repeater Diagrams', component: RepeaterDiagrams },
   { key: 'measurements', label: 'Measurements', component: MeasurementViz },
-  { key: 'pinned-to-section', label: 'Pinned to Section', component: PinnedToSectionSpec }
+  { key: 'pinned-to-section', label: 'Pinned to Section', component: PinnedToSectionSpec },
+  { key: 'login', label: 'Login', component: LoginSpec }
 ]
 
 export default function SpecsView() {
