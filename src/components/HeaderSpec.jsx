@@ -81,11 +81,12 @@ function HeaderLayoutViz() {
 
             <div style={{ flex: 1 }} />
 
-            {/* Right: Search + Order + Menu */}
+            {/* Right: Search + Order + Login + Menu */}
             <div style={{ marginRight: 24, display: 'flex', alignItems: 'center', gap: 14 }}>
               <img src={ICONS.search} alt="Search" style={{ width: 20, height: 20 }} />
+              <img src={ICONS.order}  alt="Order" style={{ width: 20, height: 20 }} />
               <img src={ICONS.login}  alt="Login" style={{ width: 20, height: 20 }} />
-              <img src={ICONS.menu}   alt="Menu/Hamburger" style={{ width: 20, height: 20 }} />
+              <img src={ICONS.menu}   alt="Menu" style={{ width: 20, height: 20 }} />
             </div>
           </div>
 
@@ -96,12 +97,13 @@ function HeaderLayoutViz() {
         </div>
 
         {/* Annotations */}
-        <div style={{ marginTop: 16, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
+        <div style={{ marginTop: 16, display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 8 }}>
           {[
             { color: '#00e6b8', label: 'Logo', desc: 'Left-aligned · Margin Left: 24px', icon: ICONS.frame },
-            { color: '#64748b', label: 'Search', desc: 'Right group · icon only on mobile', icon: ICONS.search },
-            { color: '#6366f1', label: 'Login / Avatar', desc: 'Right group · 40×40px on mobile', icon: ICONS.login },
-            { color: '#334155', label: 'Hamburger', desc: 'Right-most · 20×14px', icon: ICONS.menu },
+            { label: 'Search', desc: 'Right group · icon only on mobile', icon: ICONS.search },
+            { label: 'Order / Cart', desc: 'Right group', icon: ICONS.order },
+            { label: 'Login / Avatar', desc: 'Right group · 40×40px on mobile', icon: ICONS.login },
+            { label: 'Hamburger', desc: 'Right-most · 20×14px', icon: ICONS.menu },
           ].map(a => (
             <div key={a.label} style={{
               display: 'flex', alignItems: 'flex-start', gap: 8,
@@ -134,7 +136,7 @@ function HeaderLayoutViz() {
             { label: 'Cell B', content: 'Nav / Menu', align: 'center', bg: '#f8fafc' },
             {
               label: 'Cell C', align: 'right', bg: '#eff6ff',
-              icons: [ICONS.search, ICONS.login, ICONS.menu]
+              icons: [ICONS.search, ICONS.order, ICONS.login, ICONS.menu]
             },
           ].map((cell, i) => (
             <div key={cell.label} style={{
