@@ -327,8 +327,8 @@ const SPEC_SECTIONS = [
   desc: 'The hamburger is always placed at the far right of the header. Its size is decided by the component — we do not set or override it.',
   cols: ['Property', 'Mobile Value'],
   rows: [
-    ['Width', 'Decided by component'],
-    ['Height', 'Decided by component'],
+    ['Width', 'Defined by owners'],
+    ['Height', 'Defined by owners'],
     ['Horizontal position', 'Rightmost (Margin Right: 20px)'],
     ['Vertical position', 'Centered in header row'],
   ]
