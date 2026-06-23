@@ -4,8 +4,10 @@ import RepeaterDiagrams from './RepeaterDiagrams'
 import MeasurementViz from './MeasurementViz'
 import PinnedToSectionSpec from './PinnedToSectionSpec'
 import LoginSpec from './LoginSpec'
+import HeaderSpec from './HeaderSpec'
 
 const SPECS = [
+  { key: 'header', label: 'Header', component: HeaderSpec },
   { key: 'repeater', label: 'Repeater Spec', component: RepeaterSpec },
   { key: 'repeater-diagrams', label: 'Repeater Diagrams', component: RepeaterDiagrams },
   { key: 'measurements', label: 'Measurements', component: MeasurementViz },
@@ -14,7 +16,7 @@ const SPECS = [
 ]
 
 export default function SpecsView() {
-  const [activeSpec, setActiveSpec] = useState('repeater')
+  const [activeSpec, setActiveSpec] = useState('header')
 
   const ActiveComponent = SPECS.find(s => s.key === activeSpec)?.component
 
