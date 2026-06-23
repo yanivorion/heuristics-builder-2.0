@@ -323,15 +323,15 @@ const SPEC_SECTIONS = [
     ]
   },
   {
-    title: 'Hamburger Menu — Size & Position',
-    desc: 'The hamburger is always placed at the far right of the header. Its size is standardised to 20×14px regardless of the desktop value.',
-    cols: ['Property', 'Mobile Value'],
-    rows: [
-      ['Width', '20px'],
-      ['Height', '14px'],
-      ['Horizontal position', 'Rightmost (Margin Right: 20px)'],
-      ['Vertical position', 'Centered in header row'],
-    ]
+  title: 'Hamburger Menu — Size & Position',
+  desc: 'The hamburger is always placed at the far right of the header. Its size is decided by the component — we do not set or override it.',
+  cols: ['Property', 'Mobile Value'],
+  rows: [
+    ['Width', 'Decided by component'],
+    ['Height', 'Decided by component'],
+    ['Horizontal position', 'Rightmost (Margin Right: 20px)'],
+    ['Vertical position', 'Centered in header row'],
+  ]
   },
   {
     title: 'Search & Login — Position',
