@@ -335,7 +335,7 @@ const SPEC_SECTIONS = [
   },
   {
     title: 'Search & Login — Position',
-    desc: 'Search, Login, and Cart icons share the right-side cell of the Super Grid. They align to the far right with a 24px outer margin when header padding is 0.',
+    desc: 'Search, Login, and Cart icons share the right-side cell of the Super Grid. They align to the far right with a 24px outer margin when header padding is 0. DOM order determines priority — the last element in the DOM is the rightmost visually.',
     cols: ['Element', 'Alignment', 'Margin (padding = 0)'],
     rows: [
       ['Search icon', 'Right side (most right)', 'Margin Right: 24px (shared cell)'],
