@@ -327,8 +327,8 @@ const SPEC_SECTIONS = [
   desc: 'The hamburger is always placed at the far right of the header. Its size is decided by the component — we do not set or override it.',
   cols: ['Property', 'Mobile Value'],
   rows: [
-    ['Width', 'Defined by owners'],
-    ['Height', 'Defined by owners'],
+    ['Width', <span style={{ display: 'inline-block', padding: '2px 8px', borderRadius: 4, fontSize: 10, fontWeight: 600, background: '#FFF7ED', color: '#EA580C', border: '1px solid #FDBA7480' }}>Defined by owners</span>],
+    ['Height', <span style={{ display: 'inline-block', padding: '2px 8px', borderRadius: 4, fontSize: 10, fontWeight: 600, background: '#FFF7ED', color: '#EA580C', border: '1px solid #FDBA7480' }}>Defined by owners</span>],
     ['Horizontal position', 'Rightmost (Margin Right: 20px)'],
     ['Vertical position', 'Centered in header row'],
   ]
