@@ -89,19 +89,32 @@ function buildChart(title, rules) {
 }
 
 // ── Data ──────────────────────────────────────────────────────────────
+import { HEADER_SEED_DATA } from '../headerSeedData'
+
 const LOGIN_RULES = SEED_DATA.filter(r => r.category === 'Login').sort((a, b) => a.rule_id - b.rule_id)
+
+// Header rules that reference Login (alignment + margin positioning)
+const HEADER_LOGIN_RULES = HEADER_SEED_DATA.filter(r =>
+  r.if && r.if.toLowerCase().includes('login')
+).sort((a, b) => a.rule_id - b.rule_id)
 
 const DIAGRAM_GROUPS = [
   {
-    key: 'login-bar',
-    title: 'Login Bar Layout',
-    desc: 'How the Login Bar container transforms on mobile',
-    rules: LOGIN_RULES.filter(r => r.when === 'Login Bar' && (r.action === 'Set Size' || r.action === 'Set OOG')),
+    key: 'login-avatar',
+    title: 'Avatar (Default Preset)',
+    desc: 'Default Login output — avatar only',
+    rules: LOGIN_RULES.filter(r => r.when === 'Login Bar' && r.action === 'Set Size'),
+  },
+  {
+    key: 'login-header-position',
+    title: 'Position in Header Container',
+    desc: 'How Login is aligned and spaced within the header grid',
+    rules: HEADER_LOGIN_RULES,
   },
   {
     key: 'login-visibility',
-    title: 'Login Visibility & Collapse',
-    desc: 'When elements hide or collapse inside the Login component',
+    title: 'Visibility & Collapse',
+    desc: 'When Login elements hide or collapse on mobile',
     rules: LOGIN_RULES.filter(r => r.action === 'Set Visibility'),
   },
   {
@@ -109,12 +122,6 @@ const DIAGRAM_GROUPS = [
     title: 'Login Button',
     desc: 'Size and display rules for the Login Button element',
     rules: LOGIN_RULES.filter(r => r.when === 'Login Button'),
-  },
-  {
-    key: 'login-font',
-    title: 'Typography',
-    desc: 'Font size rules applied inside the Login component',
-    rules: LOGIN_RULES.filter(r => r.action === 'Set Font Size'),
   },
 ].filter(g => g.rules.length > 0)
  .map(g => ({ ...g, chart: buildChart(g.title, g.rules) }))
@@ -181,51 +188,53 @@ function SpecSection({ number, title, desc, cols, rows }) {
 
 const SPEC_SECTIONS = [
   {
-    title: 'Login Bar Container',
-    desc: 'The Login Bar always expands to full width on mobile. Its internal layout switches from horizontal to a vertical stack.',
+    title: 'Default Preset — Avatar Only',
+    desc: 'The Login component default preset on mobile shows only the circular avatar icon. All other elements (name, member links, sign-in text) are hidden unless explicitly configured. This is the baseline mobile output.',
+    cols: ['Element', 'Default Mobile State', 'Note'],
+    rows: [
+      ['Avatar circle', 'Visible — 40×40px', 'Always shown in default preset'],
+      ['Member name text', 'Hidden', 'Not shown in default preset'],
+      ['Member links (My Account, etc.)', 'Hidden', 'Not shown in default preset'],
+      ['Sign-in prompt text', 'Hidden', 'Not shown in default preset'],
+      ['Login Button', 'Visible (if configured)', 'Shown only when a Login Button is used instead of the bar'],
+    ]
+  },
+  {
+    title: 'Avatar Size',
+    desc: 'The avatar is fixed at 40×40px on mobile regardless of the desktop size, keeping it recognizable without occupying too much header space.',
     cols: ['Property', 'Desktop', 'Mobile'],
     rows: [
-      ['Width', 'Desktop value', '100%'],
-      ['Height', 'Fixed', 'Auto'],
-      ['Layout', 'Horizontal row', 'Vertical stack'],
-      ['Child order', 'Side by side', 'Avatar → Name → Links'],
+      ['Width', 'Desktop value', '40px'],
+      ['Height', 'Desktop value', '40px'],
+      ['Shape', 'Any (circle/square)', 'Preserved from desktop'],
     ]
   },
   {
-    title: 'Avatar',
-    desc: 'The user avatar is fixed at 40×40px on mobile regardless of the desktop size, ensuring it remains recognizable without taking up too much space.',
-    cols: ['Property', 'Mobile Value'],
+    title: 'Position in Header — Alignment',
+    desc: 'When a Login icon/button sits inside a Super Grid Cell in the header, it aligns to the far right (LTR). This is handled by the header container heuristic, not the Login component itself.',
+    cols: ['Rule', 'When', 'Condition', 'Result'],
     rows: [
-      ['Width', '40px'],
-      ['Height', '40px'],
-      ['Shape', 'Preserved from desktop (circle/square)'],
+      ['Header #4', 'Super Grid Cell', 'Cell contains Login → LTR', 'Align: Most right side'],
+      ['Header #6', 'Super Grid Cell', 'Cell contains Login → LTR → Header padding = 0px', 'Margin Right: 24px'],
     ]
   },
   {
-    title: 'Member Links Collapse',
-    desc: 'When the Login Bar shows 3 or more member links (e.g., My Account, Orders, Logout), they are hidden on mobile and collapsed into a menu to avoid clutter.',
-    cols: ['Link Count', 'Mobile Behavior'],
+    title: 'Position in Header — Visual Layout',
+    desc: 'The Login icon is always anchored to the right edge of the header on mobile (LTR layouts), with a 24px outer margin when section padding is 0.',
+    cols: ['Scenario', 'Login Position', 'Margin'],
     rows: [
-      ['1–2 links', 'Visible inline'],
-      ['3+ links', 'Hidden → collapsed into dropdown / menu'],
+      ['Header has padding > 0', 'Right-aligned in cell', 'No extra margin (padding handles it)'],
+      ['Header padding = 0px', 'Right-aligned in cell', 'Margin Right: 24px'],
+      ['RTL layout', 'Left-aligned in cell', 'Mirror of LTR rules'],
     ]
   },
   {
-    title: 'Login Button',
-    desc: 'The Login Button respects its desktop width up to the full mobile viewport. In a compact header context it displays icon-only with the text label hidden.',
+    title: 'Login Button (non-bar variant)',
+    desc: 'When a Login Button is used instead of the Login Bar, it keeps its desktop width (capped at 100%). In a compact header where width < 40px, the text label is hidden and only the icon is shown.',
     cols: ['Context', 'Mobile Width', 'Label'],
     rows: [
-      ['Any parent (general)', 'Desktop value (max 100%)', 'Visible'],
-      ['Header (width < 40px)', 'Keep size', 'Hidden — icon only'],
-    ]
-  },
-  {
-    title: 'Sign-in Prompt Typography',
-    desc: 'Any text inside the Login Bar (e.g., "Sign in", "Hello, Name") follows the standard font algorithm rules, same as any text element.',
-    cols: ['Element', 'Rule'],
-    rows: [
-      ['Sign-in prompt text', 'Apply Font Algo (paths A–N by desktop size)'],
-      ['Member name text', 'Apply Font Algo'],
+      ['General section / box', 'Desktop value (max 100%)', 'Visible'],
+      ['Header — width < 40px', 'Keep size', 'Hidden — icon only'],
     ]
   },
 ]
@@ -242,13 +251,13 @@ export default function LoginSpec() {
           Login Component — Mobile Transformation Specification
         </div>
         <div style={{ fontSize: 13, color: '#666', marginBottom: 16, maxWidth: 680, lineHeight: 1.6 }}>
-          The Login Bar and Login Button adapt their layout, sizing, and visibility when moving from
-          desktop to mobile. This spec documents every transformation rule applied by the heuristics engine.
+          The Login component's default mobile preset shows <strong>avatar only</strong> — all other elements (name, links, sign-in text) are hidden.
+          Position in the header is governed by the header container heuristics (rules #4 and #6), which align Login to the right edge with a 24px margin.
         </div>
         <div>
-          <StatPill label="Rules" value={String(LOGIN_RULES.length)} />
-          <StatPill label="Elements" value="2" color="#4a90e2" />
-          <StatPill label="Action types" value="5" color="#f5a623" />
+          <StatPill label="Login rules" value={String(LOGIN_RULES.length)} />
+          <StatPill label="Header position rules" value={String(HEADER_LOGIN_RULES.length)} color="#4a90e2" />
+          <StatPill label="Default preset" value="Avatar only" color="#f5a623" />
         </div>
 
         {/* View toggle */}
