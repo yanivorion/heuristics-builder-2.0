@@ -38,10 +38,26 @@ function MermaidChart({ id, chart }) {
   return <div ref={ref} style={{ display: 'flex', justifyContent: 'center', overflow: 'auto' }} />
 }
 
+const ICONS = {
+  order:  'https://media.base44.com/images/public/69e443859428256538e445b7/f6e46d698_Order.svg',
+  search: 'https://media.base44.com/images/public/69e443859428256538e445b7/4f82087f3_Search.svg',
+  menu:   'https://media.base44.com/images/public/69e443859428256538e445b7/bcb87ffe9_Menu.svg',
+  frame:  'https://media.base44.com/images/public/69e443859428256538e445b7/328d7759e_Frame95.svg',
+}
+
 // ── Visual Header Layout ───────────────────────────────────────────────
 function HeaderLayoutViz() {
   return (
     <div style={{ padding: '24px 0', fontFamily: '-apple-system, sans-serif' }}>
+
+      {/* Full reference frame at top */}
+      <div style={{ textAlign: 'center', marginBottom: 28 }}>
+        <div style={{ fontSize: 11, fontWeight: 600, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 12 }}>
+          Reference Design
+        </div>
+        <img src={ICONS.frame} alt="Header frame reference" style={{ maxWidth: '100%', height: 'auto', borderRadius: 8, border: '1px solid #e2e8f0' }} />
+      </div>
+
       <div style={{ fontSize: 11, fontWeight: 600, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.06em', marginBottom: 16, textAlign: 'center' }}>
         Mobile Header Layout — Super Grid (LTR)
       </div>
@@ -58,48 +74,24 @@ function HeaderLayoutViz() {
           {/* Header bar */}
           <div style={{
             background: '#fff', borderBottom: '1px solid #e2e8f0',
-            padding: '0 0', height: 56,
-            display: 'flex', alignItems: 'center', position: 'relative',
+            height: 56, display: 'flex', alignItems: 'center',
           }}>
-            {/* Left: Logo */}
-            <div style={{
-              marginLeft: 24, display: 'flex', alignItems: 'center', gap: 6,
-              flex: '0 0 auto',
-            }}>
+            {/* Left: Logo placeholder */}
+            <div style={{ marginLeft: 24, flex: '0 0 auto' }}>
               <div style={{
-                width: 28, height: 28, borderRadius: 4,
+                width: 32, height: 32, borderRadius: 4,
                 background: '#00e6b8', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: 10, fontWeight: 800, color: '#000',
-              }}>L</div>
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
-                <div style={{ width: 32, height: 3, background: '#334155', borderRadius: 2 }} />
-                <div style={{ width: 22, height: 2, background: '#94a3b8', borderRadius: 2 }} />
-              </div>
+                fontSize: 11, fontWeight: 800, color: '#000',
+              }}>Logo</div>
             </div>
 
-            {/* Spacer */}
             <div style={{ flex: 1 }} />
 
-            {/* Right: Search + Login + Hamburger */}
-            <div style={{ marginRight: 24, display: 'flex', alignItems: 'center', gap: 12 }}>
-              {/* Search icon */}
-              <div style={{ position: 'relative', width: 18, height: 18 }}>
-                <div style={{ width: 11, height: 11, border: '2px solid #64748b', borderRadius: '50%', position: 'absolute', top: 0, left: 0 }} />
-                <div style={{ width: 5, height: 2, background: '#64748b', position: 'absolute', bottom: 0, right: 0, transform: 'rotate(-45deg)', borderRadius: 1 }} />
-              </div>
-              {/* Login avatar */}
-              <div style={{
-                width: 20, height: 20, borderRadius: '50%',
-                background: '#e0e7ff', border: '1.5px solid #6366f1',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                fontSize: 8, fontWeight: 700, color: '#6366f1',
-              }}>U</div>
-              {/* Hamburger */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 3, width: 18 }}>
-                <div style={{ width: 18, height: 2, background: '#334155', borderRadius: 1 }} />
-                <div style={{ width: 14, height: 2, background: '#334155', borderRadius: 1 }} />
-                <div style={{ width: 18, height: 2, background: '#334155', borderRadius: 1 }} />
-              </div>
+            {/* Right: Search + Order + Menu */}
+            <div style={{ marginRight: 24, display: 'flex', alignItems: 'center', gap: 14 }}>
+              <img src={ICONS.search} alt="Search" style={{ width: 20, height: 20 }} />
+              <img src={ICONS.order}  alt="Order/Cart" style={{ width: 20, height: 20 }} />
+              <img src={ICONS.menu}   alt="Menu/Hamburger" style={{ width: 20, height: 20 }} />
             </div>
           </div>
 
@@ -112,16 +104,19 @@ function HeaderLayoutViz() {
         {/* Annotations */}
         <div style={{ marginTop: 16, display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
           {[
-            { color: '#00e6b8', label: 'Logo', desc: 'Left-aligned · Margin Left: 24px' },
-            { color: '#6366f1', label: 'Login (avatar)', desc: 'Right-aligned · Margin Right: 24px' },
-            { color: '#64748b', label: 'Search', desc: 'Right group · icon only on mobile' },
-            { color: '#334155', label: 'Hamburger', desc: 'Right-most · 20×14px' },
+            { color: '#00e6b8', label: 'Logo', desc: 'Left-aligned · Margin Left: 24px', icon: null },
+            { color: '#64748b', label: 'Search', desc: 'Right group · icon only on mobile', icon: ICONS.search },
+            { color: '#f59e0b', label: 'Order / Cart', desc: 'Right group · Margin Right: 24px', icon: ICONS.order },
+            { color: '#334155', label: 'Hamburger', desc: 'Right-most · 20×14px', icon: ICONS.menu },
           ].map(a => (
             <div key={a.label} style={{
               display: 'flex', alignItems: 'flex-start', gap: 8,
               background: '#fff', border: '1px solid #e2e8f0', borderRadius: 8, padding: '8px 10px',
             }}>
-              <span style={{ width: 8, height: 8, borderRadius: '50%', background: a.color, flexShrink: 0, marginTop: 3 }} />
+              {a.icon
+                ? <img src={a.icon} alt={a.label} style={{ width: 16, height: 16, flexShrink: 0, marginTop: 2 }} />
+                : <span style={{ width: 8, height: 8, borderRadius: '50%', background: a.color, flexShrink: 0, marginTop: 4 }} />
+              }
               <div>
                 <div style={{ fontSize: 11, fontWeight: 700, color: '#0f172a' }}>{a.label}</div>
                 <div style={{ fontSize: 10, color: '#64748b', lineHeight: 1.4 }}>{a.desc}</div>
@@ -141,17 +136,26 @@ function HeaderLayoutViz() {
           border: '1.5px solid #334155', borderRadius: 8, overflow: 'hidden',
         }}>
           {[
-            { label: 'Cell A', content: 'Logo', align: 'left', bg: '#f0fdf4', border: '#00e6b8' },
-            { label: 'Cell B', content: 'Menu / Nav', align: 'center', bg: '#f8fafc', border: '#cbd5e1' },
-            { label: 'Cell C', content: 'Search · Login · ☰', align: 'right', bg: '#eff6ff', border: '#6366f1' },
+            { label: 'Cell A', content: 'Logo', align: 'left', bg: '#f0fdf4' },
+            { label: 'Cell B', content: 'Nav / Menu', align: 'center', bg: '#f8fafc' },
+            {
+              label: 'Cell C', align: 'right', bg: '#eff6ff',
+              icons: [ICONS.search, ICONS.order, ICONS.menu]
+            },
           ].map((cell, i) => (
             <div key={cell.label} style={{
               background: cell.bg, borderRight: i < 2 ? '1px solid #e2e8f0' : 'none',
               padding: '10px 8px', textAlign: cell.align,
             }}>
-              <div style={{ fontSize: 9, fontWeight: 600, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 4 }}>{cell.label}</div>
-              <div style={{ fontSize: 11, fontWeight: 700, color: '#0f172a' }}>{cell.content}</div>
-              <div style={{ fontSize: 9, color: '#64748b', marginTop: 2 }}>Align: {cell.align}</div>
+              <div style={{ fontSize: 9, fontWeight: 600, color: '#94a3b8', textTransform: 'uppercase', letterSpacing: '0.05em', marginBottom: 6 }}>{cell.label}</div>
+              {cell.icons ? (
+                <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 6, marginBottom: 4 }}>
+                  {cell.icons.map((ic, idx) => <img key={idx} src={ic} alt="" style={{ width: 14, height: 14 }} />)}
+                </div>
+              ) : (
+                <div style={{ fontSize: 11, fontWeight: 700, color: '#0f172a', marginBottom: 4 }}>{cell.content}</div>
+              )}
+              <div style={{ fontSize: 9, color: '#64748b' }}>Align: {cell.align}</div>
             </div>
           ))}
         </div>
