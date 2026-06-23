@@ -341,7 +341,6 @@ const SPEC_SECTIONS = [
       ['Search icon', 'Right side (most right)', 'Margin Right: 24px (shared cell)'],
       ['Login icon / avatar', 'Right side (most right)', 'Margin Right: 24px (shared cell)'],
       ['Cart icon', 'Right side (most right)', 'Margin Right: 24px (shared cell)'],
-      ['Hamburger', 'Rightmost element', 'Margin Right: 20px'],
     ]
   },
   {
