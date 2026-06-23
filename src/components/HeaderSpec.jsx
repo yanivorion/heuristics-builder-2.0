@@ -43,6 +43,7 @@ const ICONS = {
   search: 'https://media.base44.com/images/public/69e443859428256538e445b7/4f82087f3_Search.svg',
   menu:   'https://media.base44.com/images/public/69e443859428256538e445b7/bcb87ffe9_Menu.svg',
   frame:  'https://media.base44.com/images/public/69e443859428256538e445b7/328d7759e_Frame95.svg',
+  login:  'https://media.base44.com/images/public/69e443859428256538e445b7/6c656b5f3_Avatar.svg',
 }
 
 // ── Visual Header Layout ───────────────────────────────────────────────
@@ -83,7 +84,7 @@ function HeaderLayoutViz() {
             {/* Right: Search + Order + Menu */}
             <div style={{ marginRight: 24, display: 'flex', alignItems: 'center', gap: 14 }}>
               <img src={ICONS.search} alt="Search" style={{ width: 20, height: 20 }} />
-              <img src={ICONS.order}  alt="Order/Cart" style={{ width: 20, height: 20 }} />
+              <img src={ICONS.login}  alt="Login" style={{ width: 20, height: 20 }} />
               <img src={ICONS.menu}   alt="Menu/Hamburger" style={{ width: 20, height: 20 }} />
             </div>
           </div>
@@ -99,7 +100,7 @@ function HeaderLayoutViz() {
           {[
             { color: '#00e6b8', label: 'Logo', desc: 'Left-aligned · Margin Left: 24px', icon: ICONS.frame },
             { color: '#64748b', label: 'Search', desc: 'Right group · icon only on mobile', icon: ICONS.search },
-            { color: '#f59e0b', label: 'Order / Cart', desc: 'Right group · Margin Right: 24px', icon: ICONS.order },
+            { color: '#6366f1', label: 'Login / Avatar', desc: 'Right group · 40×40px on mobile', icon: ICONS.login },
             { color: '#334155', label: 'Hamburger', desc: 'Right-most · 20×14px', icon: ICONS.menu },
           ].map(a => (
             <div key={a.label} style={{
@@ -133,7 +134,7 @@ function HeaderLayoutViz() {
             { label: 'Cell B', content: 'Nav / Menu', align: 'center', bg: '#f8fafc' },
             {
               label: 'Cell C', align: 'right', bg: '#eff6ff',
-              icons: [ICONS.search, ICONS.order, ICONS.menu]
+              icons: [ICONS.search, ICONS.login, ICONS.menu]
             },
           ].map((cell, i) => (
             <div key={cell.label} style={{
