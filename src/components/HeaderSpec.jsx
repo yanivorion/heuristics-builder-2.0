@@ -103,7 +103,7 @@ function HeaderLayoutViz() {
             { label: 'Search', desc: 'Right group · icon only on mobile', icon: ICONS.search },
             { label: 'Order / Cart', desc: 'Right group', icon: ICONS.order },
             { label: 'Login / Avatar', desc: 'Right group · 40×40px on mobile', icon: ICONS.login },
-            { label: 'Hamburger', desc: 'Right-most · 20×14px', icon: ICONS.menu },
+            { label: 'Hamburger', desc: 'Right-most · defined by owners', icon: ICONS.menu },
           ].map(a => (
             <div key={a.label} style={{
               display: 'flex', alignItems: 'flex-start', gap: 8,
@@ -329,7 +329,7 @@ const SPEC_SECTIONS = [
   rows: [
     ['Width', <span style={{ display: 'inline-block', padding: '2px 8px', borderRadius: 4, fontSize: 10, fontWeight: 600, background: '#FFF7ED', color: '#EA580C', border: '1px solid #FDBA7480' }}>Defined by owners</span>],
     ['Height', <span style={{ display: 'inline-block', padding: '2px 8px', borderRadius: 4, fontSize: 10, fontWeight: 600, background: '#FFF7ED', color: '#EA580C', border: '1px solid #FDBA7480' }}>Defined by owners</span>],
-    ['Horizontal position', 'Rightmost (Margin Right: 20px)'],
+    ['Horizontal position', 'Rightmost'],
     ['Vertical position', 'Centered in header row'],
   ]
   },
