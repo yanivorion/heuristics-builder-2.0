@@ -3,7 +3,12 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "engines": {
+    "node": ">=20 <21",
+    "npm": ">=10 <11"
+  },
   "scripts": {
+    "setup": "bash scripts/setup.sh",
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint . --quiet",
@@ -79,6 +84,7 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
+    "base44": "latest",
     "@eslint/js": "^9.19.0",
     "@types/node": "^22.13.5",
     "@types/react": "^18.2.66",
