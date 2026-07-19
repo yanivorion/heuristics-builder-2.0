@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
+import { base44 } from './api/base44Client'
 import {
   isConnected, initConnection, getConnectionError,
   fetchHeuristics, fetchHeaderHeuristics,
@@ -17,12 +18,15 @@ import SpecsView from './components/SpecsView'
 import AddRuleWizard from './components/AddRuleWizard'
 import AddRuleWizardV2 from './components/AddRuleWizardV2'
 import CustomSelect from './components/CustomSelect'
+import { usePermissions } from './lib/usePermissions'
 
 // Studio V2 wizard — always enabled.
 const WIZARD_V2_ENABLED = true
 import('./styles/wizardV2.css')
 
 function App() {
+  const { permission } = usePermissions()
+  const isAdmin = permission === 'admin'
   const navigate = useNavigate()
   const location = useLocation()
   const [activeTab, setActiveTab] = useState('main')
@@ -402,19 +406,22 @@ function App() {
                     value={row[col.key] ?? ''}
                     columnKey={col.key}
                     rowAction={row.action}
-                    isEditing={editingCell?.rowId === row.id && editingCell?.key === col.key}
-                    onStartEdit={() => setEditingCell({ rowId: row.id, key: col.key })}
+                    isEditing={isAdmin && editingCell?.rowId === row.id && editingCell?.key === col.key}
+                    onStartEdit={() => isAdmin && setEditingCell({ rowId: row.id, key: col.key })}
                     onSave={val => handleCellSave(row.id, col.key, val, activeTab === 'header')}
                     onCancel={() => setEditingCell(null)}
                   />
                 </td>
               ))}
-              <td>
-                <div className="row-actions">
-                  <button className="btn-icon" onClick={() => handleDuplicateRow(row)} title="Duplicate">&#x2398;</button>
-                  <button className="btn-icon danger" onClick={() => setConfirmDelete(row)} title="Delete">&#x2715;</button>
-                </div>
-              </td>
+              {isAdmin && (
+                <td>
+                  <div className="row-actions">
+                    <button className="btn-icon" onClick={() => handleDuplicateRow(row)} title="Duplicate">&#x2398;</button>
+                    <button className="btn-icon danger" onClick={() => setConfirmDelete(row)} title="Delete">&#x2715;</button>
+                  </div>
+                </td>
+              )}
+              {!isAdmin && <td />}
             </tr>
           ))}
         </tbody>
@@ -423,6 +430,22 @@ function App() {
   }
 
 
+
+  // Access gate — non-Wix users see a denial screen
+  if (permission === 'denied') {
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '100vh', fontFamily: 'system-ui, sans-serif', color: '#334155', gap: 12 }}>
+        <div style={{ fontSize: 40 }}>🔒</div>
+        <h2 style={{ margin: 0, fontSize: 20, fontWeight: 700 }}>Access Restricted</h2>
+        <p style={{ margin: 0, fontSize: 14, color: '#64748b', textAlign: 'center', maxWidth: 360 }}>
+          This tool is available to Wix employees only.<br />Please sign in with your <strong>@wix.com</strong> account.
+        </p>
+        <button onClick={() => base44.auth.redirectToLogin(window.location.href)} style={{ marginTop: 8, padding: '8px 20px', background: '#0f172a', color: '#fff', border: 'none', borderRadius: 8, cursor: 'pointer', fontSize: 14 }}>
+          Sign in with Wix account
+        </button>
+      </div>
+    )
+  }
 
   if (location.pathname === '/specs') {
     return <SpecsView />
@@ -532,7 +555,7 @@ function App() {
             <div className="toolbar-right">
               <button className="btn btn-ghost" style={{ '--i': 0 }} onClick={loadData}>Refresh</button>
               <button className="btn btn-ghost" style={{ '--i': 1 }} onClick={handleExportCSV}>Export CSV</button>
-              <button type="button" className="btn btn-primary" style={{ '--i': 2 }} onClick={() => setShowAddWizard(true)}>+ Add Rule</button>
+              {isAdmin && <button type="button" className="btn btn-primary" style={{ '--i': 2 }} onClick={() => setShowAddWizard(true)}>+ Add Rule</button>}
             </div>
           </div>
 
@@ -566,7 +589,7 @@ function App() {
         />
       )}
 
-      {(activeTab === 'main' || activeTab === 'header') && (
+      {isAdmin && (activeTab === 'main' || activeTab === 'header') && (
         WIZARD_V2_ENABLED ? (
           <AddRuleWizardV2
             open={showAddWizard}
