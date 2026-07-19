@@ -3,20 +3,20 @@ import React from 'react'
 const RULES = [
   {
     number: '01',
-    title: 'Sidebar → Inline Flow',
-    desc: 'Pinned sidebars that sit beside content on desktop are unpinned and moved inline into the content flow on mobile, appearing as a regular content block.',
+    title: 'Left/Right Pinned → Inline Flow',
+    desc: 'Any element pinned to the left or right side of a section on desktop is unpinned on mobile and placed inline with the content flow. This applies to any element type — container, image, button group, etc. Widget-level pinning (e.g. from a widget\'s own sticky behavior) is not affected by this rule.',
     table: {
-      cols: ['Desktop', 'Mobile', 'Rule'],
+      cols: ['Desktop Pin Position', 'Mobile Result'],
       rows: [
-        ['Pinned: Left Sidebar', 'Inline block (top of section)', 'Sidebar becomes first content element'],
-        ['Pinned: Right Sidebar', 'Inline block (bottom of section)', 'Sidebar becomes last content element'],
+        ['Pinned: Left', 'Unpinned → placed at top of section content flow'],
+        ['Pinned: Right', 'Unpinned → placed at bottom of section content flow'],
       ]
     }
   },
   {
     number: '02',
-    title: 'Toolbar Height Reduction',
-    desc: 'Pinned toolbars taller than 60px on desktop shrink to 48px on mobile to preserve viewport space for content.',
+    title: 'Top-Pinned Element Height Reduction',
+    desc: 'Any element pinned to the top of a section that is taller than 60px on desktop shrinks to 48px on mobile to preserve viewport space.',
     table: {
       cols: ['Desktop Height', 'Mobile Height'],
       rows: [
@@ -27,8 +27,8 @@ const RULES = [
   },
   {
     number: '03',
-    title: 'Multiple Pinned → Horizontal Scroll Strip',
-    desc: 'When two or more items are pinned horizontally within a section, they become a scrollable strip instead of wrapping or overlapping.',
+    title: 'Multiple Pinned Elements → Horizontal Scroll',
+    desc: 'When 2 or more elements are pinned in the same horizontal direction within a section, they form a horizontally scrollable strip on mobile instead of wrapping or overlapping.',
     table: {
       cols: ['Pinned Count', 'Mobile Behavior'],
       rows: [
@@ -39,25 +39,25 @@ const RULES = [
   },
   {
     number: '04',
-    title: 'Collapse on Scroll',
-    desc: 'A full pinned toolbar with 3+ child elements collapses to an icon-only compact bar after the user scrolls past the threshold.',
+    title: 'Collapse on Scroll (3+ Children)',
+    desc: 'A top-pinned element that contains 3 or more children collapses on scroll — child labels hide, only icons remain visible. Applies to any container, not just navigation bars.',
     table: {
       cols: ['Scroll State', 'Appearance'],
       rows: [
-        ['Top of section', 'Full toolbar: icons + labels visible'],
-        ['Scrolled past 80px', 'Compact bar: icons only, labels hidden'],
+        ['At top', 'Full size: all children visible (icons + labels)'],
+        ['Scrolled past threshold', 'Compact: icons only, labels hidden'],
       ]
     }
   },
   {
     number: '05',
-    title: 'Bottom-Pinned CTA',
-    desc: 'Action bars pinned to the bottom of a section (e.g., "Add to Cart", "Submit") remain fixed at the viewport bottom for thumb reach.',
+    title: 'Bottom-Pinned Element',
+    desc: 'Any element pinned to the bottom of a section stays fixed at the viewport bottom on mobile. This could be a button, icon, container, or any other element type.',
     table: {
       cols: ['Property', 'Mobile Value'],
       rows: [
         ['Position', 'Fixed: Bottom (viewport edge)'],
-        ['Z-Index', '100 (above section content)'],
+        ['Z-Index', '100'],
         ['Width', '100%'],
         ['Padding', '12px (all sides)'],
       ]
@@ -66,13 +66,13 @@ const RULES = [
   {
     number: '06',
     title: 'Z-Index Layering',
-    desc: 'Pinned elements use a controlled z-index stack: section content (0) < pinned elements (50) < modals/overlays (100+).',
+    desc: 'Pinned elements use a controlled z-index stack: section content (0) < pinned elements (50) < bottom-pinned (100) < modals/overlays (200+).',
     table: {
       cols: ['Layer', 'Z-Index'],
       rows: [
         ['Section content', '0'],
         ['Pinned elements (within section)', '50'],
-        ['Pinned bottom CTAs', '100'],
+        ['Bottom-pinned elements', '100'],
         ['Modals / Lightboxes / Overlays', '200+'],
       ]
     }
@@ -80,20 +80,20 @@ const RULES = [
   {
     number: '07',
     title: 'Full-Width Expansion',
-    desc: 'Non-sidebar pinned elements expand to 100% width on mobile so they span the full viewport.',
+    desc: 'Any pinned element that is not left/right-pinned expands to 100% width on mobile. Left/right-pinned elements are unpinned instead (see rule 01).',
     table: {
-      cols: ['Element Type', 'Mobile Width'],
+      cols: ['Pin Position', 'Mobile Width'],
       rows: [
-        ['Pinned toolbar (top)', '100%'],
-        ['Pinned action bar (bottom)', '100%'],
-        ['Pinned sidebar (left/right)', 'Unpinned → Auto width'],
+        ['Top-pinned', '100%'],
+        ['Bottom-pinned', '100%'],
+        ['Left/Right-pinned', 'Unpinned → Auto width'],
       ]
     }
   },
   {
     number: '08',
     title: 'Delayed Visibility',
-    desc: 'Top-pinned elements that are not critical on first paint fade in after 200px of scroll, preventing persistent UI from dominating the initial view.',
+    desc: 'Top-pinned elements fade in after 200px of scroll rather than being visible on first paint, so they do not dominate the initial view.',
     table: {
       cols: ['Condition', 'Behavior'],
       rows: [
@@ -189,9 +189,9 @@ export default function PinnedToSectionSpec() {
           Pinned to Section — Mobile Transformation Specification
         </div>
         <div style={{ fontSize: 13, color: '#666', marginBottom: 16, maxWidth: 680, lineHeight: 1.6 }}>
-          Elements pinned within a section's boundaries (sticky sidebars, toolbars, action bars) need
-          adapted positioning, sizing, and layering on mobile. This spec covers all transformation rules
-          for pinned-to-section elements.
+          Any element — button, icon, container, image, etc. — can have pinning applied at the element level within a section.
+          This spec covers how those pinned elements transform on mobile: positioning, sizing, layering, and visibility.
+          Note: widget-level pinning (built into the widget itself) is handled separately and is not covered here.
         </div>
         <div>
           <StatPill label="Rules" value="8" />
