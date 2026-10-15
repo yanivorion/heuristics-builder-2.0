@@ -3,30 +3,20 @@ import { useState, useEffect } from 'react'
 
 /**
  * Returns permission level for the current user:
- *   'admin'    — role === 'admin' → full edit/add access
- *   'viewer'   — email ends with @wix.com → read-only
- *   'denied'   — everyone else
- *   null       — still loading
+ *   'admin'    — signed-in admin → full edit/add access
+ *   'viewer'   — everyone else → read-only (no login required)
  */
 export function usePermissions() {
-  const [permission, setPermission] = useState(null)
+  const [permission, setPermission] = useState('viewer')
   const [user, setUser] = useState(null)
 
   useEffect(() => {
     base44.auth.me()
       .then(u => {
         setUser(u)
-        if (u.role === 'admin') {
-          setPermission('admin')
-        } else if (u.email && u.email.toLowerCase().endsWith('@wix.com')) {
-          setPermission('viewer')
-        } else {
-          setPermission('denied')
-        }
+        if (u.role === 'admin') setPermission('admin')
       })
-      .catch(() => {
-        setPermission('denied')
-      })
+      .catch(() => {})
   }, [])
 
   return { permission, user }
